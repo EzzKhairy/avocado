@@ -21,7 +21,10 @@ class AppLayout extends StatelessWidget {
             title: Text(
               'AVOCADO',
               style: TextStyle(
+                fontFamily: 'Conquera',
+                fontSize: 17.0,
                 color: defaultColor,
+                fontWeight: FontWeight.bold,
               ),
             ),
             gradient: LinearGradient(

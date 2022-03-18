@@ -1,7 +1,6 @@
 import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/avocadoCubit.dart';
 import 'package:avocado/modules/login_screen.dart';
-import 'package:avocado/modules/test_screen.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
