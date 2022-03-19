@@ -40,7 +40,6 @@ Widget defaultFormField({
   cursorColor: defaultColor,
   decoration: InputDecoration(
     border: UnderlineInputBorder(borderSide: BorderSide(color: defaultColor)),
-
     // fillColor: defaultColor,
     // focusColor: defaultColor,
     labelText: label,

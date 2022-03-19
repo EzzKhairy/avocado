@@ -1,6 +1,7 @@
 import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/avocadoCubit.dart';
 import 'package:avocado/modules/login_screen.dart';
+import 'package:avocado/modules/register_screen.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: AppCubit.get(context).appMode,
             debugShowCheckedModeBanner: false,
-            home : AppLayout(),
+            home : LoginScreen(),
           );
         },
       ),
