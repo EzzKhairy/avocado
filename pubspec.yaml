@@ -35,18 +35,21 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   intl: ^0.17.0
-  sqflite:
+
   bloc: ^7.0.0
   flutter_bloc: ^7.0.0
   dio: ^4.0.4
   hexcolor: ^2.0.5
   shared_preferences: ^2.0.11
-  webview_flutter: ^3.0.0
+
   flutter_conditional_rendering: ^2.0.0
   toast: ^0.1.5
-  carousel_slider: ^4.0.0
+
   new_gradient_app_bar: ^0.2.0
   scaffold_gradient_background: ^1.0.3+1
+  google_nav_bar: ^5.0.5
+  calendar_agenda: ^0.0.2+3
+  calendar_appbar: ^0.0.6
 
 dev_dependencies:
   flutter_test:
@@ -89,11 +92,11 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Conquera
+    - family: Nedian
       fonts:
 #        - asset: assets/fonts/Conquera-Light.ttf
 #        - asset: assets/fonts/Conquera-Medium.ttf
-        - asset: assets/fonts/Conquera-Heavy.ttf
+        - asset: assets/fonts/Nedian Medium.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

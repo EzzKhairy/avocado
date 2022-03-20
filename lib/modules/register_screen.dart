@@ -1,5 +1,8 @@
+import 'package:avocado/modules/login_screen.dart';
 import 'package:avocado/shared/components.dart';
+import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class RegisterScreen extends StatelessWidget {
    RegisterScreen({Key? key}) : super(key: key);
@@ -33,90 +36,129 @@ class RegisterScreen extends StatelessWidget {
         ),
         child: Center(
           child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Form(
-                key: signUpFormKey,
-                child: Column(
-                  children: [
-                    defaultFormField(
-                      controller: name,
-                      type: TextInputType.name,
-                      validate: (value)
-                      {
-                        if(value == null)
-                        {
-                          return('name is required');
-                        }
-                      },
-                      label: 'Name',
-                      prefix: Icons.person_outline,
+            child: Column(
+              children: [
+                const SizedBox(height: 50,),
+                Stack(
+                    alignment: AlignmentDirectional.topCenter,
+                  children :[
+                    const Image(image: AssetImage("assets/images/VerticalLogo2.png"),
+                      fit: BoxFit.cover,width: 250,height: 250,),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Form(
+                          key: signUpFormKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 150,),
+                              defaultFormField(
+                                controller: name,
+                                type: TextInputType.name,
+                                validate: (value)
+                                {
+                                  if(value == null)
+                                  {
+                                    return('name is required');
+                                  }
+                                },
+                                label: 'Name',
+                                prefix: Icons.person_outline,
+                              ),
+                              const SizedBox(height: 10,),
+                              defaultFormField(
+                                controller: phone,
+                                type: TextInputType.phone,
+                                validate: (value)
+                                {
+                                  if(value == null)
+                                  {
+                                    return('phone is required');
+                                  }
+                                },
+                                label: 'Phone',
+                                prefix: Icons.phone_outlined,
+                              ),
+                              const SizedBox(height: 10,),
+                              defaultFormField(
+                                controller: emailAddress,
+                                type: TextInputType.emailAddress,
+                                validate: (value)
+                                {
+                                  if(value == null)
+                                  {
+                                    return('email address is required');
+                                  }
+                                },
+                                label: 'Email Address',
+                                prefix: Icons.email_outlined,
+                              ),
+                              const SizedBox(height: 10,),
+                              defaultFormField(
+                                controller: password,
+                                type: TextInputType.visiblePassword,
+                                validate: (value)
+                                {
+                                  if(value == null)
+                                  {
+                                    return('password is required');
+                                  }
+                                },
+                                label: 'Password',
+                                prefix: Icons.lock_outline,
+                                isPassword: true,
+                                suffix: Icons.remove_red_eye_outlined,
+                              ),
+                              const SizedBox(height: 10,),
+                              defaultFormField(
+                                controller: confirmPassword,
+                                type: TextInputType.visiblePassword,
+                                validate: (value)
+                                {
+                                  if(value == null)
+                                  {
+                                    return('password not match');
+                                  }
+                                },
+                                label: 'Confirm Password',
+                                prefix: Icons.lock_outline,
+                                isPassword: true,
+                                suffix: Icons.remove_red_eye_outlined,
+                              ),
+                              const SizedBox(height: 40,),
+                              defaultButton(text: 'Register',),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Already have an account?",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      navigateTo(context, LoginScreen());
+                                    },
+                                    child: Text(
+                                      'Sign In',
+                                      style: TextStyle(
+                                        color: gold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 10,),
-                    defaultFormField(
-                      controller: phone,
-                      type: TextInputType.phone,
-                      validate: (value)
-                      {
-                        if(value == null)
-                        {
-                          return('phone is required');
-                        }
-                      },
-                      label: 'Phone',
-                      prefix: Icons.phone_outlined,
-                    ),
-                    const SizedBox(height: 10,),
-                    defaultFormField(
-                      controller: emailAddress,
-                      type: TextInputType.emailAddress,
-                      validate: (value)
-                      {
-                        if(value == null)
-                        {
-                          return('email address is required');
-                        }
-                      },
-                      label: 'Email Address',
-                      prefix: Icons.email_outlined,
-                    ),
-                    const SizedBox(height: 10,),
-                    defaultFormField(
-                      controller: password,
-                      type: TextInputType.visiblePassword,
-                      validate: (value)
-                      {
-                        if(value == null)
-                        {
-                          return('password is required');
-                        }
-                      },
-                      label: 'Password',
-                      prefix: Icons.lock_outline,
-                      isPassword: true,
-                      suffix: Icons.remove_red_eye_outlined,
-                    ),
-                    const SizedBox(height: 10,),
-                    defaultFormField(
-                      controller: confirmPassword,
-                      type: TextInputType.visiblePassword,
-                      validate: (value)
-                      {
-                        if(value == null)
-                        {
-                          return('password not match');
-                        }
-                      },
-                      label: 'Confirm Password',
-                      prefix: Icons.lock_outline,
-                      isPassword: true,
-                      suffix: Icons.remove_red_eye_outlined,
-                    ),
-                    const SizedBox(height: 40,),
-                    defaultButton(text: 'Register',),
                   ],
                 ),
-              ),
+              ],
             ),
           ),
         ),

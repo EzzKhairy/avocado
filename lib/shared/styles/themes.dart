@@ -9,24 +9,24 @@ ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: defaultColor,
+      statusBarColor: gold,
       statusBarIconBrightness: Brightness.light,
     ),
     backgroundColor: Colors.white,
     elevation: 0.0,
     titleTextStyle: TextStyle(
-      color: defaultColor,
+      color: gold,
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
     ),
     iconTheme: IconThemeData(
-      color: defaultColor,
+      color: gold,
     ),
     titleSpacing: 20.0,
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
-    selectedItemColor: defaultColor,
+    selectedItemColor: gold,
     unselectedItemColor: Colors.grey ,
     elevation: 20.0,
     backgroundColor: Colors.black,
@@ -35,7 +35,7 @@ ThemeData lightTheme = ThemeData(
     bodyText1: TextStyle(
       fontSize: 18.0,
       fontWeight: FontWeight.w600,
-      color: defaultColor,
+      color: gold,
     ),
   ),
 );

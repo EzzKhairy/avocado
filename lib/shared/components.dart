@@ -1,4 +1,5 @@
 import 'package:avocado/modules/login_screen.dart';
+import 'package:avocado/modules/searchScreen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -37,26 +38,27 @@ Widget defaultFormField({
   onTap: onTap,
   enabled: isEnabled,
   validator: validate,
-  cursorColor: defaultColor,
+  cursorColor: gold,
   decoration: InputDecoration(
-    border: UnderlineInputBorder(borderSide: BorderSide(color: defaultColor)),
+    border: UnderlineInputBorder(borderSide: BorderSide(color: gold)),
+    enabledBorder:  UnderlineInputBorder(borderSide: BorderSide(color: grey)),
     // fillColor: defaultColor,
     // focusColor: defaultColor,
     labelText: label,
     labelStyle: TextStyle(
-      color: defaultColor,
+      color: gold,
     ),
     // border: const OutlineInputBorder(),
     prefixIcon: Icon(
       prefix,
-      color: defaultColor,
+      color: gold,
     ),
     suffixIcon: suffix != null ? IconButton(
       onPressed: suffixPressed,
-      icon : Icon(suffix),color: defaultColor,) : null,
+      icon : Icon(suffix,color: gold,)) : null,
   ),
   style: TextStyle(
-    color: defaultColor,
+    color: gold,
     fontSize: 18.0,
   ),
   obscureText: isPassword,
@@ -79,18 +81,26 @@ Widget defaultButton({
       isUpperCase ? text.toUpperCase() : text,
       style: TextStyle(
         fontSize: 20.0,
-        color: defaultColor,
+        color: gold,
       ),
     ),
-    color: Colors.black,
-  ),
-  decoration: BoxDecoration(
-    borderRadius: BorderRadius.zero,
     color: HexColor('494949'),
+  ),
+  decoration: const BoxDecoration(
+    borderRadius: BorderRadius.zero,
   ),
 );
 
-
+Widget horizontalDivider() => Container(
+  color: Colors.black,
+  height: 0.25,
+  width: double.infinity,
+);
+Widget verticalDivider() => Container(
+  color: Colors.black,
+  height: 90,
+  width: 0.25,
+);
 
 void signOut(context){
   CacheHelper.deleteToken(key: 'token').then((value)
@@ -100,6 +110,35 @@ void signOut(context){
       navigateAndKill(context, LoginScreen());
     }
   });
+}
+Widget searchBar({
+  required context,
+  bool readOnly = true,
+  double height = 40,
+  double width = double.infinity,
+
+}){
+  return Container(
+
+    height: height,
+    width: width,
+    child: TextFormField(
+      readOnly: readOnly,
+      style: const TextStyle(color: Colors.grey),
+      onTap: () => navigateTo(context, const SearchScreen()),
+      decoration: InputDecoration(
+        border: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
+        filled: true,
+        fillColor: HexColor("C4C4C4"),
+        disabledBorder: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
+        focusedBorder: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
+        hintText: "Search",
+        hintStyle: const TextStyle(fontSize: 15,color: Colors.black),
+        prefixIcon: const Icon(Icons.search,color: Colors.black,),
+        contentPadding: EdgeInsets.zero
+      ),
+    ),
+  );
 }
 
 

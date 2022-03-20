@@ -27,9 +27,9 @@ class TestScreen extends StatelessWidget {
         title: Text(
           'AVOCADO',
           style: TextStyle(
-            fontFamily: 'Conquera',
-            fontSize: 17.0,
-            color: defaultColor,
+            fontFamily: 'Nedian',
+            fontSize: 23.0,
+            color: gold,
             fontWeight: FontWeight.bold,
           ),
         ),

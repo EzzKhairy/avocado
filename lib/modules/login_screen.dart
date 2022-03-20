@@ -1,3 +1,4 @@
+import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/loginCubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/modules/register_screen.dart';
@@ -26,7 +27,8 @@ class LoginScreen extends StatelessWidget {
         listener: (context, state) => {},
         builder: (context, state) {
           return Scaffold(
-            body: Container(
+            body:
+            Container(
               decoration:  BoxDecoration(
                   gradient: LinearGradient(
                       colors: [
@@ -41,83 +43,100 @@ class LoginScreen extends StatelessWidget {
                       end: AlignmentDirectional.bottomStart,
                       stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
                   ),
+                //
                 // image: const DecorationImage(image: AssetImage("assets/images/VerticalLogo.png"),fit: BoxFit.cover),
               ),
               child: Center(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(40.0),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 45.0,
-                          ),
-                          defaultFormField(
-                            controller: emailController,
-                            type: TextInputType.emailAddress,
-                            validate: (String?value) {
-                              if (value!.isEmpty) {
-                                return ('please enter email');
-                              }
-                            },
-                            label: 'Email Address',
-                            prefix: Icons.email_outlined,
-                          ),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          defaultFormField(
-                            controller: passwordController,
-                            type: TextInputType.visiblePassword,
-                            suffix: AvocadoLoginCubit.get(context).suffix,
-                            isPassword: AvocadoLoginCubit.get(context).isPassword,
-                            suffixPressed: () {
-                              AvocadoLoginCubit.get(context).changePasswordVisibility();
-                            },
-                            validate: (String?value) {
-                              if (value!.isEmpty) {
-                                return ('Password is too short');
-                              }
-                            },
-                            label: 'Password',
-                            prefix: Icons.lock_outline_rounded,
-                          ),
-                          const SizedBox(
-                            height: 80.0,
-                          ),
-                          defaultButton(text: 'Login'),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Don't have an account?",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  navigateTo(context, RegisterScreen());
-                                },
-                                child: Text(
-                                  'REGISTER NOW',
-                                  style: TextStyle(
-                                    color: HexColor('D8C690'),
+                  child: Column(
+                    children: [
+                      Stack(
+                        alignment: AlignmentDirectional.topCenter,
+                        children :[
+                          const Image(image: AssetImage("assets/images/VerticalLogo2.png"),
+                              fit: BoxFit.contain,width: 400,height: 400,),
+                          SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Form(
+                              key: formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    height: 200,
                                   ),
-                                ),
+                                  defaultFormField(
+                                    controller: emailController,
+                                    type: TextInputType.emailAddress,
+                                    validate: (String?value) {
+                                      if (value!.isEmpty) {
+                                        return ('please enter email');
+                                      }
+                                    },
+                                    label: 'Email Address',
+                                    prefix: Icons.email_outlined,
+                                  ),
+                                  const SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  defaultFormField(
+                                    controller: passwordController,
+                                    type: TextInputType.visiblePassword,
+                                    suffix: AvocadoLoginCubit.get(context).suffix,
+                                    isPassword: AvocadoLoginCubit.get(context).isPassword,
+                                    suffixPressed: () {
+                                      AvocadoLoginCubit.get(context).changePasswordVisibility();
+                                    },
+                                    validate: (String?value) {
+                                      if (value!.isEmpty) {
+                                        return ('Password is too short');
+                                      }
+                                    },
+                                    label: 'Password',
+                                    prefix: Icons.lock_outline_rounded,
+                                  ),
+                                  const SizedBox(
+                                    height: 50.0,
+                                  ),
+                                  defaultButton(text: 'Login',
+                                      function: (){navigateAndKill(context, const AppLayout());}),
+                                  const SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        "Don't have an account?",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          navigateTo(context, RegisterScreen());
+                                        },
+                                        child: Text(
+                                          'REGISTER NOW',
+                                          style: TextStyle(
+                                            color: HexColor('D8C690'),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
+                        ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
