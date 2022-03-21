@@ -33,19 +33,19 @@ class TestScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // gradient: LinearGradient(
-        //     colors: [
-        //       Colors.black.withOpacity(0.70),
-        //       Colors.black.withOpacity(0.75),
-        //       Colors.black.withOpacity(0.60),
-        //       Colors.black.withOpacity(0.65),
-        //       Colors.black.withOpacity(0.70),
-        //       Colors.black.withOpacity(0.95),
-        //     ],
-        //     begin: AlignmentDirectional.topEnd,
-        //     end: AlignmentDirectional.bottomStart,
-        //     stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
-        // ),
+        gradient: LinearGradient(
+            colors: [
+              Colors.black.withOpacity(0.70),
+              Colors.black.withOpacity(0.75),
+              Colors.black.withOpacity(0.60),
+              Colors.black.withOpacity(0.65),
+              Colors.black.withOpacity(0.70),
+              Colors.black.withOpacity(0.95),
+            ],
+            begin: AlignmentDirectional.topEnd,
+            end: AlignmentDirectional.bottomStart,
+            stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
+        ),
       ),
       body: Column(),
     );

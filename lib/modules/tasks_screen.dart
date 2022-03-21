@@ -15,18 +15,17 @@ class TasksScreen extends StatelessWidget {
         child: Column(
           children: [
             CalendarAgenda(
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now().subtract(const Duration(days: 140)),
-                  lastDate: DateTime.now().add(const Duration(days: 4)),
-                  backgroundColor: Colors.white,
-                  dateColor: Colors.black,
-                  selectedDateColor: gold,
-                  calendarEventColor:Colors.red,
-                  weekDay: WeekDay.short,
-                  onDateSelected: (date) {print(date);},
-                  calendarLogo: Container(color: Colors.black,),
-
-                  ),
+              initialDate: DateTime.now(),
+              firstDate: DateTime.now().subtract(const Duration(days: 140)),
+              lastDate: DateTime.now().add(const Duration(days: 4)),
+              backgroundColor: Colors.white,
+              dateColor: Colors.black,
+              selectedDateColor: gold,
+              calendarEventColor:Colors.red,
+              weekDay: WeekDay.short,
+              onDateSelected: (date) {print(date);},
+              calendarLogo: Container(color: Colors.black,),
+            ),
             const SizedBox(height: 15,),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
@@ -62,7 +61,7 @@ class TasksScreen extends StatelessWidget {
                 children: const[
                    Text('Case Number : 4'),
                    SizedBox(height: 5,),
-                   Text('Office Lawyer : Ahmed Abdalla '),
+                   Text('Office Lawyer : Ahmed Abdallah'),
                    SizedBox(height: 5,),
                     ],
                   )
@@ -96,5 +95,4 @@ class TasksScreen extends StatelessWidget {
       ),
     );
   }
-
 }

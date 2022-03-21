@@ -1,7 +1,7 @@
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
-import 'package:avocado/modules/settings_screen.dart';
+import 'package:avocado/modules/notification_screen.dart';
 import 'package:avocado/modules/tasks_screen.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';

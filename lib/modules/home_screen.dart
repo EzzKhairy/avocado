@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
             clipBehavior: Clip.antiAliasWithSaveLayer,
             elevation: 5,
             margin: const EdgeInsetsDirectional.all(2.5),
-            color: HexColor("ECECEC"),
+            color: HexColor('ECECEC'),
             shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
           width: double.infinity,
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const Text('Case Number : 4'),
               const SizedBox(height: 5,),
-              const Text('Office Lawyer : Ahmed Abdalla '),
+              const Text('Office Lawyer : Ahmed Abdallah'),
               const SizedBox(height: 5,),
               const Text('Client Name : Karim Mohamed'),
               const SizedBox(height: 5,),

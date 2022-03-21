@@ -1,6 +1,5 @@
 import 'package:avocado/cubit/avocadoCubit.dart';
 import 'package:avocado/cubit/states.dart';
-import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,13 +45,13 @@ class AppLayout extends StatelessWidget {
               GNav(
                 activeColor: gold,
                 tabBackgroundColor: Colors.black,
-                color: HexColor("ADADAD"),
+                color: HexColor('ADADAD'),
                 gap: 5,
                 selectedIndex: AvocadoCubit.get(context).currentIndex,
                 onTabChange: (index){
                   AvocadoCubit.get(context).changeBottomNav(index);
                 },
-                backgroundColor: HexColor("ECECEC"),
+                backgroundColor: HexColor('ECECEC'),
                   padding: const EdgeInsetsDirectional.all(13),
                   tabs: const [
                     GButton(
