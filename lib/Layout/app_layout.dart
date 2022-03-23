@@ -18,6 +18,7 @@ class AppLayout extends StatelessWidget {
         var cubit = AvocadoCubit.get(context);
         return Scaffold(
           appBar: NewGradientAppBar(
+            automaticallyImplyLeading: false,
             title: Text(
               'AVOCADO',
               style: TextStyle(
@@ -28,16 +29,13 @@ class AppLayout extends StatelessWidget {
             ),
             gradient: LinearGradient(
                 colors: [
-                  Colors.black.withOpacity(0.70),
-                  Colors.black.withOpacity(0.75),
-                  Colors.black.withOpacity(0.60),
-                  Colors.black.withOpacity(0.65),
-                  Colors.black.withOpacity(0.70),
-                  Colors.black.withOpacity(0.95),
+                  Colors.black.withOpacity(0.842),
+                  Colors.black.withOpacity(0.845),
+                  Colors.black.withOpacity(0.89),
                 ],
                 begin: AlignmentDirectional.topEnd,
                 end: AlignmentDirectional.bottomStart,
-                stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
+                stops: const [0.20,0.17,0.40]
             ),
           ),
           body: cubit.screens[cubit.currentIndex],

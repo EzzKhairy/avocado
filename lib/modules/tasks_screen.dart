@@ -12,36 +12,36 @@ class TasksScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            CalendarAgenda(
-              initialDate: DateTime.now(),
-              firstDate: DateTime.now().subtract(const Duration(days: 140)),
-              lastDate: DateTime.now().add(const Duration(days: 4)),
-              backgroundColor: Colors.white,
-              dateColor: Colors.black,
-              selectedDateColor: gold,
-              calendarEventColor:Colors.red,
-              weekDay: WeekDay.short,
-              onDateSelected: (date) {print(date);},
-              calendarLogo: Container(color: Colors.black,),
-            ),
-            const SizedBox(height: 15,),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context,index) => tasks(),
-                itemCount: 10
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            children: [
+              CalendarAgenda(
+                initialDate: DateTime.now(),
+                firstDate: DateTime.now().subtract(const Duration(days: 140)),
+                lastDate: DateTime.now().add(const Duration(days: 4)),
+                backgroundColor: Colors.white,
+                dateColor: Colors.black,
+                selectedDateColor: gold,
+                onDateSelected: (date) {print(date);},
+                calendarEventSelectedColor: gold,
+               calendarEventColor: Colors.black,
+                leading: IconButton(
+                  onPressed: (){},
+                  icon:  Icon(Icons.add,color: gold,size: 25,),
+                ),
+
+              ),
+              const SizedBox(height: 15,),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context,index) => tasks(),
+                  itemCount: 10
+              )
+            ],
+          ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        mini: true,
-        backgroundColor: Colors.black,
-        child: Icon(Icons.add,color: gold),
       ),
     );
   }

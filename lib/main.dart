@@ -1,23 +1,34 @@
 import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/avocadoCubit.dart';
 import 'package:avocado/modules/login_screen.dart';
-import 'package:avocado/modules/register_screen.dart';
-import 'package:avocado/modules/test_screen.dart';
 import 'package:avocado/shared/constants.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'cubit/appCubit.dart';
 import 'cubit/states.dart';
 import 'remoteNetwork/cache_helper.dart';
 import 'remoteNetwork/dio_helper.dart';
 import 'shared/styles/themes.dart';
+import 'package:flutter/services.dart';
 
 void main()async
 {
   WidgetsFlutterBinding.ensureInitialized();
 
   //Bloc.observer = MyBlocObserver();
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
+      statusBarColor: Colors.transparent
+    )
+  );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
+  if (kDebugMode) {
+    print(SystemChrome.latestStyle);
+  }
 
   DioHelper.init();
   await CacheHelper.init();
@@ -32,7 +43,7 @@ void main()async
 
   if(token != null)
     {
-      widget = AppLayout();
+      widget = const AppLayout();
     }
   else
     {
@@ -50,7 +61,7 @@ class MyApp extends StatelessWidget
   final bool? isDark;
   final Widget startWidget;
 
-  MyApp({
+   MyApp({
     this.isDark,
     required this.startWidget,
   });
@@ -70,9 +81,9 @@ class MyApp extends StatelessWidget
             theme: lightTheme,
             darkTheme: darkTheme,
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-            themeMode: AppCubit.get(context).appMode,
+            themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home : LoginScreen(),
+            home : const AppLayout(),
           );
         },
       ),
