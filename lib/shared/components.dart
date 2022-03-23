@@ -1,5 +1,5 @@
 import 'package:avocado/modules/login_screen.dart';
-import 'package:avocado/modules/searchScreen.dart';
+import 'package:avocado/modules/search_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -113,14 +113,12 @@ void signOut(context){
   });
 }
 Widget searchBar({
-  required context,
+  context,
   bool readOnly = true,
   double height = 40,
   double width = double.infinity,
-
 }){
   return Container(
-
     height: height,
     width: width,
     child: TextFormField(

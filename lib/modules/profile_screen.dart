@@ -1,6 +1,5 @@
 import 'package:avocado/modules/change_password_screen.dart';
 import 'package:avocado/shared/components.dart';
-import 'package:avocado/shared/constants.dart';
 import '../shared/profile_components.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
