@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 Widget profileFormField({
-  required TextEditingController controller,
+  TextEditingController ?controller,
   required TextInputType type,
   Function(String?)? onSubmit,
   Function(String?)? onChange,
@@ -12,10 +12,10 @@ Widget profileFormField({
   required String label,
   IconData ?prefix,
   bool isPassword = false,
-  bool isEnabled = true,
+  bool isEnabled = false,
   IconData? suffix,
   VoidCallback? suffixPressed,
-  bool readOnly = true,
+  String initialValue = ''
 }) => TextFormField(
   controller: controller,
   keyboardType: type,
@@ -25,16 +25,16 @@ Widget profileFormField({
   enabled: isEnabled,
   validator: validate,
   cursorColor: Colors.black,
+  initialValue: initialValue,
+  textAlignVertical: TextAlignVertical.center,
+  textAlign: TextAlign.start,
   decoration: InputDecoration(
     border: UnderlineInputBorder(borderSide: BorderSide(color: gold)),
     enabledBorder:  UnderlineInputBorder(borderSide: BorderSide(color: gold)),
-    // fillColor: defaultColor,
-    // focusColor: defaultColor,
     labelText: label,
     labelStyle: TextStyle(
       color: HexColor('838383'),
     ),
-    // border: const OutlineInputBorder(),
     prefixIcon: Icon(
       prefix,
       color: gold,
@@ -48,7 +48,6 @@ Widget profileFormField({
     fontSize: 18.0,
   ),
   obscureText: isPassword,
-  readOnly: readOnly,
 );
 
 

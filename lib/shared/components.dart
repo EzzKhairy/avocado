@@ -124,7 +124,7 @@ Widget searchBar({
     child: TextFormField(
       readOnly: readOnly,
       style: const TextStyle(color: Colors.grey),
-      onTap: () => navigateTo(context, const SearchScreen()),
+      onTap: () => navigateTo(context, SearchScreen()),
       decoration: InputDecoration(
         border: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
         filled: true,

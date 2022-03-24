@@ -8,11 +8,10 @@ ThemeData lightTheme = ThemeData(
   primarySwatch: buildMaterialColor(const Color(0xFFD8C690)),
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: AppBarTheme(
-    systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: gold,
+    systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.light,
     ),
-    backgroundColor: Colors.white,
     elevation: 0.0,
     titleTextStyle: TextStyle(
       color: gold,
