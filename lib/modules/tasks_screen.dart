@@ -30,7 +30,6 @@ class TasksScreen extends StatelessWidget {
                   onPressed: (){},
                   icon:  Icon(Icons.add,color: gold,size: 25,),
                 ),
-
               ),
               const SizedBox(height: 15,),
               ListView.builder(
@@ -64,7 +63,7 @@ class TasksScreen extends StatelessWidget {
                    Text('Office Lawyer : Ahmed Abdallah'),
                    SizedBox(height: 5,),
                     ],
-                  )
+                ),
               ),
             ),
       );

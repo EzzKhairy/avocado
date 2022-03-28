@@ -92,15 +92,24 @@ Widget defaultButton({
   ),
 );
 
-Widget horizontalDivider() => Container(
-  color: Colors.black,
-  height: 0.25,
-  width: double.infinity,
+Widget horizontalDivider({
+  double height =0.25,
+  double width = double.infinity,
+  Color hColor = Colors.black,
+}) => Container(
+  color: hColor,
+  height: height,
+  width: width,
 );
-Widget verticalDivider() => Container(
-  color: Colors.black,
-  height: 90,
-  width: 0.25,
+
+Widget verticalDivider({
+  double height = 90,
+  Color vColor = Colors.black,
+  double width = 0.25,
+}) => Container(
+  color: vColor,
+  height: height,
+  width: width,
 );
 
 void signOut(context){

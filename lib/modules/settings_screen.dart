@@ -4,10 +4,6 @@ import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
-
-
-
-
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
