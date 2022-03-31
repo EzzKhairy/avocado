@@ -14,60 +14,62 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Dashboard',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-            const SizedBox(height: 15,),
-            Row(
-              children: [
-                buildHomeCard(
-                  function: (){navigateTo(context, const CasesScreen());},
-                  title: 'Total Cases',
-                  icon: Icons.format_align_justify_outlined,
-                  number: 700,
-                ),
-                const SizedBox(width: 10,),
-                buildHomeCard(
-                  function: (){navigateTo(context, const ClientsScreen());},
-                  title: 'Total Clients',
-                  icon: Icons.people_alt_outlined,
-                  number: 509,
-                ),
-              ],
-            ),
-            const SizedBox(height: 12,),
-            Row(
-              children: [
-                buildHomeCard(
-                  function: (){navigateTo(context,const TasksScreen());},
-                  title: 'Total Tasks',
-                  icon: Icons.assignment_turned_in_rounded,
-                  number: 15,
-                ),
-                const SizedBox(width: 10,),
-                buildHomeCard(
-                  function: (){navigateTo(context, const ClientsScreen());},
-                  title: 'Total Clients',
-                  icon: Icons.people_alt_outlined,
-                  number: 700,
-                ),
-              ],
-            ),
-            const Spacer(),
-            buildTaskHomeItem(context),
-            const Spacer(),
-            Container(
-              height: 160,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => buildRecentCasesHomeItem(context,),
-                separatorBuilder: (context, index) => const SizedBox(width: 10,),
-                itemCount: 10,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Dashboard',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 15,),
+              Row(
+                children: [
+                  buildHomeCard(
+                    function: (){navigateTo(context, const CasesScreen());},
+                    title: 'Total Cases',
+                    icon: Icons.format_align_justify_outlined,
+                    number: 700,
+                  ),
+                  const SizedBox(width: 10,),
+                  buildHomeCard(
+                    function: (){navigateTo(context, const ClientsScreen());},
+                    title: 'Total Clients',
+                    icon: Icons.people_alt_outlined,
+                    number: 509,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 15,),
-          ],
+              const SizedBox(height: 12,),
+              Row(
+                children: [
+                  buildHomeCard(
+                    function: (){navigateTo(context,const TasksScreen());},
+                    title: 'Total Tasks',
+                    icon: Icons.assignment_turned_in_rounded,
+                    number: 15,
+                  ),
+                  const SizedBox(width: 10,),
+                  buildHomeCard(
+                    function: (){navigateTo(context, const ClientsScreen());},
+                    title: 'Total Clients',
+                    icon: Icons.people_alt_outlined,
+                    number: 700,
+                  ),
+                ],
+              ),
+              SizedBox(height: 15,),
+              buildTaskHomeItem(context),
+              SizedBox(height: 15,),
+              Container(
+                height: 160,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => buildRecentCasesHomeItem(context,),
+                  separatorBuilder: (context, index) => const SizedBox(width: 10,),
+                  itemCount: 10,
+                ),
+              ),
+              const SizedBox(height: 15,),
+            ],
+          ),
         ),
       ),
     );

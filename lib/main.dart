@@ -3,6 +3,7 @@ import 'package:avocado/cubit/avocadoCubit.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/login_screen.dart';
 import 'package:avocado/modules/test_screen.dart';
+import 'package:avocado/shared/bloc_observer.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ void main()async
 
   DioHelper.init();
   await CacheHelper.init();
-
+  Bloc.observer =MyBlocObserver();
   Widget widget;
 
   bool? isDark = CacheHelper.getBoolean(key: 'isDark');
@@ -70,11 +71,8 @@ class MyApp extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context)=> AppCubit()),
-        BlocProvider(create: (context)=> AvocadoCubit()),
-      ],
+    return BlocProvider(
+        create: (context)=> AppCubit(),
       child: BlocConsumer<AppCubit, AvocadoStates>(
         listener: (context, state) {},
         builder: (context, state)
@@ -85,7 +83,7 @@ class MyApp extends StatelessWidget
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home : const AppLayout(),
+            home : const TestScreen(),
           );
         },
       ),

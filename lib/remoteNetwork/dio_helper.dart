@@ -9,11 +9,10 @@ class DioHelper
   {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'https://student.valuxapps.com/api/',
+        baseUrl: 'http://nameless-fjord-56194.herokuapp.com/public/api/',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type':'application/json',
-          'lang':'en',
         }
       ),
     );
@@ -22,14 +21,10 @@ class DioHelper
   static Future<Response> getData({
     required url,
     Map<String, dynamic>? query,
-    String lang = 'ar',
-    String? token,
 }) async
   {
     dio!.options.headers = {
-        'lang' : lang,
         'Content-Type' : 'application/json',
-        'Authorization' : token,
       };
     return await dio!.get(
         url,
