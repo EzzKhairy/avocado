@@ -12,6 +12,7 @@ class DioHelper
         baseUrl: 'http://nameless-fjord-56194.herokuapp.com/public/api/',
         receiveDataWhenStatusError: true,
         headers: {
+          'Accept':'application/json',
           'Content-Type':'application/json',
         }
       ),

@@ -24,7 +24,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     ).then((value) {
       lawyers = LawyersModel.fromJson(value.data);
         //print(element);
-      print(lawyers?.lawyersData[1].email);
+      print(lawyers?.lawyersData);
       emit(GetLawyerDataSuccessful());
     }
     ).catchError((onError){

@@ -2,11 +2,11 @@ class LawyersModel
 {
   List<Lawyers> lawyersData = [];
 
-  LawyersModel.fromJson(List json)
+  LawyersModel.fromJson(Map<String,dynamic> json)
   {
-    for (var element in json) {
+    json['users'].forEach((element){
       lawyersData.add(Lawyers.fromjson(element));
-    }
+    });
   }
 }
 class Lawyers

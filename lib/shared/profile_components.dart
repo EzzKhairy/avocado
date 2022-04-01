@@ -9,20 +9,25 @@ Widget profileFormField({
   Function(String?)? onChange,
   VoidCallback? onTap,
   required String? Function(String?)? validate,
-  required String label,
+  String? label,
   IconData ?prefix,
   bool isPassword = false,
-  bool isEnabled = false,
+  bool isEnabled = true,
   IconData? suffix,
+  String ?hintText,
+  bool readOnly = false,
   VoidCallback? suffixPressed,
-  String initialValue = ''
+  String ?initialValue,
+  int ?maxLines
 }) => TextFormField(
   controller: controller,
   keyboardType: type,
   onFieldSubmitted:onSubmit,
   onChanged: onChange,
+  maxLines: maxLines ?? 1,
   onTap: onTap,
   enabled: isEnabled,
+  readOnly: readOnly,
   validator: validate,
   cursorColor: Colors.black,
   initialValue: initialValue,
@@ -32,13 +37,15 @@ Widget profileFormField({
     border: UnderlineInputBorder(borderSide: BorderSide(color: gold)),
     enabledBorder:  UnderlineInputBorder(borderSide: BorderSide(color: gold)),
     labelText: label,
+    hintText: hintText,
+    hintStyle: TextStyle(color: Colors.grey,),
     labelStyle: TextStyle(
       color: HexColor('838383'),
     ),
-    prefixIcon: Icon(
+    prefixIcon: prefix != null ? Icon(
       prefix,
       color: gold,
-    ),
+    ): null,
     suffixIcon: suffix != null ? IconButton(
         onPressed: suffixPressed,
         icon : Icon(suffix,color: gold,)) : null,

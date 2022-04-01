@@ -1,8 +1,11 @@
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:calendar_agenda/calendar_agenda.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import 'add_task_screen.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -23,12 +26,17 @@ class TasksScreen extends StatelessWidget {
                 backgroundColor: Colors.white,
                 dateColor: Colors.black,
                 selectedDateColor: gold,
-                onDateSelected: (date) {print(date);},
+                onDateSelected: (date) {
+                  if (kDebugMode) {
+                    print(date);
+                }},
                 calendarEventSelectedColor: gold,
                calendarEventColor: Colors.black,
                 leading: IconButton(
-                  onPressed: (){},
-                  icon:  Icon(Icons.add,color: gold,size: 25,),
+                  onPressed: (){
+                    navigateTo(context, AddTaskScreen());
+                  },
+                  icon:  Icon(Icons.add,color: gold,size: 30,),
                 ),
               ),
               const SizedBox(height: 15,),

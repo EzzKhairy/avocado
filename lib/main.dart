@@ -71,8 +71,11 @@ class MyApp extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context)=> AppCubit(),
+    return MultiBlocProvider(
+      providers:[
+        BlocProvider(create:  (context)=> AppCubit(),),
+        BlocProvider(create:  (context)=> AvocadoCubit(),)
+      ],
       child: BlocConsumer<AppCubit, AvocadoStates>(
         listener: (context, state) {},
         builder: (context, state)
@@ -83,7 +86,7 @@ class MyApp extends StatelessWidget
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home : const TestScreen(),
+            home : const AppLayout(),
           );
         },
       ),

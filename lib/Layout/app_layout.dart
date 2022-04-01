@@ -62,7 +62,7 @@ class AppLayout extends StatelessWidget {
                     ),
                     GButton(
                       icon: Icons.person,
-                      text: 'Profile',
+                      text: 'My Account',
                     ),
                     GButton(
                       icon: Icons.notifications,

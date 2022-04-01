@@ -1,3 +1,4 @@
+import 'package:avocado/modules/clients_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
@@ -28,6 +29,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: const [
                       Text('Ahlan Ahmed ',
                         style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),),
+                      SizedBox(height: 5,),
                       Text('Ahmed_Mohamed@gmail.com'),
                     ],
                   ),
@@ -58,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 horizontalDivider(),
                 InkWell(
                   onTap: (){
-                    //navigateTo(context, AddressesScreen());
+                    navigateTo(context, const ClientsScreen());
                   },
                   child: Container(
                     color: Colors.white,

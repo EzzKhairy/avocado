@@ -60,18 +60,60 @@ class TestScreen extends StatelessWidget {
                 stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
             ),
           ),
-              body: Conditional.single(
-                widgetBuilder:(context) =>
-                    Container(
-                        child: Text('${cubit.lawyers?.lawyersData[1].email}',style: const TextStyle(color: Colors.white),)
-              ),
-                fallbackBuilder: (context) => const Center(child: Text('Null',style: TextStyle(color: Colors.white),)),
-                conditionBuilder: (context) => cubit.lawyers?.lawyersData == null,
-                context: context,
-          ),
+              body: ListView.builder(
+                  itemBuilder: (context,index) => ClientBuilder(cubit.lawyers?.lawyersData[index]),
+                itemCount: cubit.lawyers?.lawyersData.length,
+              )
         );
       },
       ),
     );
   }
+  Widget ClientBuilder(Lawyers? lawyersModel) {
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: Container(
+        height: 70,
+        width: double.infinity,
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              backgroundColor: grey,
+              child: const Text(
+                'K',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 22),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('${lawyersModel?.name}'),
+                SizedBox(
+                  height: 5,
+                ),
+                Text('${lawyersModel?.email}')
+              ],
+            ),
+            const Spacer(),
+            CircleAvatar(
+                backgroundColor: Colors.grey,
+                child: Icon(
+                  Icons.phone_in_talk_outlined,
+                  color: Colors.black,
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
 }
