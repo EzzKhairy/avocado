@@ -1,5 +1,6 @@
 import 'package:avocado/Layout/app_layout.dart';
-import 'package:avocado/cubit/avocadoCubit.dart';
+import 'package:avocado/cubit/app_cubit.dart';
+import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/login_screen.dart';
 import 'package:avocado/modules/test_screen.dart';
@@ -9,12 +10,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'cubit/appCubit.dart';
 import 'cubit/states.dart';
 import 'remoteNetwork/cache_helper.dart';
 import 'remoteNetwork/dio_helper.dart';
 import 'shared/styles/themes.dart';
-import 'package:flutter/services.dart';
 
 void main()async
 {
@@ -72,9 +71,9 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers:[
-        BlocProvider(create:  (context)=> AppCubit(),),
-        BlocProvider(create:  (context)=> AvocadoCubit(),)
+      providers: [
+        BlocProvider(create: (context)=> AppCubit()),
+        BlocProvider(create: (context)=> AvocadoCubit()..getLawyersData(),),
       ],
       child: BlocConsumer<AppCubit, AvocadoStates>(
         listener: (context, state) {},

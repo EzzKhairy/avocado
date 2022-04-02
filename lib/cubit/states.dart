@@ -10,8 +10,3 @@ class GetLawyerDataSuccessful extends AvocadoStates{}
 class GetLawyerDataError extends AvocadoStates{}
 
 class ChangePasswordVisibilityState extends AvocadoStates{}
-
-
-
-
-

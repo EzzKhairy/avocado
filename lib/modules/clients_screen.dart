@@ -43,13 +43,13 @@ class ClientsScreen extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (context,index) {
                       if(index % 2 == 0) {
-                        return ClientBuilder(grey, Colors.black);
+                        return clientBuilder(grey, Colors.black);
                       } else {
-                        return ClientBuilder(Colors.black, gold);
+                        return clientBuilder(Colors.black, gold);
                       }
                     } ,
                     separatorBuilder: (context,index) =>const SizedBox(height: 10,),
-                    itemCount: 10
+                    itemCount: 10,
                 )
               ],
             ),
@@ -57,7 +57,7 @@ class ClientsScreen extends StatelessWidget {
         ));
   }
 
-  Widget ClientBuilder(Color avatarColor, Color avatarTextColor) {
+  Widget clientBuilder(Color avatarColor, Color avatarTextColor) {
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -83,7 +83,7 @@ class ClientsScreen extends StatelessWidget {
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text('Kareem Salem'),
                 SizedBox(
                   height: 5,

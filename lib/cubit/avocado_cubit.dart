@@ -17,6 +17,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
 
   LawyersModel? lawyers;
+
+
   void getLawyersData(){
     emit(GetLawyerDataLoading());
     DioHelper.getData(
@@ -24,7 +26,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     ).then((value) {
       lawyers = LawyersModel.fromJson(value.data);
         //print(element);
-      print(lawyers?.lawyersData);
+      print(lawyers?.lawyersData[0].email);
       emit(GetLawyerDataSuccessful());
     }
     ).catchError((onError){
@@ -35,10 +37,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
   int currentIndex = 0;
   List<Widget> screens = [
-    HomeScreen(),
-    TasksScreen(),
+    const HomeScreen(),
+    const TasksScreen(),
     SettingsScreen(),
-    NotificationScreen(),
+    const NotificationScreen(),
   ];
 
   void changeBottomNav(int index)

@@ -1,5 +1,5 @@
 import 'package:avocado/Layout/app_layout.dart';
-import 'package:avocado/cubit/loginCubit.dart';
+import 'package:avocado/cubit/login_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/modules/register_screen.dart';
 import 'package:avocado/shared/components.dart';

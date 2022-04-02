@@ -1,4 +1,4 @@
-import 'package:avocado/cubit/avocadoCubit.dart';
+import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';

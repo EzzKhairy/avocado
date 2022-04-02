@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 class DioHelper
 {
@@ -25,7 +24,8 @@ class DioHelper
 }) async
   {
     dio!.options.headers = {
-        'Content-Type' : 'application/json',
+      'Accept':'application/json',
+      'Content-Type':'application/json',
       };
     return await dio!.get(
         url,
