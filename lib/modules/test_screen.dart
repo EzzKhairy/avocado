@@ -18,8 +18,6 @@ class TestScreen extends StatelessWidget {
 
         },
         builder: (context,state) {
-          AvocadoCubit cubit = AvocadoCubit();
-          List<Lawyers>? LawyersData = cubit.lawyers?.lawyersData;
           return ScaffoldGradientBackground(
           gradient: LinearGradient(
           colors: [
@@ -61,10 +59,10 @@ class TestScreen extends StatelessWidget {
             body: Conditional.single(
               widgetBuilder:(context) =>
                   Container(
-                      child: Text('${cubit.lawyers?.lawyersData[1].email}',style: const TextStyle(color: Colors.white),)
+                      child: Text('${AvocadoCubit.get(context).lawyers?.lawyersData[1].email}',style: const TextStyle(color: Colors.white),)
             ),
               fallbackBuilder: (context) => const Center(child: Text('Null',style: TextStyle(color: Colors.white),)),
-              conditionBuilder: (context) => cubit.lawyers?.lawyersData == null,
+              conditionBuilder: (context) => AvocadoCubit.get(context).lawyers?.lawyersData != null,
               context: context,
         ),
       );

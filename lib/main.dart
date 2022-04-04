@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home : const AppLayout(),
+            home : const TestScreen(),
           );
         },
       ),
