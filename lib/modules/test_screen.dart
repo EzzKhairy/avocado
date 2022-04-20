@@ -1,6 +1,5 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
-import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +13,9 @@ class TestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
-        listener: (context,state){
-
-        },
+        listener: (context,state){},
         builder: (context,state) {
+          AvocadoCubit cubit = AvocadoCubit.get(context);
           return ScaffoldGradientBackground(
           gradient: LinearGradient(
           colors: [
@@ -58,15 +56,14 @@ class TestScreen extends StatelessWidget {
         ),
             body: Conditional.single(
               widgetBuilder:(context) =>
-                  Container(
-                      child: Text('${AvocadoCubit.get(context).lawyers?.lawyersData[1].email}',style: const TextStyle(color: Colors.white),)
-            ),
+                  Text('${cubit.lawyersList?.lawyersData[1].email}',style: const TextStyle(color: Colors.white),),
               fallbackBuilder: (context) => const Center(child: Text('Null',style: TextStyle(color: Colors.white),)),
-              conditionBuilder: (context) => AvocadoCubit.get(context).lawyers?.lawyersData != null,
+              conditionBuilder: (context) => AvocadoCubit.get(context).lawyersList?.lawyersData != null,
               context: context,
         ),
       );
     },
     );
   }
+
 }

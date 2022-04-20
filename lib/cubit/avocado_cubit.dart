@@ -16,7 +16,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   static AvocadoCubit get(context) => BlocProvider.of(context);
 
 
-  LawyersModel? lawyers;
+  LawyersModel? lawyersList;
 
 
   void getLawyersData(){
@@ -24,9 +24,9 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     DioHelper.getData(
         url: 'lawyer',
     ).then((value) {
-      lawyers = LawyersModel.fromJson(value.data);
+      lawyersList = LawyersModel.fromJson(value.data);
         //print(element);
-      print(lawyers?.lawyersData[0].email);
+      print(lawyersList?.lawyersData[0].email);
       emit(GetLawyerDataSuccessful());
     }
     ).catchError((onError){
@@ -39,7 +39,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   List<Widget> screens = [
     const HomeScreen(),
     const TasksScreen(),
-    SettingsScreen(),
+    const SettingsScreen(),
     const NotificationScreen(),
   ];
 

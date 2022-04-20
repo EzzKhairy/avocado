@@ -3,6 +3,7 @@ import 'package:avocado/cubit/app_cubit.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/login_screen.dart';
+import 'package:avocado/modules/register_screen.dart';
 import 'package:avocado/modules/test_screen.dart';
 import 'package:avocado/shared/bloc_observer.dart';
 import 'package:avocado/shared/constants.dart';
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home : const TestScreen(),
+            home : RegisterScreen(),
           );
         },
       ),
