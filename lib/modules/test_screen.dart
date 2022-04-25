@@ -54,13 +54,13 @@ class TestScreen extends StatelessWidget {
               stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
           ),
         ),
-            body: Conditional.single(
-              widgetBuilder:(context) =>
-                  Text('${cubit.lawyersList?.lawyersData[1].email}',style: const TextStyle(color: Colors.white),),
-              fallbackBuilder: (context) => const Center(child: Text('Null',style: TextStyle(color: Colors.white),)),
-              conditionBuilder: (context) => AvocadoCubit.get(context).lawyersList?.lawyersData != null,
-              context: context,
-        ),
+        //     body: Conditional.single(
+        //       widgetBuilder:(context) =>
+        //           Text('${cubit.lawyersList?.lawyersData?.email}',style: const TextStyle(color: Colors.white),),
+        //       fallbackBuilder: (context) => const Center(child: Text('Null',style: TextStyle(color: Colors.white),)),
+        //       conditionBuilder: (context) => AvocadoCubit.get(context).lawyersList?.lawyersData != null,
+        //       context: context,
+        // ),
       );
     },
     );

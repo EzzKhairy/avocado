@@ -16,21 +16,21 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   static AvocadoCubit get(context) => BlocProvider.of(context);
 
 
-  LawyersModel? lawyersList;
+  LawyersModel? lawyerData;
 
 
-  void getLawyersData(){
-    emit(GetLawyerDataLoading());
+  void getLawyerProfile(int? lawyerID){
+    emit(GetLawyerProfileLoading());
     DioHelper.getData(
-        url: 'lawyer',
+        url: 'lawyers/$lawyerID',
     ).then((value) {
-      lawyersList = LawyersModel.fromJson(value.data);
+      lawyerData = LawyersModel.fromJson(value.data);
         //print(element);
-      print(lawyersList?.lawyersData[0].email);
-      emit(GetLawyerDataSuccessful());
+      print(lawyerData?.lawyersData?.email);
+      emit(GetLawyerProfileSuccessful());
     }
     ).catchError((onError){
-      emit(GetLawyerDataError());
+      emit(GetLawyerProfileError());
       print(onError);
     });
   }

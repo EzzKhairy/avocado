@@ -2,8 +2,8 @@ import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/login_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/modules/register_screen.dart';
+import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
-import 'package:avocado/shared/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +24,16 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => AvocadoLoginCubit(),
       child: BlocConsumer<AvocadoLoginCubit, AvocadoStates>(
-        listener: (context, state) => {},
+        listener: (context, state) => {
+          if(state is LawyerLoginSuccessful)
+            {
+              if(state.model.status == 'true')
+                {
+                  CacheHelper.saveData(key: 'token', value: state.model.accessToken),
+                  navigateTo(context, const AppLayout())
+                }
+            }
+        },
         builder: (context, state) {
           return Scaffold(
             body:
@@ -103,7 +112,13 @@ class LoginScreen extends StatelessWidget {
                                     height: 50.0,
                                   ),
                                   defaultButton(text: 'Login',
-                                      function: (){navigateAndKill(context, const AppLayout());}),
+                                      function: (){
+                                        AvocadoLoginCubit.get(context).lawyerLogin(
+                                            email: emailController.text,
+                                            password: passwordController.text
+                                        );
+                                      }
+                                  ),
                                   const SizedBox(
                                     height: 15.0,
                                   ),

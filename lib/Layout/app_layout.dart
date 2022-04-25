@@ -13,65 +13,65 @@ class AppLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
-      listener: (context, state){},
-      builder: (context, state){
-        var cubit = AvocadoCubit.get(context);
-        return Scaffold(
-          appBar: NewGradientAppBar(
-            automaticallyImplyLeading: false,
-            title: Text(
-              'AVOCADO',
-              style: TextStyle(
-                fontFamily: 'Nedian',
-                fontSize: 25.0,
-                color: gold,
+        listener: (context, state){},
+        builder: (context, state){
+          var cubit = AvocadoCubit.get(context);
+          return Scaffold(
+            appBar: NewGradientAppBar(
+              automaticallyImplyLeading: false,
+              title: Text(
+                'AVOCADO',
+                style: TextStyle(
+                  fontFamily: 'Nedian',
+                  fontSize: 25.0,
+                  color: gold,
+                ),
+              ),
+              gradient: LinearGradient(
+                  colors: [
+                    Colors.black.withOpacity(0.842),
+                    Colors.black.withOpacity(0.845),
+                    Colors.black.withOpacity(0.89),
+                  ],
+                  begin: AlignmentDirectional.topEnd,
+                  end: AlignmentDirectional.bottomStart,
+                  stops: const [0.20,0.17,0.40]
               ),
             ),
-            gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.842),
-                  Colors.black.withOpacity(0.845),
-                  Colors.black.withOpacity(0.89),
-                ],
-                begin: AlignmentDirectional.topEnd,
-                end: AlignmentDirectional.bottomStart,
-                stops: const [0.20,0.17,0.40]
-            ),
-          ),
-          body: cubit.screens[cubit.currentIndex],
-          bottomNavigationBar:
-              GNav(
-                activeColor: gold,
-                tabBackgroundColor: Colors.black,
-                color: HexColor('ADADAD'),
-                gap: 5,
-                selectedIndex: AvocadoCubit.get(context).currentIndex,
-                onTabChange: (index){
-                  AvocadoCubit.get(context).changeBottomNav(index);
-                },
-                backgroundColor: HexColor('ECECEC'),
-                  padding: const EdgeInsetsDirectional.all(13),
-                  tabs: const [
-                    GButton(
-                      icon: Icons.home,
-                      text: 'Home',
-                    ),
-                    GButton(
-                      icon: Icons.toc,
-                      text: 'Tasks',
-                    ),
-                    GButton(
-                      icon: Icons.person,
-                      text: 'My Account',
-                    ),
-                    GButton(
-                      icon: Icons.notifications,
-                      text: 'Alert',
-                    )
-                  ]
-              ),
-          );
-      },
-    );
+            body: cubit.screens[cubit.currentIndex],
+            bottomNavigationBar:
+                GNav(
+                  activeColor: gold,
+                  tabBackgroundColor: Colors.black,
+                  color: HexColor('ADADAD'),
+                  gap: 5,
+                  selectedIndex: AvocadoCubit.get(context).currentIndex,
+                  onTabChange: (index){
+                    AvocadoCubit.get(context).changeBottomNav(index);
+                  },
+                  backgroundColor: HexColor('ECECEC'),
+                    padding: const EdgeInsetsDirectional.all(13),
+                    tabs: const [
+                      GButton(
+                        icon: Icons.home,
+                        text: 'Home',
+                      ),
+                      GButton(
+                        icon: Icons.toc,
+                        text: 'Tasks',
+                      ),
+                      GButton(
+                        icon: Icons.person,
+                        text: 'My Account',
+                      ),
+                      GButton(
+                        icon: Icons.notifications,
+                        text: 'Alert',
+                      )
+                    ]
+                ),
+            );
+        },
+      );
   }
 }

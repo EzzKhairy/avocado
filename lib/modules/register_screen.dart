@@ -1,5 +1,4 @@
 import 'package:avocado/Layout/app_layout.dart';
-import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/register_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/modules/login_screen.dart';
@@ -8,7 +7,6 @@ import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class RegisterScreen extends StatelessWidget {
    RegisterScreen({Key? key}) : super(key: key);
@@ -25,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
     return Builder(
         builder: (context) {
           name.text = 'Omar Sherif';
-          phone.text = '30007150100797';
+          phone.text = '30007150100777';
           password.text = '123456789';
           confirmPassword.text = '123456789';
           emailAddress.text = 'omarsherifmetwaly@gmail.com';
@@ -34,8 +32,9 @@ class RegisterScreen extends StatelessWidget {
             child: BlocConsumer<RegisterCubit, AvocadoStates>(
               listener: (context, state) {
                 if (state is LawyerRegisterSuccessful) {
-                  if(state.statusMessage == 'OK') {
-                navigateTo(context, const AppLayout());
+                  if(state.model.status == 'true') {
+                  CacheHelper.saveData(key: 'token', value: state.model.accessToken);
+                  navigateTo(context, const AppLayout());
               }
             }
               },
@@ -139,7 +138,7 @@ class RegisterScreen extends StatelessWidget {
                                             controller: confirmPassword,
                                             type: TextInputType.visiblePassword,
                                             validate: (value) {
-                                              if (value != password.text) {
+                                              if (value == null) {
                                                 return ('password not match');
                                               }
                                             },
@@ -157,6 +156,7 @@ class RegisterScreen extends StatelessWidget {
                                                 cubit.lawyerRegister(
                                                     email: emailAddress.text,
                                                     password: password.text,
+                                                    confirmPassword: confirmPassword.text,
                                                     lawyerNationalNumber: phone.text,
                                                     name: name.text
                                                 );

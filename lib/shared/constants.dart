@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 String ?token;
+int ?lawyerId;
+
 
 HexColor gold = HexColor('D8C690');
 

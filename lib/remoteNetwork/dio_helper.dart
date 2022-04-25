@@ -8,7 +8,7 @@ class DioHelper
   {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'http://nameless-fjord-56194.herokuapp.com/public/api/',
+        baseUrl: 'https://gg-new-api-avo.herokuapp.com/public/api/',
         receiveDataWhenStatusError: true,
         headers: {
           'Accept':'application/json',
@@ -35,7 +35,7 @@ class DioHelper
 
   static Future<Response> postData({
     required String url,
-    required Map<String, dynamic> query,
+    required Map<String, dynamic> data,
 })async
   {
     dio!.options.headers = {
@@ -46,7 +46,7 @@ class DioHelper
 
     return dio!.post(
       url,
-      data: query,
+      data: data,
     );
   }
 }

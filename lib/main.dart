@@ -20,18 +20,6 @@ void main()async
 {
   WidgetsFlutterBinding.ensureInitialized();
 
-  //Bloc.observer = MyBlocObserver();
-
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.light,
-      statusBarColor: Colors.transparent
-    )
-  );
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
-  if (kDebugMode) {
-    print(SystemChrome.latestStyle);
-  }
 
   DioHelper.init();
   await CacheHelper.init();
@@ -40,8 +28,11 @@ void main()async
 
   bool? isDark = CacheHelper.getBoolean(key: 'isDark');
 
-  bool? showOnBoarding = CacheHelper.getData(key : 'ShowOnBoarding');
+  //bool? showOnBoarding = CacheHelper.getData(key : 'ShowOnBoarding');
   token = CacheHelper.getData(key : 'token');
+  lawyerId = CacheHelper.getData(key : 'id');
+  print(token);
+  print(lawyerId);
 
 
   if(token != null)
@@ -74,7 +65,7 @@ class MyApp extends StatelessWidget
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context)=> AppCubit()),
-        BlocProvider(create: (context)=> AvocadoCubit()..getLawyersData(),),
+        BlocProvider(create: (context)=> AvocadoCubit()..getLawyerProfile(lawyerId),),
       ],
       child: BlocConsumer<AppCubit, AvocadoStates>(
         listener: (context, state) {},
@@ -86,7 +77,7 @@ class MyApp extends StatelessWidget
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home : RegisterScreen(),
+            home : startWidget,
           );
         },
       ),

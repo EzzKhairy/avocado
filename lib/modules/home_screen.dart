@@ -2,6 +2,7 @@ import 'package:avocado/modules/case_summary_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
 import 'package:avocado/modules/tasks_screen.dart';
+import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,11 @@ class HomeScreen extends StatelessWidget {
               Row(
                 children: [
                   buildHomeCard(
-                    function: (){navigateTo(context, const CasesScreen());},
+                    function: (){
+                      //navigateTo(context, const CasesScreen());
+                      print (token);
+                      print(CacheHelper.getData(key: 'token'));
+                      },
                     title: 'Total Cases',
                     icon: Icons.format_align_justify_outlined,
                     number: 700,
