@@ -1,9 +1,11 @@
 import 'package:avocado/Layout/app_layout.dart';
+import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/login_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/modules/register_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
+import 'package:avocado/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +32,8 @@ class LoginScreen extends StatelessWidget {
               if(state.model.status == 'true')
                 {
                   CacheHelper.saveData(key: 'token', value: state.model.accessToken),
+                  CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id),
+                  AvocadoCubit.get(context).getLawyerProfile(lawyerId),
                   navigateTo(context, const AppLayout())
                 }
             }

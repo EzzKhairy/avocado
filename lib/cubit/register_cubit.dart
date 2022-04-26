@@ -1,5 +1,5 @@
 import 'package:avocado/cubit/states.dart';
-import 'package:avocado/models/lawyers_model.dart';
+import 'package:avocado/models/login_model.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +10,7 @@ class RegisterCubit extends Cubit<AvocadoStates> {
   static RegisterCubit get(context) => BlocProvider.of(context);
 
 
-  LawyersModel? lawyer;
+  LoginModel? lawyer;
   void lawyerRegister({
     required String lawyerNationalNumber,
     required String name,
@@ -30,7 +30,7 @@ class RegisterCubit extends Cubit<AvocadoStates> {
           'password_confirmation':confirmPassword
         }
     ).then((value) {
-      lawyer = LawyersModel.fromJson(value.data);
+      lawyer = LoginModel.fromJson(value.data);
       print(lawyer?.status);
       emit(LawyerRegisterSuccessful(lawyer!));
     }

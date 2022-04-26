@@ -1,4 +1,6 @@
+import 'package:avocado/models/lawyer_profile_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
+import 'package:avocado/models/login_model.dart';
 
 abstract class AvocadoStates{}
 
@@ -11,18 +13,30 @@ class GetLawyerProfileLoading extends AvocadoStates{}
 class GetLawyerProfileSuccessful extends AvocadoStates{}
 class GetLawyerProfileError extends AvocadoStates{}
 
+class UpdateLawyerProfileLoading extends AvocadoStates{}
+class UpdateLawyerProfileSuccessful extends AvocadoStates{
+  final LawyersModel model;
+  UpdateLawyerProfileSuccessful(this.model);
+}
+class UpdateLawyerProfileError extends AvocadoStates{
+  final LawyersModel model;
+  UpdateLawyerProfileError(this.model);
+}
+
 class LawyerRegisterLoading extends AvocadoStates{}
 class LawyerRegisterSuccessful extends AvocadoStates{
-  final LawyersModel model;
+  final LoginModel model;
   LawyerRegisterSuccessful(this.model);
 }
 class LawyerRegisterError extends AvocadoStates{}
 
 class LawyerLoginLoading extends AvocadoStates{}
 class LawyerLoginSuccessful extends AvocadoStates{
-  final LawyersModel model;
+  final LoginModel model;
   LawyerLoginSuccessful(this.model);
 }
 class LawyerLoginError extends AvocadoStates{}
 
 class ChangePasswordVisibilityState extends AvocadoStates{}
+
+class EditPressedState extends AvocadoStates{}

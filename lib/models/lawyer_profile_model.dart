@@ -1,48 +1,52 @@
-class LawyersModel {
+class LawyerModel{
   String? status;
   String? message;
-  List<LawyerData>? data;
+  LawyersList? data;
 
-  LawyersModel.fromJson(Map<String, dynamic> json) {
+  LawyerModel.fromJson(Map<String,dynamic>json)
+  {
     status = json['status'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <LawyerData>[];
-      json['data'].forEach((element) {
-        data!.add(LawyerData.fromJson(element));
-      });
-    }
+    data = LawyersList.fromJson(json['data']);
   }
 }
+class LawyersList{
+  List<LawyerProfile> lawyers = [];
 
-
-class LawyerData {
+  LawyersList.fromJson(Map<String, dynamic> json)
+  {
+    json['data'].forEach((element) {
+      lawyers.add(LawyerProfile.fromJson(element));
+    });
+  }
+}
+class LawyerProfile
+{
   int? id;
+  String? status;
   String? lawyerNationalNumber;
   String? name;
   String? email;
-  String? emailVerifiedAt;
-  String? status;
+  String? profilePhoto;
   String? address;
-  String? profilePhotoPath;
   String? role;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
 
-
-  LawyerData.fromJson(Map<String, dynamic> json) {
+  LawyerProfile.fromJson(Map<String,dynamic> json)
+  {
     id = json['id'];
+    status = json['status'];
     lawyerNationalNumber = json['Lawyer_National_Number'];
     name = json['name'];
     email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
-    status = json['status'];
+    profilePhoto = json['profile_photo_path'];
     address = json['address'];
-    profilePhotoPath = json['profile_photo_path'];
     role = json['Role'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
   }
 }
+

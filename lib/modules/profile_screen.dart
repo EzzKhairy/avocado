@@ -10,35 +10,34 @@ import '../shared/profile_components.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
    ProfileScreen({Key? key}) : super(key: key);
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
-
-  bool readOnly = true;
+  var nameController = TextEditingController();
+  var phoneController = TextEditingController();
+  var dateController = TextEditingController();
+  var genderController = TextEditingController();
+  var profileFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
         return BlocConsumer<AvocadoCubit,AvocadoStates>(
-            listener: (context,state) {},
+            listener: (context,state) {
+              if(state is UpdateLawyerProfileSuccessful)
+                {
+                  showToast(context: context, msg: state.model.message);
+                }
+              else if ( state is UpdateLawyerProfileError)
+                {
+                  showToast(context: context, msg: state.model.message);
+                }
+            },
             builder: (context,state) {
-              LawyersModel? lawyersModel = AvocadoCubit.get(context).lawyerData;
-
-              nameController.text   ='${lawyersModel?.lawyersData!.name}';
-              phoneController.text  ='${lawyersModel?.lawyersData!.email}';
-              dateController.text   ='${lawyersModel?.lawyersData!.email}';
-              genderController.text ='${lawyersModel?.lawyersData!.email}';
+              LawyerData lawyersModel = AvocadoCubit.get(context).lawyerData!.data![0];
+              nameController.text   = lawyersModel.name!;
+              phoneController.text  = lawyersModel.address!;
 
               return Scaffold(
             appBar: NewGradientAppBar(
@@ -73,14 +72,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Column(
                       children: [
                         const SizedBox(height: 30,),
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 45,
                           backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage('https://lh3.googleusercontent.com/JKdSC1LFESgmWr1fNa4aO8W8YGWNA4H18hwRh6iPup7c6ZJePM7T9equv_I3WL0JS0lcmw=s85',),
+                          backgroundImage: NetworkImage('${lawyersModel.profilePhotoPath}'),
                         ),
                         const SizedBox(height: 15,),
                         Text(
-                          '${lawyersModel?.lawyersData?.name}',
+                          '${lawyersModel.name}',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -88,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),),
                         const SizedBox(height: 4,),
                         Text(
-                          '${lawyersModel?.lawyersData?.email}',
+                          '${lawyersModel.email}',
                           style: TextStyle(
                             fontSize: 15,
                             color: HexColor('ADADAD'),
@@ -103,6 +102,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
                         children: [
+                          // if(state is UpdateLawyerProfileLoading)
+                          //   Column(
+                          //     children: const [
+                          //       LinearProgressIndicator(),
+                          //       SizedBox(height: 20,),
+                          //     ],
+                          //   ),
                           Row(
                             children: [
                               const Text(
@@ -112,98 +118,105 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),),
                               const Spacer(),
-                              IconButton(
+                              TextButton(
                                 onPressed: () {
-                                  setState(() {
-                                    readOnly = !readOnly;
-                                  });
+                                  if(profileFormKey.currentState!.validate()) {
+                                    AvocadoCubit.get(context).editPressed(
+                                      lawyerID: lawyerId,
+                                      email: lawyersModel.email,
+                                      lawyerNationalNumber: lawyersModel.lawyerNationalNumber,
+                                      address: phoneController.text,
+                                      name: nameController.text,
+                                    );
+                                  }
                                 },
-                                icon: const Icon(Icons.edit_outlined),
+                                child: Text(AvocadoCubit.get(context).editText),
                               ),
                             ],
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 10,),
-                              profileFormField(
-                                //controller: nameController,
-                                type: TextInputType.name,
-                                initialValue:'Ahmed Mohamed',
-                                validate: (value)
-                                {
-                                  if(value!.isEmpty)
+                          Form(
+                            key: profileFormKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 10,),
+                                profileFormField(
+                                  controller: nameController,
+                                  type: TextInputType.name,
+                                  validate: (value)
                                   {
-                                    return 'name is required';
-                                  }
-                                },
-                                label: 'Name',
-                                isEnabled: readOnly,
-                                prefix: Icons.person_outline,
-                              ),
-                              SizedBox(height: 10,),
-                              profileFormField(
-                                //controller: phoneController,
-                                type: TextInputType.phone,
-                                initialValue:'0000-0000-000',
-                                validate: (value)
-                                {
-                                  if(value!.isEmpty)
+                                    if(value!.isEmpty)
+                                    {
+                                      return 'name is required';
+                                    }
+                                  },
+                                  label: 'Name',
+                                  isEnabled: AvocadoCubit.get(context).isEdit? true : false,
+                                  prefix: Icons.person_outline,
+                                ),
+                                SizedBox(height: 10,),
+                                profileFormField(
+                                  controller: phoneController,
+                                  type: TextInputType.phone,
+                                  validate: (value)
                                   {
-                                    return 'phone is required';
-                                  }
-                                },
-                                label: 'Phone',
-                                isEnabled: readOnly,
-                                prefix: Icons.phone_outlined,
-                              ),
-                              SizedBox(height: 10,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      child: profileFormField(
-                                        // controller: dateController,
-                                          initialValue: "15-7-1986",
-                                          label: 'Date',
+                                    if(value!.isEmpty)
+                                    {
+                                      return 'phone is required';
+                                    }
+                                  },
+                                  label: 'Phone',
+                                  isEnabled: AvocadoCubit.get(context).isEdit? true : false,
+                                  prefix: Icons.phone_outlined,
+                                ),
+                                SizedBox(height: 10,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        child: profileFormField(
+                                          // controller: dateController,
+                                            initialValue: "15-7-1986",
+                                            label: 'Date',
+                                            validate: (value )
+                                            {
+                                              if(value!.isEmpty)
+                                              {
+                                                return 'date is empty';
+                                              }
+                                            },
+                                            type: TextInputType.datetime,
+                                            isEnabled: AvocadoCubit.get(context).isEdit? true : false,
+                                            prefix: Icons.calendar_today_outlined
+
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width:35,),
+                                    Expanded(
+                                      child: Container(
+                                        child: profileFormField(
+                                          //controller: genderController,
+                                          initialValue: 'Male',
+                                          label: 'Gender',
                                           validate: (value )
                                           {
                                             if(value!.isEmpty)
                                             {
-                                              return 'date is empty';
+                                              return 'gender is empty';
                                             }
                                           },
-                                          type: TextInputType.datetime,
-                                          isEnabled: readOnly,
-                                          prefix: Icons.calendar_today_outlined
-
+                                          type: TextInputType.text,
+                                          isEnabled: AvocadoCubit.get(context).isEdit? true : false,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width:35,),
-                                  Expanded(
-                                    child: Container(
-                                      child: profileFormField(
-                                        //controller: genderController,
-                                        initialValue: 'Male',
-                                        label: 'Gender',
-                                        validate: (value )
-                                        {
-                                          if(value!.isEmpty)
-                                          {
-                                            return 'gender is empty';
-                                          }
-                                        },
-                                        type: TextInputType.text,
-                                        isEnabled : readOnly,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

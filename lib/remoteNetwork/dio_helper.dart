@@ -49,4 +49,21 @@ class DioHelper
       data: data,
     );
   }
+
+  static Future<Response> putData({
+    required String url,
+    required Map<String, dynamic> data,
+  })async
+  {
+    dio!.options.headers = {
+      'Accept' : 'application/json',
+      'Content-Type':'application/json',
+
+    };
+
+    return dio!.put(
+      url,
+      data: data,
+    );
+  }
 }

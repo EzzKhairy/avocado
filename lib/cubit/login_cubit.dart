@@ -1,5 +1,5 @@
 import 'package:avocado/cubit/states.dart';
-import 'package:avocado/models/lawyers_model.dart';
+import 'package:avocado/models/login_model.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class AvocadoLoginCubit extends Cubit<AvocadoStates>
 
   static AvocadoLoginCubit get(context) => BlocProvider.of(context);
 
-  LawyersModel? lawyer;
+  LoginModel? lawyer;
   void lawyerLogin({
     required String email,
     required String password,
@@ -25,7 +25,7 @@ class AvocadoLoginCubit extends Cubit<AvocadoStates>
           'password':password,
         }
     ).then((value) {
-      lawyer = LawyersModel.fromJson(value.data);
+      lawyer = LoginModel.fromJson(value.data);
       print(lawyer?.status);
       emit(LawyerLoginSuccessful(lawyer!));
     }

@@ -41,7 +41,7 @@ dependencies:
   hexcolor: ^2.0.5
   shared_preferences: ^2.0.11
   flutter_conditional_rendering: ^2.0.0
-  toast: ^0.1.5
+  fluttertoast: ^8.0.9
   new_gradient_app_bar: ^0.2.0
   scaffold_gradient_background: ^1.0.3+1
   google_nav_bar: ^5.0.5

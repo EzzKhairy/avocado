@@ -1,4 +1,5 @@
 import 'package:avocado/Layout/app_layout.dart';
+import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/register_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/modules/login_screen.dart';
@@ -34,6 +35,8 @@ class RegisterScreen extends StatelessWidget {
                 if (state is LawyerRegisterSuccessful) {
                   if(state.model.status == 'true') {
                   CacheHelper.saveData(key: 'token', value: state.model.accessToken);
+                  CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id);
+                  AvocadoCubit.get(context).getLawyerProfile(lawyerId);
                   navigateTo(context, const AppLayout());
               }
             }

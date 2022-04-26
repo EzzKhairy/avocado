@@ -68,7 +68,7 @@ class AddTaskScreen extends StatelessWidget {
                   profileFormField(
                     controller: dateController,
                     type: TextInputType.phone,
-                    readOnly: true,
+                    isEnabled: false,
                     onTap: (){
                       showDatePicker(
                         context: context,
@@ -117,7 +117,7 @@ class AddTaskScreen extends StatelessWidget {
                                 },
                                 type: TextInputType.datetime,
                                 suffix: Icons.access_time_outlined,
-                                readOnly: true,
+                                isEnabled: false,
                                 onTap: (){
                                   showTimePicker(
                                     context: context,
@@ -151,7 +151,7 @@ class AddTaskScreen extends StatelessWidget {
                                 }
                               },
                               type: TextInputType.text,
-                                readOnly: true,
+                                isEnabled: false,
                                 onTap: (){
                                   showTimePicker(
                                     context: context,

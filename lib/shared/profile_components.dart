@@ -15,7 +15,6 @@ Widget profileFormField({
   bool isEnabled = true,
   IconData? suffix,
   String ?hintText,
-  bool readOnly = false,
   VoidCallback? suffixPressed,
   String ?initialValue,
   int ?maxLines
@@ -27,7 +26,6 @@ Widget profileFormField({
   maxLines: maxLines ?? 1,
   onTap: onTap,
   enabled: isEnabled,
-  readOnly: readOnly,
   validator: validate,
   cursorColor: Colors.black,
   initialValue: initialValue,

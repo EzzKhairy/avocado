@@ -4,6 +4,7 @@ import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 void navigateTo(context, screen) => Navigator.push(
@@ -121,6 +122,23 @@ void signOut(context){
     }
   });
 }
+
+void showToast({
+  required context,
+  required msg,
+  Color? backgroundColor,
+}){
+  Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 5,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0
+  );
+}
+
 Widget searchBar({
   context,
   bool readOnly = true,
