@@ -36,6 +36,7 @@ Widget profileFormField({
     enabledBorder:  UnderlineInputBorder(borderSide: BorderSide(color: gold)),
     labelText: label,
     hintText: hintText,
+    contentPadding: EdgeInsets.symmetric(vertical:12,horizontal: 25 ),
     hintStyle: TextStyle(color: Colors.grey,),
     labelStyle: TextStyle(
       color: HexColor('838383'),

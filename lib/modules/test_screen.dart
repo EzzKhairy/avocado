@@ -1,5 +1,6 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
+import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,7 @@ class TestScreen extends StatelessWidget {
         listener: (context,state){},
         builder: (context,state) {
           AvocadoCubit cubit = AvocadoCubit.get(context);
+          var controller = TextEditingController();
           return ScaffoldGradientBackground(
           gradient: LinearGradient(
           colors: [
@@ -54,14 +56,13 @@ class TestScreen extends StatelessWidget {
               stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
           ),
         ),
-        //     body: Conditional.single(
-        //       widgetBuilder:(context) =>
-        //           Text('${cubit.lawyersList?.lawyersData?.email}',style: const TextStyle(color: Colors.white),),
-        //       fallbackBuilder: (context) => const Center(child: Text('Null',style: TextStyle(color: Colors.white),)),
-        //       conditionBuilder: (context) => AvocadoCubit.get(context).lawyersList?.lawyersData != null,
-        //       context: context,
-        // ),
-      );
+            body: defaultFormField(
+                controller: controller,
+                validate: (value){},
+                label: 'label',
+                prefix: Icons.phone
+            )
+        );
     },
     );
   }

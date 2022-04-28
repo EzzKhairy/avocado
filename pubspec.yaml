@@ -47,6 +47,7 @@ dependencies:
   google_nav_bar: ^5.0.5
   calendar_agenda: ^0.0.2+3
   calendar_appbar: ^0.0.6
+  url_launcher: ^6.1.0
 
 dev_dependencies:
   flutter_test:

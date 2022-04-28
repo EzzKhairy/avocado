@@ -65,7 +65,11 @@ class MyApp extends StatelessWidget
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context)=> AppCubit()),
-        BlocProvider(create: (context)=> AvocadoCubit()..getLawyerProfile(lawyerId),),
+        BlocProvider(
+          create: (context)=> AvocadoCubit()
+            ..getLawyerProfile(lawyerId)
+              ..getClients()
+        ),
       ],
       child: BlocConsumer<AppCubit, AvocadoStates>(
         listener: (context, state) {},

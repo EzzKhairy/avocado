@@ -1,10 +1,12 @@
 import 'package:avocado/cubit/states.dart';
+import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/notification_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
 import 'package:avocado/modules/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
+import 'package:avocado/shared/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,12 +69,74 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       if (kDebugMode) {
         print(lawyerUpdated?.message);
       }
+      getLawyerProfile(lawyerId);
       emit(UpdateLawyerProfileSuccessful(lawyerUpdated!));
     }
     ).catchError((onError){
       emit(UpdateLawyerProfileError(lawyerUpdated!));
       if (kDebugMode) {
         print(lawyerUpdated?.message);
+        print(onError);
+      }
+    });
+  }
+
+  ClientsModel? clientsModel;
+  void getClients(){
+    emit(GetClientsLoading());
+    DioHelper.getData(
+      url: 'clients',
+    ).then((value) {
+      clientsModel = ClientsModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(clientsModel?.clientsData![0].email);
+      }
+      emit(GetClientsSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetClientsError());
+      if (kDebugMode) {
+        print(lawyerData?.data![0].email);
+        print(onError);
+      }
+    });
+  }
+
+  ClientsModel? clientUpdateModel;
+  void updateClientProfile({
+    required int? clientsID,
+    required String? lawyerID,
+    required String? clientNationalNumber,
+    required String? name,
+    required String? email,
+    String? address,
+    String? phone,
+  }){
+    emit(UpdateClientProfileLoading());
+    DioHelper.putData(
+      url: 'clients/$clientsID',
+      data: {
+        'email' : email,
+        'lawyer_id' : lawyerID,
+        'name' : name,
+        'Client_National_Number' : clientNationalNumber,
+        'address' : address,
+        'phone' : phone,
+      },
+
+    ).then((value) {
+      clientUpdateModel = ClientsModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(clientUpdateModel?.message);
+      }
+      emit(UpdateClientProfileSuccessful(clientUpdateModel!));
+    }
+    ).catchError((onError){
+      emit(UpdateClientProfileError(clientUpdateModel!));
+      if (kDebugMode) {
+        print(clientUpdateModel?.message);
         print(onError);
       }
     });
@@ -116,6 +180,12 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   void changeBottomNav(int index)
   {
     currentIndex = index;
+    emit(ChangeNavBarState());
+  }
+
+  bool isChanged = false;
+  void toggleIsChanged(){
+    isChanged = true;
     emit(ChangeNavBarState());
   }
 

@@ -1,4 +1,4 @@
-import 'package:avocado/models/lawyer_profile_model.dart';
+import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/login_model.dart';
 
@@ -12,6 +12,20 @@ class ChangeNavBarState extends AvocadoStates{}
 class GetLawyerProfileLoading extends AvocadoStates{}
 class GetLawyerProfileSuccessful extends AvocadoStates{}
 class GetLawyerProfileError extends AvocadoStates{}
+
+class GetClientsLoading extends AvocadoStates{}
+class GetClientsSuccessful extends AvocadoStates{}
+class GetClientsError extends AvocadoStates{}
+
+class UpdateClientProfileLoading extends AvocadoStates{}
+class UpdateClientProfileSuccessful extends AvocadoStates{
+  final ClientsModel model;
+  UpdateClientProfileSuccessful(this.model);
+}
+class UpdateClientProfileError extends AvocadoStates{
+  final ClientsModel model;
+  UpdateClientProfileError(this.model);
+}
 
 class UpdateLawyerProfileLoading extends AvocadoStates{}
 class UpdateLawyerProfileSuccessful extends AvocadoStates{

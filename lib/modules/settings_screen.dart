@@ -1,5 +1,6 @@
 import 'package:avocado/modules/clients_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
+import 'package:avocado/modules/profile_screen_new.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';

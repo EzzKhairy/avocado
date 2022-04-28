@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void navigateTo(context, screen) => Navigator.push(
   context,
@@ -21,9 +22,7 @@ void navigateAndKill (context,widget) {
 
 Widget defaultFormField({
   required TextEditingController controller,
-  required TextInputType type,
-  Function(String?)? onSubmit,
-  Function(String?)? onChange,
+  TextInputType? type,
   VoidCallback? onTap,
   required String? Function(String?)? validate,
   required String label,
@@ -35,8 +34,6 @@ Widget defaultFormField({
 }) => TextFormField(
   controller: controller,
   keyboardType: type,
-  onFieldSubmitted:onSubmit,
-  onChanged: onChange,
   onTap: onTap,
   enabled: isEnabled,
   validator: validate,
@@ -93,6 +90,43 @@ Widget defaultButton({
   ),
 );
 
+Widget baseAlertDialog({
+  required context,
+  String? title,
+  String? content,
+  String? outlinedButtonText,
+  String? elevatedButtonText,
+  IconData? elevatedButtonIcon,
+}){
+  return AlertDialog(
+    backgroundColor: Colors.white,
+    title: Text('$title'),
+    titlePadding: const EdgeInsetsDirectional.only(start:13,top: 15 ),
+    content: Text('$content'),
+    elevation: 8,
+    contentPadding: const EdgeInsets.all(15),
+    actions: [
+      OutlinedButton(
+          onPressed: (){
+            Navigator.of(context).pop(false);
+          },
+          child: Text('$outlinedButtonText')
+      ),
+      Container(
+        width: 100,
+        child: ElevatedButton(
+          style:ButtonStyle(backgroundColor:MaterialStateProperty.all(Colors.black)) ,
+          onPressed: (){
+            Navigator.of(context).pop(true);
+          },
+          child:Text('$elevatedButtonText',style: TextStyle(color: gold)),
+        ),
+      ),
+    ],
+
+  );
+}
+
 Widget horizontalDivider({
   double height =0.25,
   double width = double.infinity,
@@ -137,6 +171,10 @@ void showToast({
       textColor: Colors.white,
       fontSize: 16.0
   );
+}
+
+Future launch(url) async {
+  if (await launchUrl(url)) throw 'Could not launch $url';
 }
 
 Widget searchBar({

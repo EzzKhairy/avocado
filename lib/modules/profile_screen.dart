@@ -23,22 +23,21 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
+        LawyerData lawyersModel = AvocadoCubit.get(context).lawyerData!.data![0];
+        nameController.text   = lawyersModel.name!;
+        phoneController.text  = lawyersModel.address!;
         return BlocConsumer<AvocadoCubit,AvocadoStates>(
             listener: (context,state) {
               if(state is UpdateLawyerProfileSuccessful)
                 {
-                  showToast(context: context, msg: state.model.message);
+                  showToast(context: context, msg: state.model.message,backgroundColor: Colors.green);
                 }
               else if ( state is UpdateLawyerProfileError)
                 {
-                  showToast(context: context, msg: state.model.message);
+                  showToast(context: context, msg: "Error + ${state.model.message}",backgroundColor: Colors.red);
                 }
             },
             builder: (context,state) {
-              LawyerData lawyersModel = AvocadoCubit.get(context).lawyerData!.data![0];
-              nameController.text   = lawyersModel.name!;
-              phoneController.text  = lawyersModel.address!;
-
               return Scaffold(
             appBar: NewGradientAppBar(
               title: Text(
@@ -102,13 +101,13 @@ class ProfileScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
                         children: [
-                          // if(state is UpdateLawyerProfileLoading)
-                          //   Column(
-                          //     children: const [
-                          //       LinearProgressIndicator(),
-                          //       SizedBox(height: 20,),
-                          //     ],
-                          //   ),
+                          if(state is UpdateLawyerProfileLoading)
+                            Column(
+                              children: const [
+                                LinearProgressIndicator(),
+                                SizedBox(height: 20,),
+                              ],
+                            ),
                           Row(
                             children: [
                               const Text(
