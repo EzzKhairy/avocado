@@ -1,3 +1,6 @@
+import 'package:avocado/cubit/avocado_cubit.dart';
+import 'package:avocado/cubit/states.dart';
+import 'package:avocado/models/case_model.dart';
 import 'package:avocado/modules/case_summary_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
@@ -6,77 +9,90 @@ import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Dashboard',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-              const SizedBox(height: 15,),
-              Row(
-                children: [
-                  buildHomeCard(
-                    function: (){
-                      //navigateTo(context, const CasesScreen());
-                      print (token);
-                      print(CacheHelper.getData(key: 'token'));
-                      },
-                    title: 'Total Cases',
-                    icon: Icons.format_align_justify_outlined,
-                    number: 700,
+    return BlocConsumer<AvocadoCubit, AvocadoStates>(
+      listener: (BuildContext context, state) {
+      },
+      builder: (BuildContext context, state) {
+        List<CaseData>? casesData = AvocadoCubit.get(context).caseModel?.casesData;
+        if(casesData! == 1){return const Center(child: CircularProgressIndicator());}
+        else
+          {
+            return Scaffold(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Dashboard',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                      const SizedBox(height: 15,),
+                      Row(
+                        children: [
+                          buildHomeCard(
+                            function: (){
+                              navigateTo(context,  CasesScreen());
+                              print (token);
+                              print(CacheHelper.getData(key: 'token'));
+                            },
+                            title: 'Total Cases',
+                            icon: Icons.format_align_justify_outlined,
+                            number: casesData.length,
+                          ),
+                          const SizedBox(width: 10,),
+                          buildHomeCard(
+                            function: (){navigateTo(context, const ClientsScreen());},
+                            title: 'Total Clients',
+                            icon: Icons.people_alt_outlined,
+                            number: AvocadoCubit.get(context).clientsModel!.clientsData!.length,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12,),
+                      Row(
+                        children: [
+                          buildHomeCard(
+                            function: (){navigateTo(context,const TasksScreen());},
+                            title: 'Total Tasks',
+                            icon: Icons.assignment_turned_in_rounded,
+                            number: 15,
+                          ),
+                          const SizedBox(width: 10,),
+                          buildHomeCard(
+                            function: (){navigateTo(context, const ClientsScreen());},
+                            title: 'Total Clients',
+                            icon: Icons.people_alt_outlined,
+                            number: 700,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15,),
+                      buildTaskHomeItem(context),
+                      SizedBox(height: 15,),
+                      Container(
+                        height: 160,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => buildCasesItem(casesData[index], context,width: MediaQuery.of(context).size.width*.60),
+                          separatorBuilder: (context, index) => const SizedBox(width: 10,),
+                          itemCount: casesData.length,
+                        ),
+                      ),
+                      const SizedBox(height: 15,),
+                    ],
                   ),
-                  const SizedBox(width: 10,),
-                  buildHomeCard(
-                    function: (){navigateTo(context, const ClientsScreen());},
-                    title: 'Total Clients',
-                    icon: Icons.people_alt_outlined,
-                    number: 509,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12,),
-              Row(
-                children: [
-                  buildHomeCard(
-                    function: (){navigateTo(context,const TasksScreen());},
-                    title: 'Total Tasks',
-                    icon: Icons.assignment_turned_in_rounded,
-                    number: 15,
-                  ),
-                  const SizedBox(width: 10,),
-                  buildHomeCard(
-                    function: (){navigateTo(context, const ClientsScreen());},
-                    title: 'Total Clients',
-                    icon: Icons.people_alt_outlined,
-                    number: 700,
-                  ),
-                ],
-              ),
-              SizedBox(height: 15,),
-              buildTaskHomeItem(context),
-              SizedBox(height: 15,),
-              Container(
-                height: 160,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => buildRecentCasesHomeItem(context,),
-                  separatorBuilder: (context, index) => const SizedBox(width: 10,),
-                  itemCount: 10,
                 ),
               ),
-              const SizedBox(height: 15,),
-            ],
-          ),
-        ),
-      ),
+            );
+          }
+
+      },
     );
   }
 
@@ -227,10 +243,11 @@ class HomeScreen extends StatelessWidget {
   }
 
 
-  Widget buildRecentCasesHomeItem(context)
+  Widget buildCasesItem(CaseData caseData, context,
   {
-    return GestureDetector(
-      onTap: (){navigateTo(context, CaseSummary());},
+    required width,
+})  => GestureDetector(
+      onTap: (){navigateTo(context, const CaseSummary());},
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
@@ -238,23 +255,24 @@ class HomeScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
           height: 150,
-          width: MediaQuery.of(context).size.width*.60,
+          width: width,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'BAR-25-5-2000-05',
-                  style: TextStyle(
+                Text(
+                  '${caseData.caseID}',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
                 horizontalDivider(height: 1.5,hColor: Colors.grey),
-                const Text(
-                  'Opened 25-5',
-                  style: TextStyle(
+                 Text(
+                  '${caseData.createdAt}',
+                  maxLines: 1,
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
                   ),
@@ -268,20 +286,20 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10,),
-                const Text(
-                  'Civil',
-                  style: TextStyle(
+                Text(
+                  '${caseData.caseType}',
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                 ),
                 const SizedBox(height: 10,),
                 Row(
-                  children: const [
-                    Spacer(),
+                  children: [
+                    const Spacer(),
                     Text(
-                      'In Progress',
-                      style: TextStyle(
+                      '${caseData.status}',
+                      style: const TextStyle(
                         color: Colors.green,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -295,6 +313,6 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
+
 
 }

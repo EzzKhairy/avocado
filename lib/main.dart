@@ -1,15 +1,10 @@
 import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/app_cubit.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
-import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/login_screen.dart';
-import 'package:avocado/modules/register_screen.dart';
-import 'package:avocado/modules/test_screen.dart';
 import 'package:avocado/shared/bloc_observer.dart';
 import 'package:avocado/shared/constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'cubit/states.dart';
 import 'remoteNetwork/cache_helper.dart';
@@ -68,7 +63,8 @@ class MyApp extends StatelessWidget
         BlocProvider(
           create: (context)=> AvocadoCubit()
             ..getLawyerProfile(lawyerId)
-              ..getClients()
+            ..getClients()
+            ..getCases()
         ),
       ],
       child: BlocConsumer<AppCubit, AvocadoStates>(
@@ -81,7 +77,7 @@ class MyApp extends StatelessWidget
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home : startWidget,
+            home : AppLayout(),
           );
         },
       ),

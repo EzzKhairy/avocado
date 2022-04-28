@@ -54,3 +54,7 @@ class LawyerLoginError extends AvocadoStates{}
 class ChangePasswordVisibilityState extends AvocadoStates{}
 
 class EditPressedState extends AvocadoStates{}
+
+class GetCasesDataLoading extends AvocadoStates{}
+class GetCasesDataSuccessful extends AvocadoStates{}
+class GetCasesDataError extends AvocadoStates{}

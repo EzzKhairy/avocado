@@ -1,4 +1,5 @@
 import 'package:avocado/cubit/states.dart';
+import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/modules/home_screen.dart';
@@ -167,6 +168,28 @@ class AvocadoCubit extends Cubit <AvocadoStates>
           role: role
       );
     }
+  }
+
+  CaseModel? caseModel;
+  void getCases(){
+    emit(GetCasesDataLoading());
+    DioHelper.getData(
+      url: 'cases',
+    ).then((value) {
+      caseModel = CaseModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(caseModel?.casesData![0].caseID);
+      }
+      emit(GetCasesDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetCasesDataError());
+      if (kDebugMode) {
+        print(caseModel?.casesData![0].courtNumber);
+        print(onError.toString());
+      }
+    });
   }
 
   int currentIndex = 0;

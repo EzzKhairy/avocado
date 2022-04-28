@@ -48,6 +48,7 @@ dependencies:
   calendar_agenda: ^0.0.2+3
   calendar_appbar: ^0.0.6
   url_launcher: ^6.1.0
+  folding_cell: ^1.0.0
 
 dev_dependencies:
   flutter_test:

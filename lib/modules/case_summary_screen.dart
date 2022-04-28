@@ -6,7 +6,7 @@ class CaseSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Case info scre')),
+      body: Center(child: Text('Case info screen')),
     );
   }
 }

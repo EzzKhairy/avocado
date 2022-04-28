@@ -3,7 +3,6 @@ import 'package:avocado/modules/edit_client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ClientInfoScreen extends StatelessWidget {
@@ -48,7 +47,7 @@ class ClientInfoScreen extends StatelessWidget {
                         begin: AlignmentDirectional.topEnd,
                         end: AlignmentDirectional.bottomStart,
                         stops: const [0.20, 0.17, 0.40]),
-                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60),bottomRight: Radius.circular(60))
+                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(60),bottomRight: Radius.circular(60))
                     ),
                     ),
                   alignment: AlignmentDirectional.topCenter,
@@ -66,9 +65,9 @@ class ClientInfoScreen extends StatelessWidget {
                 ),            ],
             ),
           ),
-          SizedBox(height: 10,),
-          Text('${clientsData.name}',style: TextStyle(fontSize: 23),),
-          Text('${clientsData.phone}',style: TextStyle(color: Colors.grey,letterSpacing: 2)),
+          const SizedBox(height: 10,),
+          Text('${clientsData.name}',style: const TextStyle(fontSize: 23),),
+          Text('${clientsData.phone}',style: const TextStyle(color: Colors.grey,letterSpacing: 2)),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(

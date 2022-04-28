@@ -1,6 +1,6 @@
+import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
-import 'package:avocado/modules/profile_screen_new.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -103,6 +103,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 horizontalDivider(),
+                InkWell(
+                  onTap: (){
+                    navigateTo(context, CasesScreen());
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      children:
+                      [
+                        Icon(Icons.assignment,color: gold,),
+                        separator(15, 0),
+                        const Text('Cases',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                        const Spacer(),
+                        const Icon(Icons.arrow_forward_ios_rounded),
+                        separator(10,0),
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
                     padding:const EdgeInsets.all(15),
                     child: const Text('SETTINGS',style: TextStyle(color: Colors.grey,fontSize: 15),)),
@@ -126,8 +146,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         //     });
                         //
                         //   },
-
-
                        // ),
                         separator(10,0),
                       ],

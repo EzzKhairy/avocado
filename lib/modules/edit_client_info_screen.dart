@@ -32,7 +32,7 @@ class EditClientInfoScreen extends StatelessWidget {
                 {
                   AvocadoCubit.get(context).getClients();
                   showToast(context: context, msg: state.model.message);
-                  navigateTo(context, ClientsScreen());
+                  navigateTo(context, const ClientsScreen());
                 }
             }
           if(state is UpdateLawyerProfileError)
