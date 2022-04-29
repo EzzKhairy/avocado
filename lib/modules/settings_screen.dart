@@ -1,6 +1,8 @@
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
+import 'package:avocado/modules/expert_session_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
+import 'package:avocado/modules/sessions_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -123,6 +125,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
+                horizontalDivider(),
+                InkWell(
+                  onTap: (){
+                    navigateTo(context, SessionsScreen());
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      children:
+                      [
+                        Icon(Icons.assignment,color: gold,),
+                        separator(15, 0),
+                        const Text('Sessions',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                        const Spacer(),
+                        const Icon(Icons.arrow_forward_ios_rounded),
+                        separator(10,0),
+                      ],
+                    ),
+                  ),
+                ),
+                horizontalDivider(),
+                InkWell(
+                  onTap: (){
+                    navigateTo(context, ExpertSessionScreen());
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      children:
+                      [
+                        Icon(Icons.assignment,color: gold,),
+                        separator(15, 0),
+                        const Text('Expert Sessions',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                        const Spacer(),
+                        const Icon(Icons.arrow_forward_ios_rounded),
+                        separator(10,0),
+                      ],
+                    ),
+                  ),
+                ),
+
                 Container(
                     padding:const EdgeInsets.all(15),
                     child: const Text('SETTINGS',style: TextStyle(color: Colors.grey,fontSize: 15),)),

@@ -1,6 +1,8 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
+import 'package:avocado/models/session_model.dart';
+import 'package:avocado/modules/case_info_screen.dart';
 import 'package:avocado/modules/case_summary_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
@@ -21,7 +23,7 @@ class HomeScreen extends StatelessWidget {
       },
       builder: (BuildContext context, state) {
         List<CaseData>? casesData = AvocadoCubit.get(context).caseModel?.casesData;
-        if(casesData! == 1){return const Center(child: CircularProgressIndicator());}
+        if(casesData!.isEmpty){return const Center(child: CircularProgressIndicator());}
         else
           {
             return Scaffold(
@@ -66,15 +68,15 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(width: 10,),
                           buildHomeCard(
                             function: (){navigateTo(context, const ClientsScreen());},
-                            title: 'Total Clients',
+                            title: 'Total Sessions',
                             icon: Icons.people_alt_outlined,
-                            number: 700,
+                            number: AvocadoCubit.get(context).sessionModel!.sessionData!.length,
                           ),
                         ],
                       ),
-                      SizedBox(height: 15,),
+                      const SizedBox(height: 15,),
                       buildTaskHomeItem(context),
-                      SizedBox(height: 15,),
+                      const SizedBox(height: 15,),
                       Container(
                         height: 165,
                         child: ListView.separated(
@@ -243,7 +245,7 @@ class HomeScreen extends StatelessWidget {
 
 
   Widget buildCasesItem(CaseData caseData, context, {required width,})  => GestureDetector(
-      onTap: (){navigateTo(context, const CaseSummary());},
+      onTap: (){navigateTo(context, CaseInfoScreen());},
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,

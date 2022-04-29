@@ -60,7 +60,7 @@ class CasesScreen extends StatelessWidget {
               ),
             ),
             context: context,
-            fallbackBuilder: (context) => Center(child: const CircularProgressIndicator()),
+            fallbackBuilder: (context) => const Center(child: CircularProgressIndicator()),
           ),
         );
       },

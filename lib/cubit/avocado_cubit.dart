@@ -1,7 +1,9 @@
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/clients_model.dart';
+import 'package:avocado/models/expert_session_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
+import 'package:avocado/models/session_model.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/notification_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
@@ -225,6 +227,50 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       emit(GetCasesDataError());
       if (kDebugMode) {
         print(caseModel?.casesData![0].courtNumber);
+        print(onError.toString());
+      }
+    });
+  }
+
+  SessionModel? sessionModel;
+  void getSessions(){
+    emit(GetSessionsDataLoading());
+    DioHelper.getData(
+      url: 'sessions',
+    ).then((value) {
+      sessionModel = SessionModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(sessionModel?.sessionData![0].presentLawyerName);
+      }
+      emit(GetSessionsDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetSessionsDataError());
+      if (kDebugMode) {
+      print(sessionModel!.sessionData![0].sessionRequirements);
+        print(onError.toString());
+      }
+    });
+  }
+
+  ExpertSessionModel? expertSessionModel;
+  void getExpertSessions(){
+    emit(GetExpertSessionDataLoading());
+    DioHelper.getData(
+      url: 'expert_sessions',
+    ).then((value) {
+      expertSessionModel = ExpertSessionModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(expertSessionModel?.expertSessionData![0].officeAddress);
+      }
+      emit(GetExpertSessionDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetExpertSessionDataError());
+      if (kDebugMode) {
+        print(expertSessionModel!.expertSessionData![0].expertName);
         print(onError.toString());
       }
     });

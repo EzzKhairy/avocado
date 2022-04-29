@@ -68,3 +68,11 @@ class EditPressedState extends AvocadoStates{}
 class GetCasesDataLoading extends AvocadoStates{}
 class GetCasesDataSuccessful extends AvocadoStates{}
 class GetCasesDataError extends AvocadoStates{}
+
+class GetSessionsDataLoading extends AvocadoStates{}
+class GetSessionsDataSuccessful extends AvocadoStates{}
+class GetSessionsDataError extends AvocadoStates{}
+
+class GetExpertSessionDataLoading extends AvocadoStates{}
+class GetExpertSessionDataSuccessful extends AvocadoStates{}
+class GetExpertSessionDataError extends AvocadoStates{}
