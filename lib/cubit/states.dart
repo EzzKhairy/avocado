@@ -27,6 +27,16 @@ class UpdateClientProfileError extends AvocadoStates{
   UpdateClientProfileError(this.model);
 }
 
+class AddNewClientLoading extends AvocadoStates{}
+class AddNewClientSuccessful extends AvocadoStates{
+  final ClientsModel model;
+  AddNewClientSuccessful(this.model);
+}
+class AddNewClientError extends AvocadoStates{
+  final ClientsModel model;
+  AddNewClientError(this.model);
+}
+
 class UpdateLawyerProfileLoading extends AvocadoStates{}
 class UpdateLawyerProfileSuccessful extends AvocadoStates{
   final LawyersModel model;

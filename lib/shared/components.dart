@@ -127,6 +127,34 @@ Widget baseAlertDialog({
   );
 }
 
+Widget scaleProgressIndicator(context){
+  return Container(
+    height: MediaQuery.of(context).size.height,
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+          colors: [
+            Colors.black.withOpacity(0.842),
+            Colors.black.withOpacity(0.845),
+            Colors.black.withOpacity(0.89),
+          ],
+          begin: AlignmentDirectional.topEnd,
+          end: AlignmentDirectional.bottomStart,
+          stops: const [0.20, 0.17, 0.40]),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset('assets/images/output-onlinegiftools(1).gif'),
+        const Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 50
+          ),
+          child: LinearProgressIndicator(),
+        )
+      ],
+    ),
+  );
+}
+
 Widget horizontalDivider({
   double height =0.25,
   double width = double.infinity,

@@ -26,16 +26,17 @@ class EditClientInfoScreen extends StatelessWidget {
     phoneController.text = clientsData.phone?? 'Not Found';
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
         listener: (context,state){
-          if(state is UpdateLawyerProfileSuccessful)
+          if(state is UpdateClientProfileSuccessful)
             {
               if(state.model.status == 'true')
                 {
+                  print('asasasasa' '${state.model.message}');
                   AvocadoCubit.get(context).getClients();
                   showToast(context: context, msg: state.model.message);
-                  navigateTo(context, const ClientsScreen());
+                  navigateAndKill(context, const ClientsScreen());
                 }
             }
-          if(state is UpdateLawyerProfileError)
+          if(state is UpdateClientProfileError)
           {
               showToast(context: context, msg: state.model.message);
           }
@@ -275,6 +276,10 @@ class EditClientInfoScreen extends StatelessWidget {
                         if (shouldPop == true)
                         {pop(context);}
                       }
+                      else
+                        {
+                          pop(context);
+                        }
                     }
                   },
                   child: Text('CANCEL',style: TextStyle(fontSize: 18),)
@@ -286,8 +291,7 @@ class EditClientInfoScreen extends StatelessWidget {
                       AvocadoCubit.get(context).updateClientProfile(
                           clientsID: clientsData.id,
                           lawyerID: clientsData.lawyerId,
-                          clientNationalNumber: clientsData
-                              .clientNationalNumber,
+                          clientNationalNumber: clientsData.clientNationalNumber,
                           name: nameController.text,
                           email: emailController.text,
                           address: addressController.text,

@@ -1,6 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/clients_model.dart';
+import 'package:avocado/modules/add_client_screen.dart';
 import 'package:avocado/modules/client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
@@ -65,7 +66,19 @@ class ClientsScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ));
+          ),
+            floatingActionButton: Padding(
+              padding: EdgeInsetsDirectional.only(end: 10,bottom: 10),
+              child: FloatingActionButton(
+                backgroundColor: Colors.black,
+                splashColor: Colors.blue,
+                onPressed: (){
+                  navigateTo(context, AddClientScreen());
+                },
+                child: Icon(Icons.add,color: gold,size: 35,),
+              ),
+            ),
+          );
         },
     );
   }

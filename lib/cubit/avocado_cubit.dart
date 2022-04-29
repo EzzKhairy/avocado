@@ -104,7 +104,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
-  ClientsModel? clientUpdateModel;
+  ClientsModel? updateClientModel;
   void updateClientProfile({
     required int? clientsID,
     required String? lawyerID,
@@ -119,7 +119,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       url: 'clients/$clientsID',
       data: {
         'email' : email,
-        'lawyer_id' : lawyerID,
+        'Lawyer_id' : lawyerID,
         'name' : name,
         'Client_National_Number' : clientNationalNumber,
         'address' : address,
@@ -127,17 +127,55 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       },
 
     ).then((value) {
-      clientUpdateModel = ClientsModel.fromJson(value.data);
+      updateClientModel = ClientsModel.fromJson(value.data);
       //print(element);
       if (kDebugMode) {
-        print(clientUpdateModel?.message);
+        print(updateClientModel?.message);
       }
-      emit(UpdateClientProfileSuccessful(clientUpdateModel!));
+      emit(UpdateClientProfileSuccessful(updateClientModel!));
     }
     ).catchError((onError){
-      emit(UpdateClientProfileError(clientUpdateModel!));
+      emit(UpdateClientProfileError(updateClientModel!));
       if (kDebugMode) {
-        print(clientUpdateModel?.message);
+        print(updateClientModel?.message);
+        print(onError);
+      }
+    });
+  }
+
+  ClientsModel? NewClientModel;
+  void addNewClient({
+    required String? lawyerID,
+    required String? clientNationalNumber,
+    required String? name,
+    required String? email,
+    String? address,
+    String? phone,
+  }){
+    emit(AddNewClientLoading());
+    DioHelper.postData(
+      url: 'clients',
+      data: {
+        'email' : email,
+        'Lawyer_id' : lawyerID,
+        'name' : name,
+        'Client_National_Number' : clientNationalNumber,
+        'address' : address,
+        'phone' : phone,
+      },
+
+    ).then((value) {
+      NewClientModel = ClientsModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(NewClientModel?.message);
+      }
+      emit(AddNewClientSuccessful(NewClientModel!));
+    }
+    ).catchError((onError){
+      emit(AddNewClientError(NewClientModel!));
+      if (kDebugMode) {
+        print(NewClientModel?.message);
         print(onError);
       }
     });

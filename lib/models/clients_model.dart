@@ -12,6 +12,10 @@ class ClientsModel {
         clientsData!.add(ClientsData.fromJson(element));
       });
     }
+    else
+      {
+        clientsData = null;
+      }
   }
 }
 
@@ -30,7 +34,7 @@ class ClientsData {
 
   ClientsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    clientNationalNumber = json['client_National_Number'];
+    clientNationalNumber = json['Client_National_Number'];
     name = json['name'];
     email = json['email'];
     address = json['address'];

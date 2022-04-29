@@ -32,35 +32,16 @@ class TestScreen extends StatelessWidget {
           end: AlignmentDirectional.bottomStart,
           stops: const [0.15,0.15,0.15,0.15,0.15,0.60],
         ),
-           appBar: NewGradientAppBar(
-          title: Text(
-            'AVOCADO',
-            style: TextStyle(
-              fontFamily: 'Nedian',
-              fontSize: 23.0,
-              color: gold,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          gradient: LinearGradient(
-              colors: [
-                Colors.black.withOpacity(0.70),
-                Colors.black.withOpacity(0.75),
-                Colors.black.withOpacity(0.60),
-                Colors.black.withOpacity(0.65),
-                Colors.black.withOpacity(0.70),
-                Colors.black.withOpacity(0.95),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/output-onlinegiftools(1).gif'),
+                const Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 50
+                  ),
+                  child: LinearProgressIndicator(),
+                )
               ],
-              begin: AlignmentDirectional.topEnd,
-              end: AlignmentDirectional.bottomStart,
-              stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
-          ),
-        ),
-            body: defaultFormField(
-                controller: controller,
-                validate: (value){},
-                label: 'label',
-                prefix: Icons.phone
             )
         );
     },

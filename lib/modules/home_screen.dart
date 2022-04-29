@@ -76,15 +76,14 @@ class HomeScreen extends StatelessWidget {
                       buildTaskHomeItem(context),
                       SizedBox(height: 15,),
                       Container(
-                        height: 160,
+                        height: 165,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => buildCasesItem(casesData[index], context,width: MediaQuery.of(context).size.width*.60),
+                          itemBuilder: (context, index) => buildCasesItem(casesData[index], context,width: MediaQuery.of(context).size.width*.70),
                           separatorBuilder: (context, index) => const SizedBox(width: 10,),
                           itemCount: casesData.length,
                         ),
                       ),
-                      const SizedBox(height: 15,),
                     ],
                   ),
                 ),
@@ -243,10 +242,7 @@ class HomeScreen extends StatelessWidget {
   }
 
 
-  Widget buildCasesItem(CaseData caseData, context,
-  {
-    required width,
-})  => GestureDetector(
+  Widget buildCasesItem(CaseData caseData, context, {required width,})  => GestureDetector(
       onTap: (){navigateTo(context, const CaseSummary());},
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -254,7 +250,7 @@ class HomeScreen extends StatelessWidget {
         margin: const EdgeInsetsDirectional.all(2.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          height: 150,
+          height: 160,
           width: width,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -262,15 +258,21 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${caseData.caseID}',
+                  '${caseData.caseID}'.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
                     fontSize: 16,
+                    letterSpacing: 3,
                   ),
                 ),
-                horizontalDivider(height: 1.5,hColor: Colors.grey),
+                Padding(
+                  padding:  EdgeInsets.symmetric(vertical: 5.0),
+                  child: horizontalDivider(height: 1.5,hColor: Colors.grey),
+                ),
                  Text(
-                  '${caseData.createdAt}',
+                  'Opened ${caseData.createdAt}'.split('T').elementAt(0),
                   maxLines: 1,
                   style: const TextStyle(
                     fontSize: 16,
@@ -297,14 +299,22 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   children: [
                     const Spacer(),
+                    caseData.status == 'open'?
                     Text(
-                      '${caseData.status}',
+                      '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
                       style: const TextStyle(
                         color: Colors.green,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
+                    ):Text(
+                      '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
                   ],
                 ),
               ],
