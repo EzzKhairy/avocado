@@ -25,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
       builder: (context) {
         LawyerData lawyersModel = AvocadoCubit.get(context).lawyerData!.data![0];
         nameController.text   = lawyersModel.name!;
-        phoneController.text  = lawyersModel.address!;
+        phoneController.text  = lawyersModel.address ?? 'Not Found';
         return BlocConsumer<AvocadoCubit,AvocadoStates>(
             listener: (context,state) {
               if(state is UpdateLawyerProfileSuccessful)

@@ -38,19 +38,22 @@ class SessionsScreen extends StatelessWidget {
                 end: AlignmentDirectional.bottomStart,
                 stops: const [0.20, 0.17, 0.40]),
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              searchBar(),
-              const SizedBox(height: 20,),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => buildSessionItem(sessionData![index],context),
-                separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                itemCount: 10,
-              ),
-            ],
+          body: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                searchBar(),
+                SizedBox(height: 15,),
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => buildSessionItem(sessionData![index],context),
+                  separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                  itemCount: sessionData!.length,
+                ),
+              ],
+            ),
           ),
         );
       },

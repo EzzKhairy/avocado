@@ -33,8 +33,13 @@ class LoginScreen extends StatelessWidget {
                 {
                   CacheHelper.saveData(key: 'token', value: state.model.accessToken),
                   CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id),
+                  showToast(context: context, msg: state.model.message,backgroundColor: Colors.green),
                   AvocadoCubit.get(context).getLawyerProfile(lawyerId),
                   navigateTo(context, const AppLayout())
+                }
+              else
+                {
+                  showToast(context: context, msg: state.model.message,backgroundColor: Colors.red)
                 }
             }
         },

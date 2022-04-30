@@ -21,7 +21,9 @@ class AppLayout extends StatelessWidget {
           return Conditional.single(
             context: context,
             conditionBuilder: (context)=>
-            AvocadoCubit.get(context).caseModel != null && AvocadoCubit.get(context).lawyerData != null && AvocadoCubit.get(context).clientsModel != null ,
+            AvocadoCubit.get(context).caseModel != null && AvocadoCubit.get(context).lawyerData != null
+                && AvocadoCubit.get(context).clientsModel != null && AvocadoCubit.get(context).sessionModel != null
+              && AvocadoCubit.get(context).expertSessionModel!=null,
             widgetBuilder:(context)=> Scaffold(
               backgroundColor: Colors.transparent,
               appBar: NewGradientAppBar(

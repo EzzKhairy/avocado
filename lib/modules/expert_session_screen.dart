@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/expert_session_model.dart';
@@ -7,6 +9,7 @@ import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class ExpertSessionScreen extends StatelessWidget {
@@ -14,47 +17,60 @@ class ExpertSessionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AvocadoCubit,AvocadoStates>(
-      listener: (context,state){},
-      builder: (context,state) {
-        List<ExpertSessionData>? expertsessionData = AvocadoCubit.get(context).expertSessionModel!.expertSessionData;
-        return Scaffold(
-          appBar: NewGradientAppBar(
-            centerTitle: true,
-            title: Text(
-              'SESSIONS',
-              style: TextStyle(
-                fontFamily: 'Nedian',
-                fontSize: 25.0,
-                color: gold,
+    return Builder(
+      builder: (context) {
+
+        return BlocConsumer<AvocadoCubit,AvocadoStates>(
+          listener: (context,state){},
+          builder: (context,state) {
+            List<ExpertSessionData>? expertSessionData = AvocadoCubit.get(context).expertSessionModel!.expertSessionData;
+            return Conditional.single(
+              context: context,
+              conditionBuilder: (context) => expertSessionData!.isNotEmpty,
+              widgetBuilder:(context)=> Scaffold(
+                appBar: NewGradientAppBar(
+                  centerTitle: true,
+                  title: Text(
+                    'SESSIONS',
+                    style: TextStyle(
+                      fontFamily: 'Nedian',
+                      fontSize: 25.0,
+                      color: gold,
+                    ),
+                  ),
+                  gradient: LinearGradient(
+                      colors: [
+                        Colors.black.withOpacity(0.842),
+                        Colors.black.withOpacity(0.845),
+                        Colors.black.withOpacity(0.89),
+                      ],
+                      begin: AlignmentDirectional.topEnd,
+                      end: AlignmentDirectional.bottomStart,
+                      stops: const [0.20, 0.17, 0.40]),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      searchBar(),
+                      const SizedBox(height: 20,),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => buildSessionItem(expertSessionData![index],context),
+                        separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                        itemCount: expertSessionData!.length,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.842),
-                  Colors.black.withOpacity(0.845),
-                  Colors.black.withOpacity(0.89),
-                ],
-                begin: AlignmentDirectional.topEnd,
-                end: AlignmentDirectional.bottomStart,
-                stops: const [0.20, 0.17, 0.40]),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              searchBar(),
-              const SizedBox(height: 20,),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => buildSessionItem(expertsessionData![index],context),
-                separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                itemCount: 10,
-              ),
-            ],
-          ),
+              fallbackBuilder: (context) => scaleProgressIndicator(context)
+            );
+          },
         );
-      },
+      }
     );
   }
 

@@ -20,7 +20,7 @@ class SessionModel
 class SessionData
 {
   int? id;
-  int? roleNumber;
+  String? roleNumber;
   String? presentLawyerName;
   String? sessionReason;
   String? sessionDate;
@@ -28,7 +28,7 @@ class SessionData
   String? attachment;
   String? decision;
   String? nextDate;
-  int? caseId;
+  String? caseId;
   String? createdAt;
   String? updatedAt;
 

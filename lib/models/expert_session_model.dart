@@ -21,14 +21,14 @@ class ExpertSessionData
 {
   int? id;
   String? presentLawyerName;
-  int? expertName;
+  String? expertName;
   String? sessionReason;
   String? sessionDate;
   String? officeAddress;
   String? attachment;
   String? decision;
   String? nextDate;
-  int? caseId;
+  String? caseId;
   String? createdAt;
   String? updatedAt;
 

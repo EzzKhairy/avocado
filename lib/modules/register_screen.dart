@@ -34,11 +34,17 @@ class RegisterScreen extends StatelessWidget {
               listener: (context, state) {
                 if (state is LawyerRegisterSuccessful) {
                   if(state.model.status == 'true') {
-                  CacheHelper.saveData(key: 'token', value: state.model.accessToken);
+                    showToast(context: context, msg: state.model.message,backgroundColor: Colors.green);
+
+                    CacheHelper.saveData(key: 'token', value: state.model.accessToken);
                   CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id);
                   AvocadoCubit.get(context).getLawyerProfile(lawyerId);
                   navigateTo(context, const AppLayout());
               }
+                  else{
+                    showToast(context: context, msg: state.model.message,backgroundColor: Colors.red);
+
+                  }
             }
               },
               builder: (context, state) {
