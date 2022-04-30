@@ -1,6 +1,9 @@
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/clients_model.dart';
+import 'package:avocado/models/court_model.dart';
+import 'package:avocado/models/court_model.dart';
+import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/expert_session_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/session_model.dart';
@@ -272,6 +275,102 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       if (kDebugMode) {
         print(expertSessionModel!.expertSessionData![0].expertName);
         print(onError.toString());
+      }
+    });
+  }
+
+  CourtModel? updateCourtModel;
+  void updateCourtProfile({
+    required int? courtID,
+    required String? address,
+    required String? name,
+    String? longitude,
+    String? latitude,
+    String? phone,
+  }){
+    emit(UpdateCourtDataLoading());
+    DioHelper.putData(
+      url: 'courts/$courtID',
+      data: {
+        'Latitude' : latitude,
+        'name' : name,
+        'Longtude' : longitude,
+        'address' : address,
+        'phone' : phone,
+      },
+
+    ).then((value) {
+      updateCourtModel = CourtModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(updateCourtModel?.message);
+      }
+      emit(UpdateCourtDataSuccessful(updateCourtModel!));
+    }
+    ).catchError((onError){
+      emit(UpdateCourtDataError(updateCourtModel!));
+      if (kDebugMode) {
+        print(updateCourtModel?.message);
+        print(onError);
+      }
+    });
+  }
+
+  CourtModel? AddCourtModel;
+  void AddCourtProfile({
+    required int? courtID,
+    required String? address,
+    required String? name,
+    String? longitude,
+    String? latitude,
+    String? phone,
+  }){
+    emit(UpdateCourtDataLoading());
+    DioHelper.postData(
+      url: 'courts',
+      data: {
+        'Latitude' : latitude,
+        'name' : name,
+        'Longtude' : longitude,
+        'address' : address,
+        'phone' : phone,
+      },
+
+    ).then((value) {
+      AddCourtModel = CourtModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(AddCourtModel?.message);
+      }
+      emit(UpdateCourtDataSuccessful(AddCourtModel!));
+    }
+    ).catchError((onError){
+      emit(UpdateCourtDataError(AddCourtModel!));
+      if (kDebugMode) {
+        print(AddCourtModel?.message);
+        print(onError);
+      }
+    });
+  }
+
+  CourtModel? getCourtModel;
+  void getCourts(){
+    emit(UpdateCourtDataLoading());
+    DioHelper.getData(
+      url: 'courts',
+    ).then((value) {
+      getCourtModel = CourtModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(getCourtModel?.message);
+      }
+      emit(UpdateCourtDataSuccessful(getCourtModel!));
+    }
+    ).catchError((onError){
+      emit(UpdateCourtDataError(getCourtModel!));
+      if (kDebugMode) {
+        print(getCourtModel?.message);
+        print(onError);
       }
     });
   }

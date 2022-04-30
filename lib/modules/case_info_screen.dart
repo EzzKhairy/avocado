@@ -1,6 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:folding_cell/folding_cell.dart';
@@ -43,6 +44,32 @@ class CaseInfoScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Case: BAR-25-5-2000-05',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                        SizedBox(height: 10,),
+                        RichText(
+                            text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: 'Status: ',
+                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.black)
+                                  ),
+                                  TextSpan(
+                                      text: 'Closed ',
+                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.red)
+                                  ),
+                                ]
+                            )
+                        ),
+                        SizedBox(height: 10,),
+
+                      ],
+                    ),
+                  ),
                   buildCaseInfoScreenItem(context: context, title: 'Title', info: 'Karim Salem - Real estate Transaction'),
                   const SizedBox(height: 10,),
                   buildCaseInfoScreenItem(context: context,title: 'Type', info: 'Real estate'),
@@ -51,10 +78,9 @@ class CaseInfoScreen extends StatelessWidget {
                   const SizedBox(height: 15,),
                   Container(
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.black),
-                    height: 200,
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: EdgeInsets.symmetric(vertical: 15.0,horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -68,7 +94,10 @@ class CaseInfoScreen extends StatelessWidget {
                           ),
                           const SizedBox(height : 10),
                           const Text(
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                                " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
+                                " when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                                "when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -97,7 +126,6 @@ class CaseInfoScreen extends StatelessWidget {
         margin: const EdgeInsetsDirectional.all(2.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          height: 80,
           width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -114,7 +142,7 @@ class CaseInfoScreen extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const Spacer(),
+                SizedBox(height: 10,),
                 Text(
                   '$info',
                   style: const TextStyle(

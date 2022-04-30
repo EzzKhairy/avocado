@@ -155,6 +155,15 @@ Widget scaleProgressIndicator(context){
   );
 }
 
+void viewLocation(double lat, double lng) async {
+var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+if (await canLaunchUrl(uri)) {
+await launch(uri);
+} else {
+throw 'Could not launch ${uri.toString()}';
+}
+}
+
 Widget horizontalDivider({
   double height =0.25,
   double width = double.infinity,

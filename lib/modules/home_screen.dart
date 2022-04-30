@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                             function: (){navigateTo(context, const ClientsScreen());},
                             title: 'Total Sessions',
                             icon: Icons.people_alt_outlined,
-                            number: AvocadoCubit.get(context).sessionModel!.sessionData!.length,
+                            number: 50
                           ),
                         ],
                       ),

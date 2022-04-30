@@ -66,8 +66,7 @@ class MyApp extends StatelessWidget
             ..getLawyerProfile(lawyerId)
             ..getClients()
             ..getCases()
-            ..getSessions()
-              ..getExpertSessions()
+              ..getCourts()
         ),
       ],
       child: BlocConsumer<AppCubit, AvocadoStates>(

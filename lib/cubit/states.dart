@@ -1,4 +1,6 @@
 import 'package:avocado/models/clients_model.dart';
+import 'package:avocado/models/court_model.dart';
+import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/login_model.dart';
 
@@ -76,3 +78,13 @@ class GetSessionsDataError extends AvocadoStates{}
 class GetExpertSessionDataLoading extends AvocadoStates{}
 class GetExpertSessionDataSuccessful extends AvocadoStates{}
 class GetExpertSessionDataError extends AvocadoStates{}
+
+class UpdateCourtDataLoading extends AvocadoStates{}
+class UpdateCourtDataSuccessful extends AvocadoStates{
+  final CourtModel model;
+  UpdateCourtDataSuccessful(this.model);
+}
+class UpdateCourtDataError extends AvocadoStates{
+  final CourtModel model;
+  UpdateCourtDataError(this.model);
+}

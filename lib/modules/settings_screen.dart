@@ -1,5 +1,6 @@
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
+import 'package:avocado/modules/courts_screen.dart';
 import 'package:avocado/modules/expert_session_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/modules/sessions_screen.dart';
@@ -167,6 +168,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
+
+                InkWell(
+                  onTap: (){
+                    navigateTo(context, const CourtsScreen());
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      children:
+                      [
+                        Icon(Icons.assignment,color: gold,),
+                        separator(15, 0),
+                        const Text('Courts',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                        const Spacer(),
+                        const Icon(Icons.arrow_forward_ios_rounded),
+                        separator(10,0),
+                      ],
+                    ),
+                  ),
+                ),
+
 
                 Container(
                     padding:const EdgeInsets.all(15),
