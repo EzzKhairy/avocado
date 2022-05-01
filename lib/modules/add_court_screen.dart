@@ -1,7 +1,6 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/clients_model.dart';
-import 'package:avocado/models/court_model.dart';
 import 'package:avocado/modules/clients_screen.dart';
 import 'package:avocado/modules/courts_screen.dart';
 import 'package:avocado/shared/components.dart';
@@ -11,24 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
-class EditCourtInfoScreen extends StatelessWidget {
-  CourtData courtData;
-  EditCourtInfoScreen(this.courtData,{Key? key}) : super(key: key);
+class AddCourtScreen extends StatelessWidget {
+  AddCourtScreen({Key? key}) : super(key: key);
   var nameController = TextEditingController();
-  var emailController = TextEditingController();
   var addressController = TextEditingController();
   var phoneController = TextEditingController();
-  var clientFormKey = GlobalKey<FormState>();
+  var courtFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    nameController.text = courtData.name?? 'Not Found';
-    emailController.text = courtData.address?? 'Not Found';
-    addressController.text = courtData.address ?? 'Not Found';
-    phoneController.text = courtData.phone?? 'Not Found';
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
       listener: (context,state){
-        if(state is UpdateCourtDataSuccessful)
+        if(state is AddCourtDataSuccessful)
         {
           if(state.model.status == 'true')
           {
@@ -38,7 +31,7 @@ class EditCourtInfoScreen extends StatelessWidget {
             navigateAndKill(context, const CourtsScreen());
           }
         }
-        if(state is UpdateCourtDataError)
+        if(state is AddCourtDataError)
         {
           showToast(context: context, msg: state.model.message);
         }
@@ -48,7 +41,7 @@ class EditCourtInfoScreen extends StatelessWidget {
           appBar: NewGradientAppBar(
             centerTitle: true,
             title: Text(
-              'EDIT CLIENT',
+              'ADD COURT',
               style: TextStyle(
                 fontFamily: 'Nedian',
                 fontSize: 25.0,
@@ -68,7 +61,7 @@ class EditCourtInfoScreen extends StatelessWidget {
           ),
           body: SingleChildScrollView(
             child: Form(
-              key: clientFormKey,
+              key: courtFormKey,
               child: Column(
                 children: [
                   Padding(
@@ -192,6 +185,8 @@ class EditCourtInfoScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 60,)
+
                 ],
               ),
             ),
@@ -217,7 +212,7 @@ class EditCourtInfoScreen extends StatelessWidget {
               children: [
                 TextButton(
                     onPressed: () async {
-                      if(clientFormKey.currentState!.validate())
+                      if(courtFormKey.currentState!.validate())
                       {
                         if(AvocadoCubit.get(context).isChanged)
                         {
@@ -246,14 +241,13 @@ class EditCourtInfoScreen extends StatelessWidget {
                 verticalDivider(height: 25,vColor: gold),
                 TextButton(
                     onPressed: (){
-                      if(clientFormKey.currentState!.validate()) {
-                        AvocadoCubit.get(context).updateCourtProfile(
-                            courtID: courtData.id,
+                      if(courtFormKey.currentState!.validate()) {
+                        AvocadoCubit.get(context).AddCourtProfile(
                             name: nameController.text,
                             address: addressController.text,
                             phone: phoneController.text,
-                          longitude: '29.89067771693657',
-                          latitude: '31.30332516191736'
+                            longitude: '29.89067771693657',
+                            latitude: '31.30332516191736'
                         );
                       }
                     },
@@ -267,4 +261,3 @@ class EditCourtInfoScreen extends StatelessWidget {
     );
   }
 }
-

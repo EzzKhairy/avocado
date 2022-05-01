@@ -3,6 +3,7 @@ import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/modules/add_client_screen.dart';
+import 'package:avocado/modules/add_court_screen.dart';
 import 'package:avocado/modules/client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
@@ -75,7 +76,7 @@ class CourtsScreen extends StatelessWidget {
               backgroundColor: Colors.black,
               splashColor: Colors.blue,
               onPressed: (){
-                navigateTo(context, AddClientScreen());
+                navigateTo(context, AddCourtScreen());
               },
               child: Icon(Icons.add,color: gold,size: 35,),
             ),

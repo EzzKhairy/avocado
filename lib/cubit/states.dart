@@ -88,3 +88,23 @@ class UpdateCourtDataError extends AvocadoStates{
   final CourtModel model;
   UpdateCourtDataError(this.model);
 }
+
+class AddCourtDataLoading extends AvocadoStates{}
+class AddCourtDataSuccessful extends AvocadoStates{
+  final CourtModel model;
+  AddCourtDataSuccessful(this.model);
+}
+class AddCourtDataError extends AvocadoStates{
+  final CourtModel model;
+  AddCourtDataError(this.model);
+}
+
+class GetCourtDataLoading extends AvocadoStates{}
+class GetCourtDataSuccessful extends AvocadoStates{
+  final CourtModel model;
+  GetCourtDataSuccessful(this.model);
+}
+class GetCourtDataError extends AvocadoStates{
+  final CourtModel model;
+  GetCourtDataError(this.model);
+}

@@ -318,14 +318,13 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
   CourtModel? AddCourtModel;
   void AddCourtProfile({
-    required int? courtID,
     required String? address,
     required String? name,
     String? longitude,
     String? latitude,
-    String? phone,
+    required String phone,
   }){
-    emit(UpdateCourtDataLoading());
+    emit(AddCourtDataLoading());
     DioHelper.postData(
       url: 'courts',
       data: {
@@ -342,10 +341,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       if (kDebugMode) {
         print(AddCourtModel?.message);
       }
-      emit(UpdateCourtDataSuccessful(AddCourtModel!));
+      emit(AddCourtDataSuccessful(AddCourtModel!));
     }
     ).catchError((onError){
-      emit(UpdateCourtDataError(AddCourtModel!));
+      emit(AddCourtDataError(AddCourtModel!));
       if (kDebugMode) {
         print(AddCourtModel?.message);
         print(onError);
@@ -355,7 +354,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
   CourtModel? getCourtModel;
   void getCourts(){
-    emit(UpdateCourtDataLoading());
+    emit(GetCourtDataLoading());
     DioHelper.getData(
       url: 'courts',
     ).then((value) {
@@ -364,10 +363,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       if (kDebugMode) {
         print(getCourtModel?.message);
       }
-      emit(UpdateCourtDataSuccessful(getCourtModel!));
+      emit(GetCourtDataSuccessful(getCourtModel!));
     }
     ).catchError((onError){
-      emit(UpdateCourtDataError(getCourtModel!));
+      emit(GetCourtDataError(getCourtModel!));
       if (kDebugMode) {
         print(getCourtModel?.message);
         print(onError);
