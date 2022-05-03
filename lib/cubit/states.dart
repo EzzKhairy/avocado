@@ -108,3 +108,7 @@ class GetCourtDataError extends AvocadoStates{
   final CourtModel model;
   GetCourtDataError(this.model);
 }
+
+class GetExpensesDataLoading extends AvocadoStates{}
+class GetExpensesDataSuccessful extends AvocadoStates{}
+class GetExpensesDataError extends AvocadoStates{}

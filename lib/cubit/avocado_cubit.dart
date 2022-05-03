@@ -4,6 +4,7 @@ import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/court_model.dart';
+import 'package:avocado/models/expenses_model.dart';
 import 'package:avocado/models/expert_session_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/session_model.dart';
@@ -112,7 +113,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   ClientsModel? updateClientModel;
   void updateClientProfile({
     required int? clientsID,
-    required String? lawyerID,
+    required int? lawyerID,
     required String? clientNationalNumber,
     required String? name,
     required String? email,
@@ -251,7 +252,29 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     ).catchError((onError){
       emit(GetSessionsDataError());
       if (kDebugMode) {
-      print(sessionModel!.sessionData![0].sessionRequirements);
+      print(sessionModel!.sessionData![0].presentLawyerName);
+        print(onError.toString());
+      }
+    });
+  }
+
+  ExpensesModel? expensesModel;
+  void getExpenses(){
+    emit(GetExpensesDataLoading());
+    DioHelper.getData(
+      url: 'expenses',
+    ).then((value) {
+      expensesModel = ExpensesModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(expensesModel?.expensesData![0].amount);
+      }
+      emit(GetExpensesDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetExpensesDataError());
+      if (kDebugMode) {
+        print(expensesModel?.message);
         print(onError.toString());
       }
     });

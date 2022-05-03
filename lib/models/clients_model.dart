@@ -27,7 +27,7 @@ class ClientsData {
   String? email;
   String? address;
   String? phone;
-  String? lawyerId;
+  int? lawyerId;
   String? createdAt;
   String? updatedAt;
 

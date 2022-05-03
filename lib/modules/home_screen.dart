@@ -1,9 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
-import 'package:avocado/models/session_model.dart';
 import 'package:avocado/modules/case_info_screen.dart';
-import 'package:avocado/modules/case_summary_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
 import 'package:avocado/modules/tasks_screen.dart';

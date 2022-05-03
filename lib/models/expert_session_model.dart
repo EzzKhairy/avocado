@@ -28,7 +28,7 @@ class ExpertSessionData
   String? attachment;
   String? decision;
   String? nextDate;
-  String? caseId;
+  int? caseId;
   String? createdAt;
   String? updatedAt;
 
