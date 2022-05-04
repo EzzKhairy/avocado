@@ -25,6 +25,8 @@ class Lawyer
   String? profilePhoto;
   String? address;
   String? role;
+  String? dateOfBirth;
+  String? gender;
   String? createdAt;
   String? updatedAt;
 
@@ -38,6 +40,8 @@ class Lawyer
     profilePhoto = json['profile_photo_path'];
     address = json['address'];
     role = json['Role'];
+    dateOfBirth = json['DOB'];
+    gender = json['Gender'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

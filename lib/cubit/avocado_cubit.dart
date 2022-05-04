@@ -5,6 +5,8 @@ import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/expert_session_model.dart';
+import 'package:avocado/models/investegation_model.dart';
+import 'package:avocado/models/investigation_places_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/session_model.dart';
 import 'package:avocado/modules/home_screen.dart';
@@ -112,7 +114,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   ClientsModel? updateClientModel;
   void updateClientProfile({
     required int? clientsID,
-    required String? lawyerID,
+    required int? lawyerID,
     required String? clientNationalNumber,
     required String? name,
     required String? email,
@@ -279,6 +281,50 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
+  InvestigationModel? investigationModel;
+  void getInvestigations(){
+    emit(GetInvestigationsDataLoading());
+    DioHelper.getData(
+      url: 'investigations',
+    ).then((value) {
+      investigationModel = InvestigationModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(investigationModel?.investigationData![0].topic);
+      }
+      emit(GetInvestigationsDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetInvestigationsDataError());
+      if (kDebugMode) {
+        print(investigationModel?.investigationData![0].topic);
+        print(onError.toString());
+      }
+    });
+  }
+
+  InvestigationPlacesModel? investigationPlacesModel;
+  void getInvestigationPlaces(){
+    emit(GetInvestigationsPlacesDataLoading());
+    DioHelper.getData(
+      url: 'investigations',
+    ).then((value) {
+      investigationPlacesModel = InvestigationPlacesModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(investigationPlacesModel?.data![0].name);
+      }
+      emit(GetInvestigationsPlacesDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetInvestigationsPlacesDataError());
+      if (kDebugMode) {
+        print(investigationPlacesModel?.data![0].name);
+        print(onError.toString());
+      }
+    });
+  }
+
   CourtModel? updateCourtModel;
   void updateCourtProfile({
     required int? courtID,
@@ -372,6 +418,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
         print(onError);
       }
     });
+  }
+
+  void checkSession(){
+
   }
 
   int currentIndex = 0;

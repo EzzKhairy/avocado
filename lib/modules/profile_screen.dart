@@ -74,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
                         CircleAvatar(
                           radius: 45,
                           backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage('${lawyersModel.profilePhotoPath}'),
+                          backgroundImage: NetworkImage('${lawyersModel.profilePhotoPath ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZG3qkyaZZsnYyKv3-iTLyK_WT6QFmBQz3IQ&usqp=CAU'}'),
                         ),
                         const SizedBox(height: 15,),
                         Text(

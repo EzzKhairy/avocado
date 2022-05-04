@@ -26,6 +26,8 @@ class LawyerData {
   String? address;
   String? profilePhotoPath;
   String? role;
+  String? dateOfBirth;
+  String? gender;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -41,6 +43,8 @@ class LawyerData {
     address = json['address'];
     profilePhotoPath = json['profile_photo_path'];
     role = json['Role'];
+    dateOfBirth = json['DOB'];
+    gender = json['Gender'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];

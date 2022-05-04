@@ -26,7 +26,7 @@ class CaseData
   String? content;
   String? note;
   String? status;
-  String? lawyerID;
+  int? lawyerID;
   String? createdAt;
   String? updatedAt;
 

@@ -79,6 +79,14 @@ class GetExpertSessionDataLoading extends AvocadoStates{}
 class GetExpertSessionDataSuccessful extends AvocadoStates{}
 class GetExpertSessionDataError extends AvocadoStates{}
 
+class GetInvestigationsDataLoading extends AvocadoStates{}
+class GetInvestigationsDataSuccessful extends AvocadoStates{}
+class GetInvestigationsDataError extends AvocadoStates{}
+
+class GetInvestigationsPlacesDataLoading extends AvocadoStates{}
+class GetInvestigationsPlacesDataSuccessful extends AvocadoStates{}
+class GetInvestigationsPlacesDataError extends AvocadoStates{}
+
 class UpdateCourtDataLoading extends AvocadoStates{}
 class UpdateCourtDataSuccessful extends AvocadoStates{
   final CourtModel model;
