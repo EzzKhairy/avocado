@@ -241,13 +241,13 @@ class AddTaskScreen extends StatelessWidget {
                 TextButton(
                     onPressed: (){
                       if(tasksFormKey.currentState!.validate()) {
-                        AvocadoCubit.get(context).addNewTask(
-                            title: taskNameController.text,
-                          date: dateController.text,
-                          startTime: startTimeController.text,
-                          endTime: endTimeController.text,
-                          description: descriptionController.text
-                        );
+                        // AvocadoCubit.get(context).addNewTask(
+                        //     title: taskNameController.text,
+                        //   date: dateController.text,
+                        //   startTime: startTimeController.text,
+                        //   endTime: endTimeController.text,
+                        //   description: descriptionController.text
+                        // );
                       }
                     },
                     child: Text('SAVE',style: TextStyle(fontSize: 18),)

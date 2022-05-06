@@ -47,11 +47,12 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 15,),
-                ListView.builder(
+                ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemBuilder: (context,index) => tasks(AvocadoCubit.get(context).tasksModel?.tasksData![index]),
-                    itemCount: AvocadoCubit.get(context).tasksModel?.tasksData!.length
+                    separatorBuilder: (context,index) => SizedBox(height: 0,),
+                    itemBuilder: (context,index) => tasks(AvocadoCubit.get(context).getTasksModel?.tasksData![index]),
+                    itemCount: AvocadoCubit.get(context).getTasksModel!.tasksData!.length
                 )
               ],
             ),
@@ -61,52 +62,38 @@ class TasksScreen extends StatelessWidget {
     },
     );
   }
-  Widget taskBuilder (){
-    return  Expanded(
-      child: Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 5,
-            margin: const EdgeInsetsDirectional.all(2.5),
-            color: HexColor("ECECEC"),
-            shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Container(
-              height: 100,
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const[
-                   Text('Case Number : 4'),
-                   SizedBox(height: 5,),
-                   Text('Office Lawyer : Ahmed Abdallah'),
-                   SizedBox(height: 5,),
-                    ],
-                ),
-              ),
-            ),
-      );
-  }
   Widget tasks(TasksData? tasksData){
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('10:00 Am',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),),
+          Text('${tasksData?.startTime}',style: const TextStyle(fontSize: 13,fontWeight: FontWeight.bold),),
           const SizedBox(width: 10,),
-          Column(
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.center,
-                children: const [
-                  CircleAvatar(radius: 5,),
-                  CircleAvatar(radius: 3.5,backgroundColor: Colors.white),
-                ],
-              ),
-              verticalDivider(),
-            ],
+          pole(),
+          const SizedBox(width: 10,),
+      Expanded(
+        child: Card(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          elevation: 5,
+          margin: const EdgeInsetsDirectional.all(2.5),
+          color: HexColor("ECECEC"),
+          shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Container(
+            height: 100,
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${tasksData?.title}'),
+                SizedBox(height: 5,),
+                Text('${tasksData?.description}'),
+                SizedBox(height: 5,),
+              ],
+            ),
           ),
-          const SizedBox(width: 10,),
-          taskBuilder(),
+        ),
+      )
         ],
       ),
     );

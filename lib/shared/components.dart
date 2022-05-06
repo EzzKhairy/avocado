@@ -184,6 +184,21 @@ Widget verticalDivider({
   width: width,
 );
 
+Widget pole (){
+  return  Column(
+    children: [
+      Stack(
+        alignment: AlignmentDirectional.center,
+        children: const [
+          CircleAvatar(radius: 5,),
+          CircleAvatar(radius: 3.5,backgroundColor: Colors.white),
+        ],
+      ),
+      verticalDivider(),
+    ],
+  );
+}
+
 void signOut(context){
   CacheHelper.deleteToken(key: 'token').then((value)
   {
