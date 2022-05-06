@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget
             ..getClients()
             ..getCases()
             ..getCourts()
-            ..getExpenses()
+            ..getTasks()
 
         ),
       ],

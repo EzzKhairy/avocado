@@ -10,6 +10,7 @@ import 'package:avocado/models/investegation_model.dart';
 import 'package:avocado/models/investigation_places_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/session_model.dart';
+import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/notification_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
@@ -239,32 +240,28 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   SessionModel? sessionModel;
-  void getSessions(){
+  void getSessions({required int ?caseId}){
     emit(GetSessionsDataLoading());
     DioHelper.getData(
-      url: 'sessions',
+      url: 'sessions_foriegn/$caseId',
     ).then((value) {
       sessionModel = SessionModel.fromJson(value.data);
       //print(element);
-      if (kDebugMode) {
-        print(sessionModel?.sessionData![0].presentLawyerName);
-      }
       emit(GetSessionsDataSuccessful());
     }
     ).catchError((onError){
       emit(GetSessionsDataError());
       if (kDebugMode) {
-      print(sessionModel!.sessionData![0].presentLawyerName);
         print(onError.toString());
       }
     });
   }
 
   ExpensesModel? expensesModel;
-  void getExpenses(){
+  void getExpenses({required int? caseId}){
     emit(GetExpensesDataLoading());
     DioHelper.getData(
-      url: 'expenses',
+      url: 'expenses_foriegn/$caseId',
     ).then((value) {
       expensesModel = ExpensesModel.fromJson(value.data);
       //print(element);
@@ -283,10 +280,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   ExpertSessionModel? expertSessionModel;
-  void getExpertSessions(){
+  void getExpertSessions({required int? caseId}){
     emit(GetExpertSessionDataLoading());
     DioHelper.getData(
-      url: 'expert_sessions',
+      url: 'expert_sessions_foriegn/$caseId',
     ).then((value) {
       expertSessionModel = ExpertSessionModel.fromJson(value.data);
       //print(element);
@@ -305,10 +302,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   InvestigationModel? investigationModel;
-  void getInvestigations(){
+  void getInvestigations({required int? caseId}){
     emit(GetInvestigationsDataLoading());
     DioHelper.getData(
-      url: 'investigations',
+      url: 'investigations_foriegn/$caseId',
     ).then((value) {
       investigationModel = InvestigationModel.fromJson(value.data);
       //print(element);
@@ -443,8 +440,48 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
-  void checkSession(){
+  TasksModel? tasksModel;
+  void addNewTask({
+  required String title,
+  required String date,
+  required String startTime,
+    String? endTime,
+    String? description,
+  }){
+    emit(AddNewTaskLoading());
+    DioHelper.postData(
+        url: 'tasks',
+        data: {
+          'Title' : title,
+          'Date':date,
+          'StartTime' : startTime,
+          'EndTime':endTime,
+          'Description':description
+        }).then((value) {
+          tasksModel = TasksModel.fromJson(value.data);
+          print(tasksModel!.message);
+          emit(AddNewTaskSuccessful(tasksModel!));
+    }).catchError((error){
+      emit(AddNewTaskError(tasksModel!));
+      print(tasksModel!.message);
+      print(error.toString());
+    });
+  }
 
+  TasksModel? getTasksModel;
+  void getTasks(){
+    emit(GetTasksLoading());
+    DioHelper.getData(
+        url: 'tasks',
+       ).then((value) {
+      getTasksModel = TasksModel.fromJson(value.data);
+      print(getTasksModel!.message);
+      emit(GetTasksSuccessful(getTasksModel!));
+    }).catchError((error){
+      emit(GetTasksError(getTasksModel!));
+      print(getTasksModel!.message);
+      print(error.toString());
+    });
   }
 
   int currentIndex = 0;
@@ -466,5 +503,4 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     isChanged = true;
     emit(ChangeNavBarState());
   }
-
 }

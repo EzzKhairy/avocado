@@ -1,8 +1,12 @@
+import 'package:avocado/cubit/avocado_cubit.dart';
+import 'package:avocado/cubit/states.dart';
+import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import 'add_task_screen.dart';
@@ -12,44 +16,49 @@ class TasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(
-            children: [
-              CalendarAgenda(
-                initialDate: DateTime.now(),
-                firstDate: DateTime.now().subtract(const Duration(days: 140)),
-                lastDate: DateTime.now().add(const Duration(days: 4)),
-                backgroundColor: Colors.white,
-                dateColor: Colors.black,
-                selectedDateColor: gold,
-                onDateSelected: (date) {
-                  if (kDebugMode) {
-                    print(date);
-                }},
-                calendarEventSelectedColor: gold,
-               calendarEventColor: Colors.black,
-                leading: IconButton(
-                  onPressed: (){
-                    navigateTo(context, AddTaskScreen());
-                  },
-                  icon:  Icon(Icons.add,color: gold,size: 30,),
+    return BlocConsumer<AvocadoCubit,AvocadoStates>(
+        listener: (context,state){},
+        builder: (context,state){
+      return Scaffold(
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              children: [
+                CalendarAgenda(
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now().subtract(const Duration(days: 140)),
+                  lastDate: DateTime.now().add(const Duration(days: 4)),
+                  backgroundColor: Colors.white,
+                  dateColor: Colors.black,
+                  selectedDateColor: gold,
+                  onDateSelected: (date) {
+                    if (kDebugMode) {
+                      print(date);
+                    }},
+                  calendarEventSelectedColor: gold,
+                  calendarEventColor: Colors.black,
+                  leading: IconButton(
+                    onPressed: (){
+                      navigateTo(context, AddTaskScreen());
+                    },
+                    icon:  Icon(Icons.add,color: gold,size: 30,),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15,),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context,index) => tasks(),
-                  itemCount: 10
-              )
-            ],
+                const SizedBox(height: 15,),
+                ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context,index) => tasks(AvocadoCubit.get(context).tasksModel?.tasksData![index]),
+                    itemCount: AvocadoCubit.get(context).tasksModel?.tasksData!.length
+                )
+              ],
+            ),
           ),
         ),
-      ),
+      );
+    },
     );
   }
   Widget taskBuilder (){
@@ -76,7 +85,7 @@ class TasksScreen extends StatelessWidget {
             ),
       );
   }
-  Widget tasks(){
+  Widget tasks(TasksData? tasksData){
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Row(

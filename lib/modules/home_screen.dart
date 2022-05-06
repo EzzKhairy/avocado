@@ -243,7 +243,7 @@ class HomeScreen extends StatelessWidget {
 
 
   Widget buildCasesItem(CaseData caseData, context, {required width,})  => GestureDetector(
-      onTap: (){navigateTo(context, CaseInfoScreen());},
+      onTap: (){navigateTo(context, CaseInfoScreen(caseData));},
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,

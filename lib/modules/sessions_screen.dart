@@ -61,7 +61,7 @@ class SessionsScreen extends StatelessWidget {
   }
 
 
-  Widget buildSessionItem(SessionData sessionData,context)=> GestureDetector(
+  Widget buildSessionItem(SessionData? sessionData,context)=> GestureDetector(
     onTap: (){navigateTo(context, SessionInfoScreen());},
     child: Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -77,7 +77,7 @@ class SessionsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Role.No ${sessionData.roleNumber}'.toUpperCase(),
+                'Role.No ${sessionData?.roleNumber}'.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -91,7 +91,7 @@ class SessionsScreen extends StatelessWidget {
                 child: horizontalDivider(height: 1.5,hColor: Colors.grey),
               ),
               Text(
-                'Opened ${sessionData.createdAt}'.split('T').elementAt(0),
+                'Opened ${sessionData?.createdAt}'.split('T').elementAt(0),
                 maxLines: 1,
                 style: const TextStyle(
                   fontSize: 16,
@@ -100,7 +100,7 @@ class SessionsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               Text(
-                '${sessionData.presentLawyerName}',
+                '${sessionData?.presentLawyerName}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -108,7 +108,7 @@ class SessionsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               Text(
-                '${sessionData.sessionReason}',
+                '${sessionData?.sessionReason}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 15,
@@ -119,7 +119,7 @@ class SessionsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    '${sessionData.sessionDate}',
+                    '${sessionData?.sessionDate}',
                     style: const TextStyle(
                       color: Colors.green,
                       fontSize: 15,
@@ -128,7 +128,7 @@ class SessionsScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    '${sessionData.nextDate}',
+                    '${sessionData?.nextDate}',
                     style: const TextStyle(
                       color: Colors.green,
                       fontSize: 15,

@@ -3,6 +3,7 @@ import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/login_model.dart';
+import 'package:avocado/models/tasks_model.dart';
 
 abstract class AvocadoStates{}
 
@@ -120,3 +121,23 @@ class GetCourtDataError extends AvocadoStates{
 class GetExpensesDataLoading extends AvocadoStates{}
 class GetExpensesDataSuccessful extends AvocadoStates{}
 class GetExpensesDataError extends AvocadoStates{}
+
+class AddNewTaskLoading extends AvocadoStates{}
+class AddNewTaskSuccessful extends AvocadoStates{
+  final TasksModel model;
+  AddNewTaskSuccessful(this.model);
+}
+class AddNewTaskError extends AvocadoStates{
+  final TasksModel model;
+  AddNewTaskError(this.model);
+}
+
+class GetTasksLoading extends AvocadoStates{}
+class GetTasksSuccessful extends AvocadoStates{
+  final TasksModel model;
+  GetTasksSuccessful(this.model);
+}
+class GetTasksError extends AvocadoStates{
+  final TasksModel model;
+  GetTasksError(this.model);
+}
