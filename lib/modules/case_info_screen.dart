@@ -1,4 +1,3 @@
-import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
@@ -10,7 +9,6 @@ import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
-import 'package:folding_cell/folding_cell.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'dart:math' as math;
 
@@ -22,24 +20,22 @@ class CaseInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        print(caseData.id);
-        AvocadoCubit.get(context).getSessions(caseId: caseData.id);
-        SessionModel? sessionModel = AvocadoCubit.get(context).sessionModel;
+
+        //print(sessionModel!.sessionData![0].decision  'Not Found');
         return BlocConsumer<AvocadoCubit, AvocadoStates>(
           listener: (context, state) {},
           builder: (context, state) {
             return Conditional.single(
                 context: context,
-                conditionBuilder: (context) => state is GetSessionsDataSuccessful ,
+                conditionBuilder: (context) => state != GetSessionsDataLoading,
             widgetBuilder:(context) => Scaffold(
                 appBar: NewGradientAppBar(
                   automaticallyImplyLeading: false,
                   leading: IconButton(
                       icon: const Icon(Icons.arrow_back),
                       onPressed: (){
-                        AvocadoCubit.get(context).sessionModel = null;
-                        sessionModel = null;
-                        navigateAndKill(context, const AppLayout());
+                        AvocadoCubit.get(context).resetSession();
+                        pop(context);
                       }
                   ),
                   centerTitle: true,
@@ -156,31 +152,48 @@ class CaseInfoScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        if(sessionModel != null)
-                          ExpansionWidget(
-                            titleBuilder: (double animationValue, _,
-                                bool isExpand, toogleFunction) {
-                              return InkWell(
-                                onTap: () => toogleFunction(animated: true),
-                                child: buildCaseInfoScreenItem(
-                                    animationValue: animationValue,
-                                    extras: true,
-                                    context: context,
-                                    title: 'Sessions',
-                                    info: '${sessionModel?.sessionData!.length}'' Sessions included'),
+                          Builder(
+                            builder: (context) {
+                              AvocadoCubit.get(context).getSessions(caseId: caseData.id);
+                              //CaseData? singleCaseData = AvocadoCubit.get(context).singleCaseModel?.casesData![0];
+                              print(caseData.title);
+                              SessionModel? sessionModel = AvocadoCubit.get(context).sessionModel;
+                              if(sessionModel!=null && sessionModel.sessionData != []) {
+                                return ExpansionWidget(
+                                titleBuilder: (double animationValue, _,
+                                    bool isExpand, toogleFunction) {
+                                  return InkWell(
+                                    onTap: () => toogleFunction(animated: true),
+                                    child: buildCaseInfoScreenItem(
+                                        animationValue: animationValue,
+                                        extras: true,
+                                        context: context,
+                                        title: 'Sessions',
+                                        info:
+                                            '${sessionModel.sessionData!.length}'
+                                            ' Sessions included'),
+                                  );
+                                },
+                                content: SizedBox(
+                                  height: 180,
+                                  child: ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return buildSessionItem(
+                                            sessionModel.sessionData![index],
+                                            context);
+                                      },
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                      itemCount:
+                                          sessionModel.sessionData!.length),
+                                ),
                               );
-                            },
-                            content: SizedBox(
-                              height: 180,
-                              child: ListView.separated(
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index){ return
-                                    buildSessionItem(sessionModel?.sessionData![index], context);
-                                  },
-                                  separatorBuilder: (context, index) => const SizedBox(width: 10,),
-                                  itemCount: sessionModel!.sessionData!.length
-                              ),
-                            ),
+                            }
+                              else {return const SizedBox(height: 0,);}
+                          }
                           )
                       ],
                     ),
@@ -383,11 +396,7 @@ class CaseInfoScreen extends StatelessWidget {
                 color: gold,
               ),
             ),
-            onPressed: () {
-              final foldingCellState =
-                  context.findAncestorStateOfType<SimpleFoldingCellState>();
-              foldingCellState?.toggleFold();
-            },
+            onPressed: () {},
           ),
         ),
       ));

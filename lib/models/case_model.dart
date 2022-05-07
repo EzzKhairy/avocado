@@ -21,6 +21,7 @@ class CaseData
 {
   int? id;
   String? caseID;
+  String? title;
   String? caseType;
   String? contender;
   int? courtNumber;
@@ -35,6 +36,7 @@ class CaseData
   {
     id = json['id'];
     caseID = json['Case_id'];
+    title = json['Title'];
     caseType = json['Case_type'];
     contender = json['contender'];
     courtNumber = json['Court_no'];

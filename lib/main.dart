@@ -28,6 +28,7 @@ void main()async
   lawyerId = CacheHelper.getData(key : 'id');
   print(token);
   print(lawyerId);
+  print(DateTime.now());
 
 
   if(token != null)
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget
             ..getClients()
             ..getCases()
             ..getCourts()
-            ..getTasks()
+            ..getTodayTasks(DateTime.now().toString().split(' ').elementAt(0))
 
         ),
       ],

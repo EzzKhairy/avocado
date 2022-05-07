@@ -229,11 +229,27 @@ class AvocadoCubit extends Cubit <AvocadoStates>
         print(caseModel?.casesData![0].caseID);
       }
       emit(GetCasesDataSuccessful());
-    }
-    ).catchError((onError){
+    }).catchError((onError){
       emit(GetCasesDataError());
       if (kDebugMode) {
         print(caseModel?.casesData![0].courtNumber);
+        print(onError.toString());
+      }
+    });
+  }
+
+  CaseModel? singleCaseModel;
+  void getSingleCase(int? caseId){
+    emit(GetCasesDataLoading());
+    DioHelper.getData(
+      url: 'cases/$caseId',
+    ).then((value) {
+      singleCaseModel = CaseModel.fromJson(value.data);
+      getSessions(caseId: caseId);
+      emit(GetCasesDataSuccessful());
+    }).catchError((onError){
+      emit(GetCasesDataError());
+      if (kDebugMode) {
         print(onError.toString());
       }
     });
@@ -255,6 +271,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
         print(onError.toString());
       }
     });
+  }
+  void resetSession(){
+    sessionModel = null;
+    emit(RestSessionsDataSuccesful());
   }
 
   ExpensesModel? expensesModel;
@@ -469,13 +489,14 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   TasksModel? getTasksModel;
-  void getTasks(){
+  void getTodayTasks(String? date){
     emit(GetTasksLoading());
     DioHelper.getData(
-        url: 'tasks',
+        url: 'tasks_search/$date',
        ).then((value) {
       getTasksModel = TasksModel.fromJson(value.data);
       print(getTasksModel!.message);
+      print(getTasksModel!.tasksData != [] ? getTasksModel!.tasksData![0].title : 'Not Found');
       emit(GetTasksSuccessful(getTasksModel!));
     }).catchError((error){
       emit(GetTasksError(getTasksModel!));
