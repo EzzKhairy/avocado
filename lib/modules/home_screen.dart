@@ -1,9 +1,11 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
+import 'package:avocado/models/session_model.dart';
 import 'package:avocado/modules/case_info_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
+import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/modules/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
@@ -13,12 +15,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit, AvocadoStates>(
-      listener: (BuildContext context, state) {
-      },
+      listener: (BuildContext context, state) {},
       builder: (BuildContext context, state) {
         List<CaseData>? casesData = AvocadoCubit.get(context).caseModel?.casesData;
         if(casesData!.isEmpty){return const Center(child: CircularProgressIndicator());}
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 10,),
                           buildHomeCard(
-                            function: (){navigateTo(context, const ClientsScreen());},
+                            function: (){navigateTo(context, SessionInfoScreen());},
                             title: 'Total Sessions',
                             icon: Icons.people_alt_outlined,
                             number: 50
@@ -148,8 +149,8 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-  
-  
+
+
   Widget buildTaskHomeItem(context)
   {
     return Card(
@@ -269,7 +270,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 5.0),
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: horizontalDivider(height: 1.5,hColor: Colors.grey),
                 ),
                  Text(

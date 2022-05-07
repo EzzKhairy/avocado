@@ -9,6 +9,7 @@ import 'package:avocado/models/expert_session_model.dart';
 import 'package:avocado/models/investegation_model.dart';
 import 'package:avocado/models/investigation_places_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
+import 'package:avocado/models/records_model.dart';
 import 'package:avocado/models/session_model.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/home_screen.dart';
@@ -277,6 +278,25 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     emit(RestSessionsDataSuccesful());
   }
 
+  RecordsModel? recordsModel;
+  void getRecords(){
+    emit(GetRecordsDataLoading());
+    DioHelper.getData(
+      url: 'records',
+    ).then((value) {
+      recordsModel = RecordsModel.fromJson(value.data);
+      //print(element);
+      emit(GetRecordsDataSuccessful());
+      print(recordsModel!.recordsData![0].clientName);
+    }
+    ).catchError((onError){
+      emit(GetRecordsDataError());
+      if (kDebugMode) {
+        print(onError.toString());
+      }
+    });
+  }
+
   ExpensesModel? expensesModel;
   void getExpenses({required int? caseId}){
     emit(GetExpensesDataLoading());
@@ -402,7 +422,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
-  CourtModel? AddCourtModel;
+  CourtModel? addCourtModel;
   void AddCourtProfile({
     required String? address,
     required String? name,
@@ -422,17 +442,17 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       },
 
     ).then((value) {
-      AddCourtModel = CourtModel.fromJson(value.data);
+      addCourtModel = CourtModel.fromJson(value.data);
       //print(element);
       if (kDebugMode) {
-        print(AddCourtModel?.message);
+        print(addCourtModel?.message);
       }
-      emit(AddCourtDataSuccessful(AddCourtModel!));
+      emit(AddCourtDataSuccessful(addCourtModel!));
     }
     ).catchError((onError){
-      emit(AddCourtDataError(AddCourtModel!));
+      emit(AddCourtDataError(addCourtModel!));
       if (kDebugMode) {
-        print(AddCourtModel?.message);
+        print(addCourtModel?.message);
         print(onError);
       }
     });

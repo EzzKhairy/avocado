@@ -2,6 +2,7 @@ import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/app_cubit.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/modules/login_screen.dart';
+import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/shared/bloc_observer.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget
             ..getCases()
             ..getCourts()
             ..getTodayTasks(DateTime.now().toString().split(' ').elementAt(0))
+              ..getRecords()
 
         ),
       ],

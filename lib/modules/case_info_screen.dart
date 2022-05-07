@@ -85,8 +85,15 @@ class CaseInfoScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                             color: Colors.black)),
+                                    caseData.status == 'open'?
                                     TextSpan(
-                                        text: '${caseData.status} ',
+                                        text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.green)) :
+                                    TextSpan(
+                              text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
@@ -209,7 +216,7 @@ class CaseInfoScreen extends StatelessWidget {
   }
 
   Widget buildSessionItem(SessionData? sessionData,context)=> GestureDetector(
-    onTap: (){navigateTo(context, const SessionInfoScreen());},
+    onTap: (){navigateTo(context, SessionInfoScreen());},
     child: Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5,

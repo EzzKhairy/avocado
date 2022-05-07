@@ -12,6 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
+import 'expert_session__info_screen.dart';
+
 class ExpertSessionScreen extends StatelessWidget {
   const ExpertSessionScreen({Key? key}) : super(key: key);
 
@@ -58,7 +60,7 @@ class ExpertSessionScreen extends StatelessWidget {
                       ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) => buildSessionItem(expertSessionData![index],context),
+                        itemBuilder: (context, index) => buildExpertSessionItem(expertSessionData![index],context),
                         separatorBuilder: (context, index) => const SizedBox(height: 10,),
                         itemCount: expertSessionData!.length,
                       ),
@@ -75,8 +77,8 @@ class ExpertSessionScreen extends StatelessWidget {
   }
 
 
-  Widget buildSessionItem(ExpertSessionData expertSessionData,context)=> GestureDetector(
-    onTap: (){navigateTo(context, SessionInfoScreen());},
+  Widget buildExpertSessionItem(ExpertSessionData expertSessionData,context)=> GestureDetector(
+    onTap: (){navigateTo(context, ExpertSessionInfoScreen());},
     child: Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5,

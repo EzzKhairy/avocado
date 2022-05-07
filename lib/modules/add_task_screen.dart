@@ -208,49 +208,53 @@ class AddTaskScreen extends StatelessWidget {
                     end: AlignmentDirectional.bottomStart,
                     stops: const [0.20,0.17,0.40]
                 ),
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TextButton(
-                    onPressed: () async {
-                      if(tasksFormKey.currentState!.validate())
-                      {
-                        if(AvocadoCubit.get(context).isChanged)
+                Expanded(
+                  child: TextButton(
+                      onPressed: () async {
+                        if(tasksFormKey.currentState!.validate())
                         {
-                          final shouldPop = await showDialog(
-                              context: context,
-                              builder:
-                                  (context) => baseAlertDialog(
+                          if(AvocadoCubit.get(context).isChanged)
+                          {
+                            final shouldPop = await showDialog(
                                 context: context,
-                                title: 'Discard Changes',
-                                content: 'Are you sure you want to discard the changes?',
-                                outlinedButtonText: 'No',
-                                elevatedButtonText: 'Yes',
-                              )
-                          );
-                          if (shouldPop == true)
-                          {pop(context);}
+                                builder:
+                                    (context) => baseAlertDialog(
+                                  context: context,
+                                  title: 'Discard Changes',
+                                  content: 'Are you sure you want to discard the changes?',
+                                  outlinedButtonText: 'No',
+                                  elevatedButtonText: 'Yes',
+                                )
+                            );
+                            if (shouldPop == true)
+                            {pop(context);}
+                          }
                         }
-                      }
-                    },
-                    child: Text('CANCEL',style: TextStyle(fontSize: 18),)
+                      },
+                      child: const Text('CANCEL',style: TextStyle(fontSize: 18))
+                  ),
                 ),
                 verticalDivider(height: 25,vColor: gold),
-                TextButton(
-                    onPressed: (){
-                      if(tasksFormKey.currentState!.validate()) {
-                        // AvocadoCubit.get(context).addNewTask(
-                        //     title: taskNameController.text,
-                        //   date: dateController.text,
-                        //   startTime: startTimeController.text,
-                        //   endTime: endTimeController.text,
-                        //   description: descriptionController.text
-                        // );
-                      }
-                    },
-                    child: Text('SAVE',style: TextStyle(fontSize: 18),)
+                Expanded(
+                  child: TextButton(
+                      onPressed: (){
+                        if(tasksFormKey.currentState!.validate()) {
+                          // AvocadoCubit.get(context).addNewTask(
+                          //     title: taskNameController.text,
+                          //   date: dateController.text,
+                          //   startTime: startTimeController.text,
+                          //   endTime: endTimeController.text,
+                          //   description: descriptionController.text
+                          // );
+                        }
+                      },
+                      child: const Text('SAVE',style: TextStyle(fontSize: 18),)
+                  ),
                 ),
               ],
             ),

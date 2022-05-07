@@ -183,8 +183,6 @@ class ClientInfoScreen extends StatelessWidget {
               ),
             ),
           ),
-
-
         ],
       ),
     );

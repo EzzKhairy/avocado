@@ -51,7 +51,7 @@ class CasesScreen extends StatelessWidget {
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => const HomeScreen().buildCasesItem(casesData![index],context,width: double.infinity),
+                      itemBuilder: (context, index) => HomeScreen().buildCasesItem(casesData![index],context,width: double.infinity),
                       separatorBuilder: (context, index) => const SizedBox(height: 10,),
                       itemCount: casesData!.length,
                     ),

@@ -29,8 +29,7 @@ class TasksScreen extends StatelessWidget {
                 children: [
                   CalendarAgenda(
                     initialDate: DateTime.now(),
-                    firstDate:
-                        DateTime.now().subtract(const Duration(days: 140)),
+                    firstDate: DateTime.now().subtract(const Duration(days: 140)),
                     lastDate: DateTime.now().add(const Duration(days: 4)),
                     backgroundColor: Colors.white,
                     dateColor: Colors.black,
@@ -67,9 +66,7 @@ class TasksScreen extends StatelessWidget {
                       widgetBuilder: (context) => ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          separatorBuilder: (context, index) => SizedBox(
-                                height: 0,
-                              ),
+                          separatorBuilder: (context, index) => const SizedBox(height: 0,),
                           itemBuilder: (context, index) => tasks(
                               AvocadoCubit.get(context)
                                   .getTasksModel
@@ -129,11 +126,11 @@ class TasksScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('${tasksData?.title}'),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text('${tasksData?.description}'),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                   ],
