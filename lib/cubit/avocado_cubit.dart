@@ -282,10 +282,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   RecordsModel? recordsModel;
-  void getRecords(int? caseId){
+  void getRecords(){
     emit(GetRecordsDataLoading());
     DioHelper.getData(
-      url: 'records_foriegn/$caseId',
+      url: 'records',
     ).then((value) {
       recordsModel = RecordsModel.fromJson(value.data);
       //print(element);
@@ -345,10 +345,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   InvestigationModel? investigationModel;
-  void getInvestigations({required int? caseId}){
+  void getInvestigations(){
     emit(GetInvestigationsDataLoading());
     DioHelper.getData(
-      url: 'investigations_foriegn/$caseId',
+      url: 'investigations',
     ).then((value) {
       investigationModel = InvestigationModel.fromJson(value.data);
       //print(element);

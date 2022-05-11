@@ -17,7 +17,6 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-  
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit, AvocadoStates>(
@@ -256,9 +255,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10,),
-                const Text(
-                  'Mohamed Ahmed',
-                  style: TextStyle(
+                Text(
+                  '${caseData.clientName}',
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                   ),

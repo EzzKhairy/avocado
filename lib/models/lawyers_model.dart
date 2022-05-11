@@ -28,6 +28,7 @@ class LawyerData {
   String? role;
   String? dateOfBirth;
   String? gender;
+  String? phone;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -45,6 +46,7 @@ class LawyerData {
     role = json['Role'];
     dateOfBirth = json['DOB'];
     gender = json['Gender'];
+    phone = json['phone'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];

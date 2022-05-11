@@ -23,6 +23,7 @@ class CaseData
   String? caseID;
   String? title;
   String? caseType;
+  String? clientName;
   String? contender;
   int? courtNumber;
   String? content;
@@ -38,6 +39,7 @@ class CaseData
     caseID = json['Case_id'];
     title = json['Title'];
     caseType = json['Case_type'];
+    clientName = json['client_name'];
     contender = json['contender'];
     courtNumber = json['Court_no'];
     content = json['Content'];

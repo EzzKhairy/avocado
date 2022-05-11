@@ -146,9 +146,8 @@ class GetTasksError extends AvocadoStates{
 
 
 class GetRecordsDataLoading extends AvocadoStates{}
-class GetRecordsDataSuccessful extends AvocadoStates{
+class GetRecordsDataSuccessful extends AvocadoStates{}
+class GetRecordsDataError extends AvocadoStates{}
 
-}
-class GetRecordsDataError extends AvocadoStates{
 
-}
+

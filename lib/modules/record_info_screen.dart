@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
+import 'package:avocado/models/records_model.dart';
 import 'package:avocado/models/session_model.dart';
 import 'package:avocado/modules/expert_session_screen.dart';
-import 'package:avocado/modules/investigation_info_screen.dart';
-import 'package:avocado/modules/investigations_screen.dart';
-import 'package:avocado/modules/records_screen.dart';
 import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/modules/sessions_screen.dart';
 import 'package:avocado/shared/components.dart';
@@ -20,25 +18,22 @@ import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'dart:math' as math;
 
 
-class CaseInfoScreen extends StatelessWidget {
-  CaseData caseData;
-  CaseInfoScreen(this.caseData,{Key? key}) : super(key: key);
+class RecordInfoScreen extends StatelessWidget {
+  RecordsData recordsData;
+  RecordInfoScreen(this.recordsData,{Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
           String? lawyerName;
-          String? courtName;
-          AvocadoCubit.get(context).getLawyerById(caseData.lawyerID);
-          AvocadoCubit.get(context).getCourtById(caseData.courtNumber);
+          AvocadoCubit.get(context).getLawyerById(recordsData.lawyerId);
         return BlocConsumer<AvocadoCubit, AvocadoStates>(
           listener: (context, state) {},
           builder: (context, state) {
            lawyerName = AvocadoCubit.get(context).getLawyerModel?.data![0].name ?? 'Not Found';
-           courtName = AvocadoCubit.get(context).getCourtByIdModel?.courtData![0].name ?? 'Not Found';
             return Conditional.single(
                 context: context,
-                conditionBuilder: (context) => state is GetLawyerProfileSuccessful || state is GetCourtDataSuccessful,
+                conditionBuilder: (context) => state is GetLawyerProfileSuccessful || state is GetRecordsDataSuccessful,
                 widgetBuilder:(context) => Scaffold(
                     appBar: NewGradientAppBar(
                       automaticallyImplyLeading: false,
@@ -47,16 +42,15 @@ class CaseInfoScreen extends StatelessWidget {
                           onPressed: (){
                             AvocadoCubit.get(context).resetSession();
                             lawyerName = '';
-                            courtName = '';
                             pop(context);
                           }
                       ),
                       centerTitle: true,
                       title: Text(
-                        'Case Summary'.toUpperCase(),
+                        'Record Summary'.toUpperCase(),
                         style: TextStyle(
                           fontFamily: 'Nedian',
-                          fontSize: 25.0,
+                          fontSize: 22.0,
                           color: gold,
                         ),
                       ),
@@ -82,7 +76,7 @@ class CaseInfoScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Case: ''${caseData.caseID?.toUpperCase()}',
+                                    'Record: ''${recordsData.recordId?.toUpperCase()}',
                                     style: const TextStyle(
                                         letterSpacing: 2,
                                         fontWeight: FontWeight.bold, fontSize: 20),
@@ -90,56 +84,32 @@ class CaseInfoScreen extends StatelessWidget {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  RichText(
-                                      text: TextSpan(children: [
-                                        const TextSpan(
-                                            text: 'Status: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                color: Colors.black)),
-                                        caseData.status == 'open'?
-                                        TextSpan(
-                                            text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                color: Colors.green)) :
-                                        TextSpan(
-                                            text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                color: Colors.red)),
-                                      ])),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                 ],
                               ),
                             ),
-                            buildCaseInfoScreenItem(
+                            buildRecordInfoScreenItem(
                                 context: context,
-                                title: 'Title',
-                                info: '${caseData.title}'),
+                                title: 'Topic',
+                                info: '${recordsData.topic}'),
                             const SizedBox(
                               height: 10,
                             ),
-                            buildCaseInfoScreenItem(
-                                context: context, title: 'Type', info: '${caseData.caseType}'),
+                            buildRecordInfoScreenItem(
+                                context: context, title: 'Client', info: '${recordsData.clientName}'),
                             const SizedBox(
                               height: 10,
                             ),
-                            buildCaseInfoScreenItem(
-                                context: context, title: 'Court', info: '${courtName}'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            buildCaseInfoScreenItem(
+                            buildRecordInfoScreenItem(
                                 context: context, title: 'Lawyer', info: '${lawyerName}'),
                             const SizedBox(
                               height: 10,
                             ),
+                            buildRecordInfoScreenItem(
+                                context: context, title: 'Contender', info: '${recordsData.contender}'),
+                            const SizedBox(height: 10),
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -152,7 +122,7 @@ class CaseInfoScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Description',
+                                      'Note'.toUpperCase(),
                                       style: TextStyle(
                                         color: gold,
                                         fontSize: 16,
@@ -160,16 +130,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(height: 10),
-                                    const Text(
-                                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                                          " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
-                                          " when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                                          "when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
+                                    Text('${recordsData.note}')
                                   ],
                                 ),
                               ),
@@ -217,77 +178,6 @@ class CaseInfoScreen extends StatelessWidget {
                                   child: Text('Attachments',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                      onPressed: (){
-                                        navigateTo(context, SessionsScreen(caseData.id));
-                                      },
-                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-
-                                      child: const Text('Sessions',style: TextStyle(color: Colors.white))
-                                  ),
-                                ),
-                                SizedBox(width: 15,),
-                                Expanded(
-                                  child: ElevatedButton(
-                                      onPressed: (){
-                                        navigateTo(context, ExpertSessionScreen(caseData.id));
-                                      },
-                                      child: const Text('Expert Sessions')
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                      onPressed: (){
-                                        navigateTo(context, RecordsScreen(caseData.id));
-                                      },
-                                      child: const Text('Records')
-                                  ),
-                                ),
-                                SizedBox(width: 15,),
-                                Expanded(
-                                  child: ElevatedButton(
-                                      onPressed: (){
-                                        navigateTo(context, InvestigationsScreen(caseData.id));
-                                      },
-                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-
-                                      child: const Text('Investigations',style: TextStyle(color: Colors.white),)
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                      onPressed: (){
-                                        navigateTo(context, SessionsScreen(caseData.id));
-                                      },
-                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                                      child: const Text('Expenses',style: TextStyle(color: Colors.white),)
-                                  ),
-                                ),
-                                SizedBox(width: 15,),
-                                Expanded(
-                                  child: ElevatedButton(
-                                      onPressed: (){
-                                        navigateTo(context, SessionsScreen(caseData.id));
-                                      },
-                                      child: const Text('Payments')
-                                  ),
-                                ),
-                              ],
-                            )
                           ],
                         ),
                       ),
@@ -385,7 +275,7 @@ class CaseInfoScreen extends StatelessWidget {
   );
 
 
-  Widget buildCaseInfoScreenItem({
+  Widget buildRecordInfoScreenItem({
     required context,
     required String? title,
     required String? info,
