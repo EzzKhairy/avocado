@@ -184,7 +184,7 @@ Widget verticalDivider({
   width: width,
 );
 
-Widget pole (){
+Widget pole (double height){
   return  Column(
     children: [
       Stack(
@@ -194,7 +194,9 @@ Widget pole (){
           CircleAvatar(radius: 3.5,backgroundColor: Colors.white),
         ],
       ),
-      verticalDivider(),
+      verticalDivider(
+        height: height
+      ),
     ],
   );
 }

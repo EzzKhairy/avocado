@@ -68,8 +68,7 @@ class MyApp extends StatelessWidget
             ..getClients()
             ..getCases()
             ..getCourts()
-            ..getTodayTasks(DateTime.now().toString().split(' ').elementAt(0))
-              ..getRecords()
+            ..getTodayTasks('2022-05-09')
 
         ),
       ],

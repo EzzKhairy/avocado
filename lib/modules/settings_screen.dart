@@ -129,48 +129,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 horizontalDivider(),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, SessionsScreen());
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                        Icon(Icons.assignment,color: gold,),
-                        separator(15, 0),
-                        const Text('Sessions',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
-                horizontalDivider(),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, ExpertSessionScreen());
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                        Icon(Icons.assignment,color: gold,),
-                        separator(15, 0),
-                        const Text('Expert Sessions',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
-
-                InkWell(
-                  onTap: (){
                     navigateTo(context, const CourtsScreen());
                   },
                   child: Container(

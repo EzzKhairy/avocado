@@ -2,6 +2,7 @@ import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/session_model.dart';
+import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/case_info_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
@@ -12,6 +13,7 @@ import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -66,7 +68,9 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 10,),
                           buildHomeCard(
-                            function: (){navigateTo(context, SessionInfoScreen());},
+                            function: (){
+                              //navigateTo(context, SessionInfoScreen());
+                            },
                             title: 'Total Sessions',
                             icon: Icons.people_alt_outlined,
                             number: 50
@@ -74,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15,),
-                      buildTaskHomeItem(context),
+                      buildTaskHomeItem(context,AvocadoCubit.get(context).getTasksModel),
                       const SizedBox(height: 15,),
                       Container(
                         height: 165,
@@ -151,7 +155,7 @@ class HomeScreen extends StatelessWidget {
   }
 
 
-  Widget buildTaskHomeItem(context)
+  Widget buildTaskHomeItem(context,TasksModel? tasksModel)
   {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -159,7 +163,6 @@ class HomeScreen extends StatelessWidget {
       margin: const EdgeInsetsDirectional.all(2.5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
-        height: 150,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -183,58 +186,29 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const Spacer(),
-              Row(
-                children: [
-                  Column(
+              SizedBox(height: 5,),
+              Conditional.single(
+                context: context,
+                conditionBuilder: (context) =>  tasksModel!.tasksData!.isNotEmpty,
+                widgetBuilder:(context) => ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder:(context, index) => taskItem(tasksModel!.tasksData![index]),
+                    separatorBuilder: (context,index) => SizedBox(height: 5),
+                    itemCount: tasksModel!.tasksData!.length < 2 ? tasksModel.tasksData!.length : 2
+                ),
+                fallbackBuilder: (context) => SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Stack(
-                        alignment: AlignmentDirectional.center,
-                        children: const [
-                        CircleAvatar(radius: 5,),
-                        CircleAvatar(radius: 3.5,backgroundColor: Colors.white),
-                        ]
-                      ),
-                      verticalDivider(height: 30,),
+                      Icon(Icons.toc,size: 80,color: Colors.grey.shade400,textDirection: Directionality.of(context)),
+                      Text('No Tasks found \n for Today',style: TextStyle(color: Colors.grey.shade500),textAlign: TextAlign.center,)
                     ],
                   ),
-                  const SizedBox(width: 7,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text('Sending out some paper work'),
-                      SizedBox(height: 5,),
-                      Text('10.00 Am',style: TextStyle(color: Colors.grey),),
-                    ],
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Stack(
-                          alignment: AlignmentDirectional.center,
-                          children: const [
-                            CircleAvatar(radius: 5,),
-                            CircleAvatar(radius: 3.5,backgroundColor: Colors.white),
-                          ]
-                      ),
-                      verticalDivider(height: 30),
-                    ],
-                  ),
-                  const SizedBox(width: 7,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text('Sending out some paper work'),
-                      SizedBox(height: 5,),
-                      Text('10.00 Am',style: TextStyle(color: Colors.grey),),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              )
             ],
           ),
         ),
@@ -326,5 +300,31 @@ class HomeScreen extends StatelessWidget {
       ),
     );
 
+  Widget whatsUp(
+      String? title,
+      String? time
+      ){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title!),
+        SizedBox(height: 2,),
+        Text(time!,style: TextStyle(color: Colors.grey),),
+      ],
+    );
+  }
+
+  Widget taskItem(TasksData tasksData){
+    return Row(
+      children: [
+        pole(25),
+        const SizedBox(width: 7,),
+        whatsUp(
+            tasksData.title,
+            tasksData.startTime
+        )
+      ],
+    );
+  }
 
 }

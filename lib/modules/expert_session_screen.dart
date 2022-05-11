@@ -15,13 +15,14 @@ import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'expert_session__info_screen.dart';
 
 class ExpertSessionScreen extends StatelessWidget {
-  const ExpertSessionScreen({Key? key}) : super(key: key);
+  int? caseId;
+   ExpertSessionScreen(this.caseId,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-
+        AvocadoCubit.get(context).getExpertSessions(caseId: caseId);
         return BlocConsumer<AvocadoCubit,AvocadoStates>(
           listener: (context,state){},
           builder: (context,state) {
@@ -33,7 +34,7 @@ class ExpertSessionScreen extends StatelessWidget {
                 appBar: NewGradientAppBar(
                   centerTitle: true,
                   title: Text(
-                    'SESSIONS',
+                    'EXPERT SESSIONS',
                     style: TextStyle(
                       fontFamily: 'Nedian',
                       fontSize: 25.0,
@@ -78,7 +79,7 @@ class ExpertSessionScreen extends StatelessWidget {
 
 
   Widget buildExpertSessionItem(ExpertSessionData expertSessionData,context)=> GestureDetector(
-    onTap: (){navigateTo(context, ExpertSessionInfoScreen());},
+    onTap: (){navigateTo(context, ExpertSessionInfoScreen(expertSessionData));},
     child: Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5,

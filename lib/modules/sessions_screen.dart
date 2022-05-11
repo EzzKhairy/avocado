@@ -6,63 +6,80 @@ import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class SessionsScreen extends StatelessWidget {
-  const SessionsScreen({Key? key}) : super(key: key);
+  int? caseId;
+  SessionsScreen(this.caseId,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AvocadoCubit,AvocadoStates>(
-      listener: (context,state){},
-      builder: (context,state) {
-        List<SessionData>? sessionData = AvocadoCubit.get(context).sessionModel!.sessionData;
-        return Scaffold(
-          appBar: NewGradientAppBar(
-            centerTitle: true,
-            title: Text(
-              'SESSIONS',
-              style: TextStyle(
-                fontFamily: 'Nedian',
-                fontSize: 25.0,
-                color: gold,
-              ),
-            ),
-            gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.842),
-                  Colors.black.withOpacity(0.845),
-                  Colors.black.withOpacity(0.89),
-                ],
-                begin: AlignmentDirectional.topEnd,
-                end: AlignmentDirectional.bottomStart,
-                stops: const [0.20, 0.17, 0.40]),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                searchBar(),
-                SizedBox(height: 15,),
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => buildSessionItem(sessionData![index],context),
-                  separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                  itemCount: sessionData!.length,
+    return Builder(
+      builder: (context) {
+        AvocadoCubit.get(context).getSessions(caseId: caseId);
+        return BlocConsumer<AvocadoCubit,AvocadoStates>(
+          listener: (context,state){},
+          builder: (context,state) {
+            List<SessionData>? sessionData = AvocadoCubit.get(context).sessionModel?.sessionData;
+            return Conditional.single(
+              context: context,
+              conditionBuilder: (context) => state is GetSessionsDataSuccessful,
+              widgetBuilder:(context) => Scaffold(
+                appBar: NewGradientAppBar(
+                  centerTitle: true,
+                  title: Text(
+                    'SESSIONS',
+                    style: TextStyle(
+                      fontFamily: 'Nedian',
+                      fontSize: 25.0,
+                      color: gold,
+                    ),
+                  ),
+                  gradient: LinearGradient(
+                      colors: [
+                        Colors.black.withOpacity(0.842),
+                        Colors.black.withOpacity(0.845),
+                        Colors.black.withOpacity(0.89),
+                      ],
+                      begin: AlignmentDirectional.topEnd,
+                      end: AlignmentDirectional.bottomStart,
+                      stops: const [0.20, 0.17, 0.40]),
                 ),
-              ],
-            ),
-          ),
+                body: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      searchBar(),
+                      SizedBox(height: 15,),
+                      Conditional.single(
+                          context: context,
+                          conditionBuilder: (context)=> sessionData!.isNotEmpty,
+                          widgetBuilder:(context) => ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) => buildSessionItem(sessionData![index],context),
+                            separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                            itemCount: sessionData!.length,
+                          ),
+                          fallbackBuilder: (context) => Center(child: Text('Not Found'),)
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              fallbackBuilder: (context) => scaleProgressIndicator(context)
+            );
+          },
         );
-      },
+      }
     );
   }
 
 
   Widget buildSessionItem(SessionData? sessionData,context)=> GestureDetector(
-    onTap: (){navigateTo(context, SessionInfoScreen());},
+    onTap: (){navigateTo(context, SessionInfoScreen(sessionData));},
     child: Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5,

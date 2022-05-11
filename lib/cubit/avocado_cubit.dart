@@ -29,10 +29,30 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
   static AvocadoCubit get(context) => BlocProvider.of(context);
 
+ LawyersModel? getLawyerModel;
+  void getLawyerById(int? lawyerID){
+    emit(GetLawyerProfileLoading());
+    DioHelper.getData(
+      url: 'lawyers/$lawyerID',
+    ).then((value) {
+      getLawyerModel = LawyersModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(getLawyerModel?.data![0].email);
+      }
+      emit(GetLawyerProfileSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetLawyerProfileError());
+      if (kDebugMode) {
+        print(getLawyerModel?.data![0].email);
+        print(onError);
+      }
+    });
+  }
+
 
   LawyersModel? lawyerData;
-
-
   void getLawyerProfile(int? lawyerID){
     emit(GetLawyerProfileLoading());
     DioHelper.getData(
@@ -239,23 +259,6 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
-  CaseModel? singleCaseModel;
-  void getSingleCase(int? caseId){
-    emit(GetCasesDataLoading());
-    DioHelper.getData(
-      url: 'cases/$caseId',
-    ).then((value) {
-      singleCaseModel = CaseModel.fromJson(value.data);
-      getSessions(caseId: caseId);
-      emit(GetCasesDataSuccessful());
-    }).catchError((onError){
-      emit(GetCasesDataError());
-      if (kDebugMode) {
-        print(onError.toString());
-      }
-    });
-  }
-
   SessionModel? sessionModel;
   void getSessions({required int ?caseId}){
     emit(GetSessionsDataLoading());
@@ -279,10 +282,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   RecordsModel? recordsModel;
-  void getRecords(){
+  void getRecords(int? caseId){
     emit(GetRecordsDataLoading());
     DioHelper.getData(
-      url: 'records',
+      url: 'records_foriegn/$caseId',
     ).then((value) {
       recordsModel = RecordsModel.fromJson(value.data);
       //print(element);
@@ -475,6 +478,28 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       emit(GetCourtDataError(getCourtModel!));
       if (kDebugMode) {
         print(getCourtModel?.message);
+        print(onError);
+      }
+    });
+  }
+
+  CourtModel? getCourtByIdModel;
+  void getCourtById(courtId){
+    emit(GetCourtDataLoading());
+    DioHelper.getData(
+      url: 'courts/$courtId',
+    ).then((value) {
+      getCourtByIdModel = CourtModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(getCourtByIdModel?.message);
+      }
+      emit(GetCourtDataSuccessful(getCourtByIdModel!));
+    }
+    ).catchError((onError){
+      emit(GetCourtDataError(getCourtByIdModel!));
+      if (kDebugMode) {
+        print(getCourtByIdModel?.message);
         print(onError);
       }
     });

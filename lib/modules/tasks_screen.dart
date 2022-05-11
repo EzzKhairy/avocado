@@ -107,7 +107,7 @@ class TasksScreen extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          pole(),
+          pole(90),
           const SizedBox(
             width: 10,
           ),

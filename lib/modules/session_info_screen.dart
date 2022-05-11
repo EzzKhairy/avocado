@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class SessionInfoScreen extends StatelessWidget {
-  SessionInfoScreen({Key? key}) : super(key: key);
+  SessionData? sessionData;
+  SessionInfoScreen(this.sessionData,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class SessionInfoScreen extends StatelessWidget {
       appBar: NewGradientAppBar(
         centerTitle: true,
         title: Text(
-          'Case Summary'.toUpperCase(),
+          'Session'.toUpperCase(),
           style: TextStyle(
             fontFamily: 'Nedian',
             fontSize: 25.0,
@@ -33,15 +34,19 @@ class SessionInfoScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
             child : Column(
               children : [
-                buildSessionInfoScreenItem(context: context, title: '', info: 'aly'),
+                buildSessionInfoScreenItem(context: context, title: 'Role Number', info: '${sessionData?.roleNumber}'),
                 const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: 'title', info: 'info'),
+                buildSessionInfoScreenItem(context: context, title: 'Session Date', info: '${sessionData?.sessionDate}'),
                 const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: 'title', info: 'info'),
+                buildSessionInfoScreenItem(context: context, title: 'Lawyer Name', info: '${sessionData?.presentLawyerName}'),
                 const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: 'title', info: 'info'),
+                buildSessionInfoScreenItem(context: context, title: 'Session Reason', info: '${sessionData?.sessionReason}'),
                 const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: 'title', info: 'info')
+                buildSessionInfoScreenItem(context: context, title: 'Requirements', info: '${sessionData?.sessionRequirements}'),
+                const SizedBox(height: 10),
+                buildSessionInfoScreenItem(context: context, title: 'Decision', info: '${sessionData?.decision}'),
+                const SizedBox(height: 10),
+                buildSessionInfoScreenItem(context: context, title: 'Next Date', info: '${sessionData?.nextDate}'),
               ],
             ),
       ),

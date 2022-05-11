@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/session_model.dart';
+import 'package:avocado/modules/expert_session_screen.dart';
 import 'package:avocado/modules/session_info_screen.dart';
+import 'package:avocado/modules/sessions_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:expansion_widget/expansion_widget.dart';
@@ -20,194 +24,275 @@ class CaseInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-
-        //print(sessionModel!.sessionData![0].decision  'Not Found');
+          String? lawyerName;
+          String? courtName;
+          AvocadoCubit.get(context).getLawyerById(caseData.lawyerID);
+          AvocadoCubit.get(context).getCourtById(caseData.courtNumber);
         return BlocConsumer<AvocadoCubit, AvocadoStates>(
           listener: (context, state) {},
           builder: (context, state) {
+           lawyerName = AvocadoCubit.get(context).getLawyerModel?.data![0].name ?? 'Not Found';
+           courtName = AvocadoCubit.get(context).getCourtByIdModel?.courtData![0].name ?? 'Not Found';
             return Conditional.single(
                 context: context,
-                conditionBuilder: (context) => state != GetSessionsDataLoading,
-            widgetBuilder:(context) => Scaffold(
-                appBar: NewGradientAppBar(
-                  automaticallyImplyLeading: false,
-                  leading: IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: (){
-                        AvocadoCubit.get(context).resetSession();
-                        pop(context);
-                      }
-                  ),
-                  centerTitle: true,
-                  title: Text(
-                    'Case Summary'.toUpperCase(),
-                    style: TextStyle(
-                      fontFamily: 'Nedian',
-                      fontSize: 25.0,
-                      color: gold,
+                conditionBuilder: (context) => state is GetLawyerProfileSuccessful || state is GetCourtDataSuccessful,
+                widgetBuilder:(context) => Scaffold(
+                    appBar: NewGradientAppBar(
+                      automaticallyImplyLeading: false,
+                      leading: IconButton(
+                          icon: const Icon(Icons.arrow_back),
+                          onPressed: (){
+                            AvocadoCubit.get(context).resetSession();
+                            lawyerName = '';
+                            courtName = '';
+                            pop(context);
+                          }
+                      ),
+                      centerTitle: true,
+                      title: Text(
+                        'Case Summary'.toUpperCase(),
+                        style: TextStyle(
+                          fontFamily: 'Nedian',
+                          fontSize: 25.0,
+                          color: gold,
+                        ),
+                      ),
+                      gradient: LinearGradient(
+                          colors: [
+                            Colors.black.withOpacity(0.842),
+                            Colors.black.withOpacity(0.845),
+                            Colors.black.withOpacity(0.89),
+                          ],
+                          begin: AlignmentDirectional.topEnd,
+                          end: AlignmentDirectional.bottomStart,
+                          stops: const [0.20, 0.17, 0.40]),
                     ),
-                  ),
-                  gradient: LinearGradient(
-                      colors: [
-                        Colors.black.withOpacity(0.842),
-                        Colors.black.withOpacity(0.845),
-                        Colors.black.withOpacity(0.89),
-                      ],
-                      begin: AlignmentDirectional.topEnd,
-                      end: AlignmentDirectional.bottomStart,
-                      stops: const [0.20, 0.17, 0.40]),
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Case: ''${caseData.caseID?.toUpperCase()}',
-                                style: const TextStyle(
-                                    letterSpacing: 2,
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                    body: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Case: ''${caseData.caseID?.toUpperCase()}',
+                                    style: const TextStyle(
+                                        letterSpacing: 2,
+                                        fontWeight: FontWeight.bold, fontSize: 20),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                      text: TextSpan(children: [
+                                        const TextSpan(
+                                            text: 'Status: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Colors.black)),
+                                        caseData.status == 'open'?
+                                        TextSpan(
+                                            text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Colors.green)) :
+                                        TextSpan(
+                                            text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Colors.red)),
+                                      ])),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                height: 10,
+                            ),
+                            buildCaseInfoScreenItem(
+                                context: context,
+                                title: 'Title',
+                                info: '${caseData.title}'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            buildCaseInfoScreenItem(
+                                context: context, title: 'Type', info: '${caseData.caseType}'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            buildCaseInfoScreenItem(
+                                context: context, title: 'Court', info: '${courtName}'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            buildCaseInfoScreenItem(
+                                context: context, title: 'Lawyer', info: '${lawyerName}'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.black),
+                              width: MediaQuery.of(context).size.width,
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Description',
+                                      style: TextStyle(
+                                        color: gold,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                                          " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
+                                          " when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                                          "when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              RichText(
-                                  text: TextSpan(children: [
-                                    const TextSpan(
-                                        text: 'Status: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.black)),
-                                    caseData.status == 'open'?
-                                    TextSpan(
-                                        text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.green)) :
-                                    TextSpan(
-                              text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.red)),
-                                  ])),
-                              const SizedBox(
-                                height: 10,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            // if(sessionModel!=null && sessionModel.sessionData!.isNotEmpty)
+                            //     ExpansionWidget(
+                            //   titleBuilder: (double animationValue, _,
+                            //       bool isExpand, toogleFunction) {
+                            //     return InkWell(
+                            //       onTap: () => toogleFunction(animated: true),
+                            //       child: buildCaseInfoScreenItem(
+                            //           animationValue: animationValue,
+                            //           extras: true,
+                            //           context: context,
+                            //           title: 'Sessions',
+                            //           info:
+                            //               '${sessionModel.sessionData!.length}'
+                            //               ' Sessions included'),
+                            //     );
+                            //   },
+                            //   content: SizedBox(
+                            //     height: 180,
+                            //     child: ListView.separated(
+                            //         scrollDirection: Axis.horizontal,
+                            //         itemBuilder: (context, index) {
+                            //           return buildSessionItem(
+                            //               sessionModel.sessionData![index],
+                            //               context);
+                            //         },
+                            //         separatorBuilder: (context, index) =>
+                            //             const SizedBox(
+                            //               width: 10,
+                            //             ),
+                            //         itemCount:
+                            //             sessionModel.sessionData!.length),
+                            //   ),
+                            // )
+                            Container(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                  onPressed: (){},
+                                  child: Text('Attachments',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
                               ),
-                            ],
-                          ),
-                        ),
-                        buildCaseInfoScreenItem(
-                            context: context,
-                            title: 'Title',
-                            info: '${caseData.courtNumber}'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        buildCaseInfoScreenItem(
-                            context: context, title: 'Type', info: '${caseData.caseType}'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        buildCaseInfoScreenItem(
-                            context: context, title: 'Lawyer', info: '${caseData.lawyerID}'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.black),
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Description',
-                                  style: TextStyle(
-                                    color: gold,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                Expanded(
+                                  child: ElevatedButton(
+                                      onPressed: (){
+                                        navigateTo(context, SessionsScreen(caseData.id));
+                                      },
+                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+
+                                      child: const Text('Sessions',style: TextStyle(color: Colors.white))
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                const Text(
-                                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                                      " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
-                                      " when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                                      "when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
+                                SizedBox(width: 15,),
+                                Expanded(
+                                  child: ElevatedButton(
+                                      onPressed: (){
+                                        navigateTo(context, ExpertSessionScreen(caseData.id));
+                                      },
+                                      child: const Text('Expert Sessions')
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                          Builder(
-                            builder: (context) {
-                              AvocadoCubit.get(context).getSessions(caseId: caseData.id);
-                              //CaseData? singleCaseData = AvocadoCubit.get(context).singleCaseModel?.casesData![0];
-                              print(caseData.title);
-                              SessionModel? sessionModel = AvocadoCubit.get(context).sessionModel;
-                              if(sessionModel!=null && sessionModel.sessionData != []) {
-                                return ExpansionWidget(
-                                titleBuilder: (double animationValue, _,
-                                    bool isExpand, toogleFunction) {
-                                  return InkWell(
-                                    onTap: () => toogleFunction(animated: true),
-                                    child: buildCaseInfoScreenItem(
-                                        animationValue: animationValue,
-                                        extras: true,
-                                        context: context,
-                                        title: 'Sessions',
-                                        info:
-                                            '${sessionModel.sessionData!.length}'
-                                            ' Sessions included'),
-                                  );
-                                },
-                                content: SizedBox(
-                                  height: 180,
-                                  child: ListView.separated(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return buildSessionItem(
-                                            sessionModel.sessionData![index],
-                                            context);
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                      onPressed: (){
+                                        navigateTo(context, SessionsScreen(caseData.id));
                                       },
-                                      separatorBuilder: (context, index) =>
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                      itemCount:
-                                          sessionModel.sessionData!.length),
+                                      child: const Text('Records')
+                                  ),
                                 ),
-                              );
-                            }
-                              else {return const SizedBox(height: 0,);}
-                          }
-                          )
-                      ],
-                    ),
-                  ),
-                )
-            ) ,
-            fallbackBuilder: (context) => scaleProgressIndicator(context)
+                                SizedBox(width: 15,),
+                                Expanded(
+                                  child: ElevatedButton(
+                                      onPressed: (){
+                                        navigateTo(context, SessionsScreen(caseData.id));
+                                      },
+                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+
+                                      child: const Text('Investigations',style: TextStyle(color: Colors.white),)
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                      onPressed: (){
+                                        navigateTo(context, SessionsScreen(caseData.id));
+                                      },
+                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                                      child: const Text('Expenses',style: TextStyle(color: Colors.white),)
+                                  ),
+                                ),
+                                SizedBox(width: 15,),
+                                Expanded(
+                                  child: ElevatedButton(
+                                      onPressed: (){
+                                        navigateTo(context, SessionsScreen(caseData.id));
+                                      },
+
+
+                                      child: const Text('Payments')
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                ),
+                fallbackBuilder: (context) => scaleProgressIndicator(context)
             );
           },
         );
@@ -216,7 +301,7 @@ class CaseInfoScreen extends StatelessWidget {
   }
 
   Widget buildSessionItem(SessionData? sessionData,context)=> GestureDetector(
-    onTap: (){navigateTo(context, SessionInfoScreen());},
+    onTap: (){navigateTo(context, SessionInfoScreen(sessionData));},
     child: Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5,
