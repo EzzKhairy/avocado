@@ -5,12 +5,75 @@ import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:workmanager/workmanager.dart';
 
-class AppLayout extends StatelessWidget {
+var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+Future showNotification() async{
+  AndroidNotificationDetails androidNotificationDetails =
+      const AndroidNotificationDetails(
+          '1',
+          'tasks',
+        playSound: true,
+        enableVibration: true,
+        priority: Priority.high,
+      );
+  var platformChannelSpecifies = NotificationDetails(
+    android: androidNotificationDetails
+  );
+
+      await flutterLocalNotificationsPlugin.show(
+           5,
+          'hjvh',
+          'jvkjnkn',
+          platformChannelSpecifies);
+
+}
+
+Future<void> callbackDispatcher() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initializationSettings
+  = InitializationSettings(android: initializationSettingsAndroid);
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings)
+      .then((value) => print('Flutter Local Notifications Initialized'));
+
+  Workmanager().executeTask((task, inputData) {
+    showNotification()
+        .then((value) => print("Notification Pushed"))
+        .catchError((onError){print(onError.toString());});//simpleTask will be emitted here.
+    return Future.value(true);
+  });
+}
+
+class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);
+
+  @override
+  State<AppLayout> createState() => _AppLayoutState();
+
+
+}
+class _AppLayoutState extends State<AppLayout> {
+  @override
+  void initState() {
+
+    Workmanager().initialize(
+        callbackDispatcher, // The top level function, aka callbackDispatcher
+        isInDebugMode: true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+    );    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../models/tasks_model.dart';
+
 String ?token;
 int ?lawyerId;
 
@@ -19,3 +21,5 @@ Widget separator (double wide,double high){
 void pop (context) {
   Navigator.pop(context);
 }
+
+List<TasksData>? tasksData = [];

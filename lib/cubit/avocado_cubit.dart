@@ -21,6 +21,7 @@ import 'package:avocado/shared/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
 class AvocadoCubit extends Cubit <AvocadoStates>
@@ -28,6 +29,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   AvocadoCubit() : super(InitialState());
 
   static AvocadoCubit get(context) => BlocProvider.of(context);
+
 
  LawyersModel? getLawyerModel;
   void getLawyerById(int? lawyerID){
@@ -282,10 +284,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   RecordsModel? recordsModel;
-  void getRecords(){
+  void getRecords(int? caseId){
     emit(GetRecordsDataLoading());
     DioHelper.getData(
-      url: 'records',
+      url: 'records_foriegn/$caseId',
     ).then((value) {
       recordsModel = RecordsModel.fromJson(value.data);
       //print(element);
@@ -505,7 +507,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
-  TasksModel? tasksModel;
+  TasksModel? AddTasksModel;
   void addNewTask({
   required String title,
   required String date,
@@ -523,30 +525,36 @@ class AvocadoCubit extends Cubit <AvocadoStates>
           'EndTime':endTime,
           'Description':description
         }).then((value) {
-          tasksModel = TasksModel.fromJson(value.data);
-          print(tasksModel!.message);
-          emit(AddNewTaskSuccessful(tasksModel!));
+          AddTasksModel = TasksModel.fromJson(value.data);
+          print(AddTasksModel!.message);
+          emit(AddNewTaskSuccessful(AddTasksModel!));
     }).catchError((error){
-      emit(AddNewTaskError(tasksModel!));
-      print(tasksModel!.message);
+      emit(AddNewTaskError(AddTasksModel!));
+      print(AddTasksModel!.message);
       print(error.toString());
     });
   }
 
   TasksModel? getTasksModel;
+  bool isThereTasks = false;
   void getTodayTasks(String? date){
     emit(GetTasksLoading());
     DioHelper.getData(
         url: 'tasks_search/$date',
        ).then((value) {
       getTasksModel = TasksModel.fromJson(value.data);
-      print(getTasksModel!.message);
-      print(getTasksModel!.tasksData != [] ? getTasksModel!.tasksData![0].title : 'Not Found');
+      if(getTasksModel != null) {
+        isThereTasks = true;
+        tasksData = getTasksModel?.tasksData;
+      }
+      debugPrint(tasksData![0].title);
+      debugPrint(getTasksModel!.message);
+      debugPrint(isThereTasks.toString());
       emit(GetTasksSuccessful(getTasksModel!));
     }).catchError((error){
       emit(GetTasksError(getTasksModel!));
-      print(getTasksModel!.message);
-      print(error.toString());
+      debugPrint(getTasksModel!.message);
+      debugPrint(error.toString());
     });
   }
 

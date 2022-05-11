@@ -18,7 +18,7 @@ class RecordsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        AvocadoCubit.get(context).getRecords();
+        AvocadoCubit.get(context).getRecords(caseID);
         return BlocConsumer<AvocadoCubit, AvocadoStates>(
           listener: (context, state) {},
           builder: (context, state) {

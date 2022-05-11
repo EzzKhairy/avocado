@@ -7,6 +7,7 @@ import 'package:avocado/shared/bloc_observer.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:workmanager/workmanager.dart';
 import 'cubit/states.dart';
 import 'remoteNetwork/cache_helper.dart';
 import 'remoteNetwork/dio_helper.dart';
@@ -41,6 +42,11 @@ void main()async
       widget = LoginScreen();
     }
 
+  Workmanager().registerPeriodicTask(
+      '1',
+      'Every 15 Mins',
+      frequency: Duration(minutes: 15)
+  );
 
   runApp(MyApp(
     isDark: isDark,
@@ -68,7 +74,7 @@ class MyApp extends StatelessWidget
             ..getClients()
             ..getCases()
             ..getCourts()
-            ..getTodayTasks('2022-05-09')
+            ..getTodayTasks(DateTime.now().toString().split(' ').elementAt(0))
 
         ),
       ],
