@@ -149,5 +149,8 @@ class GetRecordsDataLoading extends AvocadoStates{}
 class GetRecordsDataSuccessful extends AvocadoStates{}
 class GetRecordsDataError extends AvocadoStates{}
 
+class ChangeLocalToArState extends AvocadoStates{}
+class ChangeLocalToEnState extends AvocadoStates{}
+
 
 

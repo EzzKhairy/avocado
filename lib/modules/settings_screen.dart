@@ -1,3 +1,4 @@
+import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
 import 'package:avocado/modules/courts_screen.dart';
@@ -212,9 +213,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         separator(15, 0),
                         const Text('Language',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                         const Spacer(),
-                        const Text('English'),
-                        separator(10,0),
-                        const Icon(Icons.arrow_forward_ios_rounded),
+                        PopupMenuButton(
+                          onSelected: (value){
+                            if(value == 'Arabic')
+                              AvocadoCubit.get(context).changeLocalToAr(context);
+                            else
+                              AvocadoCubit.get(context).changeLocalToEn(context);
+                          },
+                          itemBuilder: (context) =>  [
+                            PopupMenuItem(
+                              value: 'Arabic',
+                              child: Text('عربي',style: TextStyle(color: Colors.black),),),
+                            PopupMenuItem(
+                              value: 'English',
+                              child: Text('English',style: TextStyle(color: Colors.black)),),
+                          ],
+                          child: Row(
+                            children: [
+                              const Text('English'),
+                              separator(10,0),
+                              const Icon(Icons.arrow_forward_ios_rounded),
+                            ],
+                          ),
+                        ),
                         separator(10,0),
                       ],
                     ),

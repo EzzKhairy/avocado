@@ -12,12 +12,15 @@ import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/modules/sessions_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'dart:math' as math;
+
+import '../translation/locale_keys.g.dart';
 
 
 class CaseInfoScreen extends StatelessWidget {
@@ -53,7 +56,7 @@ class CaseInfoScreen extends StatelessWidget {
                       ),
                       centerTitle: true,
                       title: Text(
-                        'Case Summary'.toUpperCase(),
+                        LocaleKeys.caseSummary.tr().toUpperCase(),
                         style: TextStyle(
                           fontFamily: 'Nedian',
                           fontSize: 25.0,
@@ -82,7 +85,7 @@ class CaseInfoScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Case: ''${caseData.caseID?.toUpperCase()}',
+                                  LocaleKeys.cases.tr()+ ': ' + '${caseData.caseID?.toUpperCase()}',
                                     style: const TextStyle(
                                         letterSpacing: 2,
                                         fontWeight: FontWeight.bold, fontSize: 20),
@@ -92,9 +95,9 @@ class CaseInfoScreen extends StatelessWidget {
                                   ),
                                   RichText(
                                       text: TextSpan(children: [
-                                        const TextSpan(
-                                            text: 'Status: ',
-                                            style: TextStyle(
+                                         TextSpan(
+                                            text: LocaleKeys.status.tr() + ': ',
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
                                                 color: Colors.black)),
@@ -120,23 +123,23 @@ class CaseInfoScreen extends StatelessWidget {
                             ),
                             buildCaseInfoScreenItem(
                                 context: context,
-                                title: 'Title',
+                                title: LocaleKeys.title.tr(),
                                 info: '${caseData.title}'),
                             const SizedBox(
                               height: 10,
                             ),
                             buildCaseInfoScreenItem(
-                                context: context, title: 'Type', info: '${caseData.caseType}'),
+                                context: context, title: LocaleKeys.caseType.tr(), info: '${caseData.caseType}'),
                             const SizedBox(
                               height: 10,
                             ),
                             buildCaseInfoScreenItem(
-                                context: context, title: 'Court', info: '${courtName}'),
+                                context: context, title:LocaleKeys.courts.tr(), info: '${courtName}'),
                             const SizedBox(
                               height: 10,
                             ),
                             buildCaseInfoScreenItem(
-                                context: context, title: 'Lawyer', info: '${lawyerName}'),
+                                context: context, title: LocaleKeys.lawyer.tr(), info: '${lawyerName}'),
                             const SizedBox(
                               height: 10,
                             ),
@@ -152,7 +155,7 @@ class CaseInfoScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Description',
+                                      LocaleKeys.description.tr(),
                                       style: TextStyle(
                                         color: gold,
                                         fontSize: 16,
@@ -227,7 +230,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       },
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
 
-                                      child: const Text('Sessions',style: TextStyle(color: Colors.white))
+                                      child:  Text(LocaleKeys.sessions.tr(),style: TextStyle(color: Colors.white))
                                   ),
                                 ),
                                 SizedBox(width: 15,),
@@ -236,7 +239,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       onPressed: (){
                                         navigateTo(context, ExpertSessionScreen(caseData.id));
                                       },
-                                      child: const Text('Expert Sessions')
+                                      child:  Text(LocaleKeys.e_session.tr())
                                   ),
                                 ),
                               ],
@@ -260,7 +263,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       },
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
 
-                                      child: const Text('Investigations',style: TextStyle(color: Colors.white),)
+                                      child:  Text(LocaleKeys.investigation.tr(),style: TextStyle(color: Colors.white),)
                                   ),
                                 ),
                               ],

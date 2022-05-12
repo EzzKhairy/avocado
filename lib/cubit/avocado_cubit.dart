@@ -18,6 +18,7 @@ import 'package:avocado/modules/settings_screen.dart';
 import 'package:avocado/modules/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -537,12 +538,13 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
   TasksModel? getTasksModel;
   bool isThereTasks = false;
-  void getTodayTasks(String? date){
+  Future<TasksModel>? getTodayTasks(String? date){
     emit(GetTasksLoading());
     DioHelper.getData(
         url: 'tasks_search/$date',
        ).then((value) {
       getTasksModel = TasksModel.fromJson(value.data);
+
       if(getTasksModel != null) {
         isThereTasks = true;
         tasksData = getTasksModel?.tasksData;
@@ -551,11 +553,23 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       debugPrint(getTasksModel!.message);
       debugPrint(isThereTasks.toString());
       emit(GetTasksSuccessful(getTasksModel!));
+      return getTasksModel;
     }).catchError((error){
       emit(GetTasksError(getTasksModel!));
       debugPrint(getTasksModel!.message);
       debugPrint(error.toString());
+      return null;
     });
+    return null;
+  }
+
+  void changeLocalToAr (BuildContext context)async {
+    await context.setLocale(Locale('ar'));
+    emit(ChangeLocalToArState());
+  }
+  void changeLocalToEn (BuildContext context) async {
+    await context.setLocale(Locale('en'));
+    emit(ChangeLocalToEnState());
   }
 
   int currentIndex = 0;

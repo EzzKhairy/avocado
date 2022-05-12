@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/shared/components.dart';
@@ -15,8 +17,8 @@ var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 Future showNotification() async{
   AndroidNotificationDetails androidNotificationDetails =
-      const AndroidNotificationDetails(
-          '1',
+       AndroidNotificationDetails(
+          '${Random().nextInt(400)}',
           'tasks',
         playSound: true,
         enableVibration: true,
@@ -26,10 +28,10 @@ Future showNotification() async{
     android: androidNotificationDetails
   );
 
-      await flutterLocalNotificationsPlugin.show(
-           5,
-          'hjvh',
-          'jvkjnkn',
+  await flutterLocalNotificationsPlugin.show(
+           Random().nextInt(200),
+          'dsdsad',
+          'fsefes',
           platformChannelSpecifies);
 
 }
@@ -47,14 +49,15 @@ Future<void> callbackDispatcher() async {
   = InitializationSettings(android: initializationSettingsAndroid);
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings)
-      .then((value) => print('Flutter Local Notifications Initialized'));
+      .then((value) => debugPrint('Flutter Local Notifications Initialized'));
 
-  Workmanager().executeTask((task, inputData) {
+  Workmanager().executeTask((task, inputData) async {
     showNotification()
-        .then((value) => print("Notification Pushed"))
-        .catchError((onError){print(onError.toString());});//simpleTask will be emitted here.
+        .then((value) => debugPrint("Notification Pushed"))
+        .catchError((onError){debugPrint('Notification Error >>>> ' '$onError');});//simpleTask will be emitted here.
     return Future.value(true);
   });
+  return null;
 }
 
 class AppLayout extends StatefulWidget {
@@ -68,11 +71,12 @@ class AppLayout extends StatefulWidget {
 class _AppLayoutState extends State<AppLayout> {
   @override
   void initState() {
-
     Workmanager().initialize(
         callbackDispatcher, // The top level function, aka callbackDispatcher
         isInDebugMode: true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-    );    super.initState();
+    ).then((value) => debugPrint('WorkManager Initialized'));
+
+    super.initState();
   }
 
   @override

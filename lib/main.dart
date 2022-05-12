@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/app_cubit.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
@@ -5,6 +7,7 @@ import 'package:avocado/modules/login_screen.dart';
 import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/shared/bloc_observer.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:workmanager/workmanager.dart';
@@ -17,7 +20,7 @@ void main()async
 {
   WidgetsFlutterBinding.ensureInitialized();
 
-
+  EasyLocalization.ensureInitialized();
   DioHelper.init();
   await CacheHelper.init();
   Bloc.observer =MyBlocObserver();
@@ -30,7 +33,6 @@ void main()async
   lawyerId = CacheHelper.getData(key : 'id');
   print(token);
   print(lawyerId);
-  print(DateTime.now());
 
 
   if(token != null)
@@ -42,16 +44,28 @@ void main()async
       widget = LoginScreen();
     }
 
-  Workmanager().registerPeriodicTask(
-      '1',
-      'Every 15 Mins',
-      frequency: Duration(minutes: 15)
-  );
 
-  runApp(MyApp(
-    isDark: isDark,
-    startWidget: widget ,
-  ));
+
+  Workmanager().registerPeriodicTask(
+      '${Random().nextInt(200)}',
+      'Every 15 Mins',
+      frequency: const Duration(minutes: 15),
+    //initialDelay: Duration(seconds: 5),
+  ).then((value) => debugPrint('Periodic Task Registered')).catchError((onError){"Periodic Task Error >>>> $onError";});
+
+  runApp(
+      EasyLocalization(
+        path: 'assets/translation',
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ar')
+        ],
+        fallbackLocale: Locale('en'),
+        child: MyApp(
+          isDark: isDark,
+          startWidget: widget ,
+  ),
+      ));
 }
 class MyApp extends StatelessWidget
 {
@@ -74,7 +88,7 @@ class MyApp extends StatelessWidget
             ..getClients()
             ..getCases()
             ..getCourts()
-            ..getTodayTasks(DateTime.now().toString().split(' ').elementAt(0))
+
 
         ),
       ],
@@ -82,12 +96,16 @@ class MyApp extends StatelessWidget
         listener: (context, state) {},
         builder: (context, state)
         {
+          AvocadoCubit.get(context).getTodayTasks("2022-05-11");
           return MaterialApp(
             theme: lightTheme,
             darkTheme: darkTheme,
             //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
+            locale:context.locale ,
+            supportedLocales: context.supportedLocales,
+            localizationsDelegates: context.localizationDelegates,
             home : startWidget,
           );
         },

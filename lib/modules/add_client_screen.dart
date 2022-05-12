@@ -5,6 +5,8 @@ import 'package:avocado/modules/clients_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:avocado/shared/profile_components.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -91,7 +93,7 @@ class AddClientScreen extends StatelessWidget {
                                 controller: nameController,
                                 validate: (value){
                                   if(value!.isEmpty) {
-                                    return 'This Feild Must not be Empty';
+                                    return LocaleKeys.ThisFieldMustBeFilled.tr();
                                   }
                                   else if(value.compareTo(nameController.text)!=0){
                                     AvocadoCubit.get(context).toggleIsChanged();
@@ -123,14 +125,14 @@ class AddClientScreen extends StatelessWidget {
                                 SizedBox(width: 5,),
                                 Icon(Icons.phone,size: 15,color: gold,),
                                 SizedBox(width: 5,),
-                                Text('Phone',style: TextStyle(color: Colors.grey.shade500,)),
+                                Text(LocaleKeys.phoneNumber.tr(),style: TextStyle(color: Colors.grey.shade500,)),
                               ],
                             ),
                             profileFormField(
                                 controller: phoneController,
                                 validate: (value){
                                   if(value!.isEmpty) {
-                                    return 'This field must not be Empty';
+                                    return LocaleKeys.ThisFieldMustBeFilled.tr();
                                   }
                                   else if(value.length != 11)
                                   {
@@ -166,14 +168,14 @@ class AddClientScreen extends StatelessWidget {
                                 SizedBox(width: 5,),
                                 Icon(Icons.email,size: 15,color: gold,),
                                 SizedBox(width: 5,),
-                                Text('Email',style: TextStyle(color: Colors.grey.shade500,)),
+                                Text(LocaleKeys.EmailAddress.tr(),style: TextStyle(color: Colors.grey.shade500,)),
                               ],
                             ),
                             profileFormField(
                                 controller: emailController,
                                 validate: (value){
                                   if(value!.isEmpty) {
-                                    return 'This field must not be Empty';
+                                    return LocaleKeys.ThisFieldMustBeFilled.tr();
                                   }
                                   else if (value.contains('@') == false) {
                                     return 'Email Formula is incorrect';
@@ -208,14 +210,14 @@ class AddClientScreen extends StatelessWidget {
                                 SizedBox(width: 5,),
                                 Icon(Icons.location_on,size: 15,color: gold,),
                                 SizedBox(width: 5,),
-                                Text('Address',style: TextStyle(color: Colors.grey.shade500,)),
+                                Text(LocaleKeys.address.tr(),style: TextStyle(color: Colors.grey.shade500,)),
                               ],
                             ),
                             profileFormField(
                               controller: addressController,
                               validate: (value){
                                 if(value!.isEmpty) {
-                                  return 'This field must not be Empty';
+                                  return LocaleKeys.ThisFieldMustBeFilled.tr();
                                 }
                                 else if(value.compareTo(addressController.text)!=0){
                                   AvocadoCubit.get(context).toggleIsChanged();
@@ -254,7 +256,7 @@ class AddClientScreen extends StatelessWidget {
                                 controller: nationalNumberController,
                                 validate: (value){
                                   if(value!.isEmpty) {
-                                    return 'This field must not be Empty';
+                                    return LocaleKeys.ThisFieldMustBeFilled.tr();
                                   }
                                   else if(value.length != 14)
                                   {
@@ -322,7 +324,7 @@ class AddClientScreen extends StatelessWidget {
                         }
                       }
                     },
-                    child: Text('CANCEL',style: TextStyle(fontSize: 18),)
+                    child: Text(LocaleKeys.cancel.tr(),style: TextStyle(fontSize: 18),)
                 ),
                 verticalDivider(height: 25,vColor: gold),
                 TextButton(
@@ -338,7 +340,7 @@ class AddClientScreen extends StatelessWidget {
                         );
                       }
                     },
-                    child: Text('SAVE',style: TextStyle(fontSize: 18),)
+                    child: Text(LocaleKeys.save.tr(),style: TextStyle(fontSize: 18),)
                 ),
               ],
             ),

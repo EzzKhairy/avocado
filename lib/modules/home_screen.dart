@@ -11,9 +11,12 @@ import 'package:avocado/modules/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
+
+import '../translation/locale_keys.g.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Dashboard',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                       Text(LocaleKeys.dashboard.tr(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                       const SizedBox(height: 15,),
                       Row(
                         children: [
@@ -43,14 +46,14 @@ class HomeScreen extends StatelessWidget {
                               print (token);
                               print(CacheHelper.getData(key: 'token'));
                             },
-                            title: 'Total Cases',
+                            title: LocaleKeys.totalCases.tr(),
                             icon: Icons.format_align_justify_outlined,
                             number: casesData.length,
                           ),
                           const SizedBox(width: 10,),
                           buildHomeCard(
                             function: (){navigateTo(context, const ClientsScreen());},
-                            title: 'Total Clients',
+                            title: LocaleKeys.totalClients.tr(),
                             icon: Icons.people_alt_outlined,
                             number: AvocadoCubit.get(context).clientsModel!.clientsData!.length,
                           ),
@@ -61,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           buildHomeCard(
                             function: (){navigateTo(context,const TasksScreen());},
-                            title: 'Total Tasks',
+                            title: LocaleKeys.totalTasks.tr(),
                             icon: Icons.assignment_turned_in_rounded,
                             number: 15,
                           ),
@@ -70,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                             function: (){
                               //navigateTo(context, SessionInfoScreen());
                             },
-                            title: 'Total Sessions',
+                            title: LocaleKeys.totalClients.tr(),
                             icon: Icons.people_alt_outlined,
                             number: 50
                           ),
