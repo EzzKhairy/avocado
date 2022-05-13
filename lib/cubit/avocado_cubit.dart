@@ -536,31 +536,36 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
-  TasksModel? getTasksModel;
-  bool isThereTasks = false;
-  Future<TasksModel>? getTodayTasks(String? date){
+   TasksModel? getTasksModel;
+   void getTodayTasks(String? date){
     emit(GetTasksLoading());
     DioHelper.getData(
         url: 'tasks_search/$date',
        ).then((value) {
       getTasksModel = TasksModel.fromJson(value.data);
-
-      if(getTasksModel != null) {
-        isThereTasks = true;
-        tasksData = getTasksModel?.tasksData;
-      }
-      debugPrint(tasksData![0].title);
       debugPrint(getTasksModel!.message);
-      debugPrint(isThereTasks.toString());
       emit(GetTasksSuccessful(getTasksModel!));
-      return getTasksModel;
     }).catchError((error){
       emit(GetTasksError(getTasksModel!));
       debugPrint(getTasksModel!.message);
       debugPrint(error.toString());
-      return null;
     });
-    return null;
+   }
+
+  static TasksModel? getNotifyTasksModel;
+  static bool isThereTasks = false;
+  static Future<void> getNotifyTasks(String? date) async {
+    DioHelper.getData(
+      url: 'tasks_search/$date',
+    ).then((value) {
+      getNotifyTasksModel = TasksModel.fromJson(value.data);
+      debugPrint(getNotifyTasksModel!.message);
+      if(getNotifyTasksModel!.tasksData!.isNotEmpty){isThereTasks = true;tasksData = getNotifyTasksModel!.tasksData;}
+      debugPrint(isThereTasks.toString());
+    }).catchError((error){
+      debugPrint(getNotifyTasksModel!.message);
+      debugPrint(error.toString());
+    });
   }
 
   void changeLocalToAr (BuildContext context)async {

@@ -50,7 +50,6 @@ void main()async
       '${Random().nextInt(200)}',
       'Every 15 Mins',
       frequency: const Duration(minutes: 15),
-    //initialDelay: Duration(seconds: 5),
   ).then((value) => debugPrint('Periodic Task Registered')).catchError((onError){"Periodic Task Error >>>> $onError";});
 
   runApp(
@@ -83,12 +82,12 @@ class MyApp extends StatelessWidget
       providers: [
         BlocProvider(create: (context)=> AppCubit()),
         BlocProvider(
-          create: (context)=> AvocadoCubit()
+          create: (context) => AvocadoCubit()
             ..getLawyerProfile(lawyerId)
             ..getClients()
             ..getCases()
             ..getCourts()
-
+              ..getTodayTasks("2022-05-11")
 
         ),
       ],
@@ -96,7 +95,7 @@ class MyApp extends StatelessWidget
         listener: (context, state) {},
         builder: (context, state)
         {
-          AvocadoCubit.get(context).getTodayTasks("2022-05-11");
+          AvocadoCubit.getNotifyTasks("2022-05-11");
           return MaterialApp(
             theme: lightTheme,
             darkTheme: darkTheme,

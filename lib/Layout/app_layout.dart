@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
+import 'package:avocado/main.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -30,14 +32,13 @@ Future showNotification() async{
 
   await flutterLocalNotificationsPlugin.show(
            Random().nextInt(200),
-          'dsdsad',
+          tasksData![0].title,
           'fsefes',
           platformChannelSpecifies);
 
 }
 
 Future<void> callbackDispatcher() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 
   var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -51,24 +52,39 @@ Future<void> callbackDispatcher() async {
   await flutterLocalNotificationsPlugin.initialize(initializationSettings)
       .then((value) => debugPrint('Flutter Local Notifications Initialized'));
 
-  Workmanager().executeTask((task, inputData) async {
-    showNotification()
-        .then((value) => debugPrint("Notification Pushed"))
-        .catchError((onError){debugPrint('Notification Error >>>> ' '$onError');});//simpleTask will be emitted here.
-    return Future.value(true);
-  });
-  return null;
+  if (tasksData!.isNotEmpty || tasksData != null) {
+    Workmanager().executeTask((task, inputData) async {
+      showNotification()
+          .then((value) => debugPrint("Notification Pushed"))
+          .catchError((onError) {
+        debugPrint('Notification Error >>>> ' '$onError');
+      }); //simpleTask will be emitted here.
+      return Future.value(true);
+    });
+  }
+  else {
+    Timer(const Duration(seconds: 10), () {
+      Workmanager().executeTask((task, inputData) async {
+        showNotification()
+            .then((value) => debugPrint("Notification Pushed"))
+            .catchError((onError) {
+          debugPrint('Notification Error after Delay >>>> ' '$onError');
+        }); //simpleTask will be emitted here.
+        return Future.value(true);
+      });
+    });
+  }
 }
 
 class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);
 
   @override
-  State<AppLayout> createState() => _AppLayoutState();
+  State<AppLayout> createState() => AppLayoutState();
 
 
 }
-class _AppLayoutState extends State<AppLayout> {
+class AppLayoutState extends State<AppLayout> {
   @override
   void initState() {
     Workmanager().initialize(
