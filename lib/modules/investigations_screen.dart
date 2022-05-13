@@ -1,12 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
-import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/investegation_model.dart';
-import 'package:avocado/models/investegation_model.dart';
-import 'package:avocado/models/records_model.dart';
-import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/investigation_info_screen.dart';
-import 'package:avocado/modules/record_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -15,41 +10,42 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class InvestigationsScreen extends StatelessWidget {
-  int? caseID;
-  InvestigationsScreen(this.caseID,{Key? key}) : super(key: key);
+  final int? caseID;
+  const InvestigationsScreen(this.caseID,{Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        AvocadoCubit.get(context).getInvestigations();
+        AvocadoCubit.get(context).getInvestigations(caseId: caseID);
         return BlocConsumer<AvocadoCubit, AvocadoStates>(
           listener: (context, state) {},
           builder: (context, state) {
-            List<InvestigationData>? recordsData = AvocadoCubit.get(context).investigationModel?.investigationData;
-            return Scaffold(
-              appBar: NewGradientAppBar(
-                centerTitle: true,
-                title: Text(
-                  'Investigations',
-                  style: TextStyle(
-                    fontFamily: 'Nedian',
-                    fontSize: 25.0,
-                    color: gold,
+            List<InvestigationData>? investigationData = AvocadoCubit.get(context).investigationModel?.investigationData;
+            return Conditional.single(
+              context: context,
+              conditionBuilder: (context) => state is GetInvestigationsDataSuccessful,
+              widgetBuilder: (context) => Scaffold(
+                appBar: NewGradientAppBar(
+                  centerTitle: true,
+                  title: Text(
+                    'Investigations'.toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: 'Nedian',
+                      fontSize: 25.0,
+                      color: gold,
+                    ),
                   ),
+                  gradient: LinearGradient(
+                      colors: [
+                        Colors.black.withOpacity(0.842),
+                        Colors.black.withOpacity(0.845),
+                        Colors.black.withOpacity(0.89),
+                      ],
+                      begin: AlignmentDirectional.topEnd,
+                      end: AlignmentDirectional.bottomStart,
+                      stops: const [0.20, 0.17, 0.40]),
                 ),
-                gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0.842),
-                      Colors.black.withOpacity(0.845),
-                      Colors.black.withOpacity(0.89),
-                    ],
-                    begin: AlignmentDirectional.topEnd,
-                    end: AlignmentDirectional.bottomStart,
-                    stops: const [0.20, 0.17, 0.40]),
-              ),
-              body: Conditional.single(
-                conditionBuilder: (context) => recordsData?.length != null,
-                widgetBuilder:(context)=> SingleChildScrollView(
+                body: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
@@ -57,20 +53,24 @@ class InvestigationsScreen extends StatelessWidget {
                       children: [
                         searchBar(),
                         const SizedBox(height: 20,),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => buildRecordItem(recordsData![index],context),
-                          separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                          itemCount: recordsData!.length,
+                        Conditional.single(
+                          context: context,
+                          conditionBuilder: (context) => investigationData!.isNotEmpty,
+                          widgetBuilder: (context) => ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) => buildInvestigationItem(investigationData![index],context),
+                            separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                            itemCount: investigationData!.length,
+                          ),
+                          fallbackBuilder: (context) => const Center(child: Text('No investigations included'),),
                         ),
                       ],
                     ),
                   ),
                 ),
-                context: context,
-                fallbackBuilder: (context) => scaleProgressIndicator(context),
               ),
+              fallbackBuilder: (context) => scaleProgressIndicator(context),
             );
           },
         );
@@ -79,7 +79,7 @@ class InvestigationsScreen extends StatelessWidget {
   }
 
 
-  Widget buildRecordItem(InvestigationData investigationData, context,)
+  Widget buildInvestigationItem(InvestigationData investigationData, context,)
   => GestureDetector(
     onTap: (){navigateTo(context, InvestigationInfoScreen(investigationData));},
     child: Card(

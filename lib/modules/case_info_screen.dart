@@ -21,6 +21,7 @@ import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'dart:math' as math;
 
 import '../translation/locale_keys.g.dart';
+import 'expenses_screen.dart';
 
 
 class CaseInfoScreen extends StatelessWidget {
@@ -217,7 +218,7 @@ class CaseInfoScreen extends StatelessWidget {
                               width: double.infinity,
                               child: ElevatedButton(
                                   onPressed: (){},
-                                  child: Text('Attachments',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
+                                  child: const Text('Attachments',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
                               ),
                             ),
                             Row(
@@ -230,10 +231,10 @@ class CaseInfoScreen extends StatelessWidget {
                                       },
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
 
-                                      child:  Text(LocaleKeys.sessions.tr(),style: TextStyle(color: Colors.white))
+                                      child:  Text(LocaleKeys.sessions.tr(),style: const TextStyle(color: Colors.white))
                                   ),
                                 ),
-                                SizedBox(width: 15,),
+                                const SizedBox(width: 15,),
                                 Expanded(
                                   child: ElevatedButton(
                                       onPressed: (){
@@ -255,7 +256,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       child: const Text('Records')
                                   ),
                                 ),
-                                SizedBox(width: 15,),
+                                const SizedBox(width: 15,),
                                 Expanded(
                                   child: ElevatedButton(
                                       onPressed: (){
@@ -263,7 +264,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       },
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
 
-                                      child:  Text(LocaleKeys.investigation.tr(),style: TextStyle(color: Colors.white),)
+                                      child:  Text(LocaleKeys.investigation.tr(),style: const TextStyle(color: Colors.white),)
                                   ),
                                 ),
                               ],
@@ -274,13 +275,13 @@ class CaseInfoScreen extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                       onPressed: (){
-                                        navigateTo(context, SessionsScreen(caseData.id));
+                                        navigateTo(context, ExpensesScreen(caseData.id));
                                       },
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                                       child: const Text('Expenses',style: TextStyle(color: Colors.white),)
                                   ),
                                 ),
-                                SizedBox(width: 15,),
+                                const SizedBox(width: 15,),
                                 Expanded(
                                   child: ElevatedButton(
                                       onPressed: (){

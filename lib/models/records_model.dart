@@ -27,6 +27,7 @@ class RecordsData
   String? clientName;
   String? contender;
   int? lawyerId;
+  int? caseId;
   String? createdAt;
   String? updatedAt;
 
@@ -40,6 +41,7 @@ class RecordsData
     clientName = json['Client_name'];
     contender = json['Contender'];
     lawyerId = json['Lawyer_id'];
+    caseId = json['Case'];
     createdAt =json['created_at'];
     updatedAt =json['updated_at'];
   }

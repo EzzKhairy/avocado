@@ -25,6 +25,7 @@ class InvestigationData
   String? inDate;
   String? contender;
   int? lawyerId;
+  int? caseID;
   String? client;
   int? investigationPlaceNo;
   String? decision;
@@ -41,6 +42,7 @@ class InvestigationData
     contender = json['contender'];
     client = json['client'];
     lawyerId = json['Lawyer_id'];
+    caseID = json['Case_id'];
     investigationPlaceNo = json['investigation_place_No'];
     decision = json['Decision'];
     note = json['Note'];

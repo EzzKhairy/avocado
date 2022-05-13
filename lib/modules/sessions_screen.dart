@@ -10,8 +10,8 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class SessionsScreen extends StatelessWidget {
-  int? caseId;
-  SessionsScreen(this.caseId,{Key? key}) : super(key: key);
+  final int? caseId;
+  const SessionsScreen(this.caseId,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,18 +52,25 @@ class SessionsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       searchBar(),
-                      SizedBox(height: 15,),
+                      const SizedBox(height: 15,),
                       Conditional.single(
-                          context: context,
-                          conditionBuilder: (context)=> sessionData!.isNotEmpty,
-                          widgetBuilder:(context) => ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) => buildSessionItem(sessionData![index],context),
-                            separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                            itemCount: sessionData!.length,
-                          ),
-                          fallbackBuilder: (context) => Center(child: Text('Not Found'),)
+                      context: context,
+                      conditionBuilder: (context)=> sessionData!.isNotEmpty,
+                      widgetBuilder:(context) => ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => buildSessionItem(sessionData![index],context),
+                        separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                        itemCount: sessionData!.length,
+                      ),
+                      fallbackBuilder: (context) => const Center(child: Text(
+                        'No Sessions Included',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      ),
                       ),
                     ],
                   ),

@@ -21,7 +21,7 @@ class ExpensesData
 {
   int? id;
   String? name;
-  String? amount;
+  int? amount;
   String? note;
   int? caseId;
   String? createdAt;
