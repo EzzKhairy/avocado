@@ -7,6 +7,7 @@ import 'package:avocado/models/session_model.dart';
 import 'package:avocado/modules/expert_session_screen.dart';
 import 'package:avocado/modules/investigation_info_screen.dart';
 import 'package:avocado/modules/investigations_screen.dart';
+import 'package:avocado/modules/payments_screen.dart';
 import 'package:avocado/modules/records_screen.dart';
 import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/modules/sessions_screen.dart';
@@ -285,13 +286,13 @@ class CaseInfoScreen extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                       onPressed: (){
-                                        navigateTo(context, SessionsScreen(caseData.id));
+                                        navigateTo(context, PaymentsScreen(caseData.id));
                                       },
                                       child: const Text('Payments')
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),

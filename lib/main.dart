@@ -88,6 +88,7 @@ class MyApp extends StatelessWidget
             ..getCases()
             ..getCourts()
               ..getTodayTasks("2022-05-11")
+              ..getEveryLawyer()
 
         ),
       ],
@@ -99,7 +100,6 @@ class MyApp extends StatelessWidget
           return MaterialApp(
             theme: lightTheme,
             darkTheme: darkTheme,
-            //themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             themeMode: ThemeMode.light,
             debugShowCheckedModeBanner: false,
             locale:context.locale ,

@@ -124,6 +124,10 @@ class GetExpensesDataLoading extends AvocadoStates{}
 class GetExpensesDataSuccessful extends AvocadoStates{}
 class GetExpensesDataError extends AvocadoStates{}
 
+class GetPaymentsDataLoading extends AvocadoStates{}
+class GetPaymentsDataSuccessful extends AvocadoStates{}
+class GetPaymentsDataError extends AvocadoStates{}
+
 class AddNewTaskLoading extends AvocadoStates{}
 class AddNewTaskSuccessful extends AvocadoStates{
   final TasksModel model;
@@ -152,5 +156,13 @@ class GetRecordsDataError extends AvocadoStates{}
 class ChangeLocalToArState extends AvocadoStates{}
 class ChangeLocalToEnState extends AvocadoStates{}
 
+
+class GetCasesByLawyerIdDataLoading extends AvocadoStates{}
+class GetCasesByLawyerIdDataSuccessful extends AvocadoStates{}
+class GetCasesByLawyerIdDataError extends AvocadoStates{}
+
+class GetLawyersDataLoading extends AvocadoStates{}
+class GetLawyersDataSuccessful extends AvocadoStates{}
+class GetLawyersDataError extends AvocadoStates{}
 
 

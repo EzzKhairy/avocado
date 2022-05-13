@@ -10,7 +10,7 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class CasesScreen extends StatelessWidget {
-  CasesScreen({Key? key}) : super(key: key);
+  const CasesScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit, AvocadoStates>(

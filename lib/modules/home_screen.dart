@@ -1,12 +1,10 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
-import 'package:avocado/models/session_model.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/case_info_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clients_screen.dart';
-import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/modules/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
@@ -17,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 
 import '../translation/locale_keys.g.dart';
+import 'lawyers_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -71,11 +70,11 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(width: 10,),
                           buildHomeCard(
                             function: (){
-                              //navigateTo(context, SessionInfoScreen());
+                              navigateTo(context, const LawyersScreen());
                             },
                             title: LocaleKeys.totalClients.tr(),
                             icon: Icons.people_alt_outlined,
-                            number: 50
+                            number: AvocadoCubit.get(context).getLawyers!.data!.length,
                           ),
                         ],
                       ),

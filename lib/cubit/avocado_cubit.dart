@@ -2,13 +2,12 @@ import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/court_model.dart';
-import 'package:avocado/models/court_model.dart';
-import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/expenses_model.dart';
 import 'package:avocado/models/expert_session_model.dart';
 import 'package:avocado/models/investegation_model.dart';
 import 'package:avocado/models/investigation_places_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
+import 'package:avocado/models/payments_model.dart';
 import 'package:avocado/models/records_model.dart';
 import 'package:avocado/models/session_model.dart';
 import 'package:avocado/models/tasks_model.dart';
@@ -262,6 +261,49 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
+  LawyersModel? getLawyers;
+  void getEveryLawyer(){
+    emit(GetLawyersDataLoading());
+    DioHelper.getData(
+      url: 'lawyers',
+    ).then((value) {
+      getLawyers = LawyersModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(getLawyerModel?.data![0].email);
+      }
+      emit(GetLawyersDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetLawyersDataError());
+      if (kDebugMode) {
+        print(getLawyerModel?.data![0].email);
+        print(onError);
+      }
+    });
+  }
+
+  CaseModel? getLawyerCases;
+  void getCasesByLawyerId({required int? lawyerId}){
+    emit(GetCasesByLawyerIdDataLoading());
+    DioHelper.getData(
+      url: 'cases_foriegn/$lawyerId',
+    ).then((value) {
+      getLawyerCases = CaseModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(caseModel?.casesData![0].caseID);
+      }
+      emit(GetCasesByLawyerIdDataSuccessful());
+    }).catchError((onError){
+      emit(GetCasesByLawyerIdDataError());
+      if (kDebugMode) {
+        print(caseModel?.casesData![0].courtNumber);
+        print(onError.toString());
+      }
+    });
+  }
+
   SessionModel? sessionModel;
   void getSessions({required int ?caseId}){
     emit(GetSessionsDataLoading());
@@ -320,6 +362,28 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       emit(GetExpensesDataError());
       if (kDebugMode) {
         print(expensesModel?.message);
+        print(onError.toString());
+      }
+    });
+  }
+
+  PaymentsModel? paymentsModel;
+  void getPayments({required int? caseId}){
+    emit(GetPaymentsDataLoading());
+    DioHelper.getData(
+      url: 'payments_foriegn/$caseId',
+    ).then((value) {
+      paymentsModel = PaymentsModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(paymentsModel?.paymentsData![0].amount);
+      }
+      emit(GetPaymentsDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(GetPaymentsDataError());
+      if (kDebugMode) {
+        print(paymentsModel?.message);
         print(onError.toString());
       }
     });
