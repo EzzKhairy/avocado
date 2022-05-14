@@ -1,8 +1,8 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/clients_model.dart';
-import 'package:avocado/modules/add_client_screen.dart';
-import 'package:avocado/modules/client_info_screen.dart';
+import 'package:avocado/modules/clientScreens/add_client_screen.dart';
+import 'package:avocado/modules/clientScreens/client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,14 +12,16 @@ import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ClientsScreen extends StatelessWidget {
-  const ClientsScreen({Key? key}) : super(key: key);
+   ClientsScreen({Key? key}) : super(key: key);
 
+  var searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
         listener: (context,state){},
         builder: (context,state) {
           List<ClientsData>? clientData = AvocadoCubit.get(context).clientsModel?.clientsData;
+          List<ClientsData>? searchClientData = AvocadoCubit.get(context).searchClientsModel?.clientsData ?? [];
           return Scaffold(
           appBar: NewGradientAppBar(
             centerTitle: true,
@@ -46,11 +48,34 @@ class ClientsScreen extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
-                  searchBar(context: context),
+                  searchBar(
+                    controller: searchController,
+                    onChange: (value){
+                      if(value.isNotEmpty) {
+                      AvocadoCubit.get(context).searchClients(value);
+                    }
+                      else{
+                        AvocadoCubit.get(context).getClients();
+                      }
+                  }
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
-                  ListView.separated(
+                  searchClientData.isNotEmpty ?
+                    ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context,index) {
+                      if(index % 2 == 0) {
+                        return clientBuilder(searchClientData[index],grey, Colors.black,context);
+                      } else {
+                        return clientBuilder(searchClientData[index],Colors.black, gold,context);
+                      }
+                    } ,
+                    separatorBuilder: (context,index) =>const SizedBox(height: 10,),
+                    itemCount: searchClientData.length,
+                  ) : ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context,index) {

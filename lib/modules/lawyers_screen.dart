@@ -44,7 +44,10 @@ class LawyersScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     child: Column(
                       children: [
-                        searchBar(context: context),
+                        searchBar(
+                          onChange: (value){
+                          }
+                        ),
                         const SizedBox(
                           height: 15,
                         ),

@@ -15,85 +15,70 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:workmanager/workmanager.dart';
 
-var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+// var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+//
+// Future showNotification() async{
+//   AndroidNotificationDetails androidNotificationDetails =
+//        AndroidNotificationDetails(
+//           '${Random().nextInt(400)}',
+//           'tasks',
+//         playSound: true,
+//         enableVibration: true,
+//         priority: Priority.high,
+//       );
+//   var platformChannelSpecifies = NotificationDetails(
+//     android: androidNotificationDetails
+//   );
+//
+//   await flutterLocalNotificationsPlugin.show(
+//            Random().nextInt(200),
+//           tasksData![0].title,
+//           'fsefes',
+//           platformChannelSpecifies);
+//
+// }
+//
+// Future<void> callbackDispatcher() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//
+//   var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+//
+//   const AndroidInitializationSettings initializationSettingsAndroid =
+//   AndroidInitializationSettings('@mipmap/ic_launcher');
+//
+//   const InitializationSettings initializationSettings
+//   = InitializationSettings(android: initializationSettingsAndroid);
+//
+//   await flutterLocalNotificationsPlugin.initialize(initializationSettings)
+//       .then((value) => debugPrint('Flutter Local Notifications Initialized'));
+//
+//   if (tasksData!.isNotEmpty || tasksData != null) {
+//     Workmanager().executeTask((task, inputData) async {
+//       showNotification()
+//           .then((value) => debugPrint("Notification Pushed"))
+//           .catchError((onError) {
+//         debugPrint('Notification Error >>>> ' '$onError');
+//       }); //simpleTask will be emitted here.
+//       return Future.value(true);
+//     });
+//   }
+//   else {
+//     Timer(const Duration(seconds: 10), () {
+//       Workmanager().executeTask((task, inputData) async {
+//         showNotification()
+//             .then((value) => debugPrint("Notification Pushed"))
+//             .catchError((onError) {
+//           debugPrint('Notification Error after Delay >>>> ' '$onError');
+//         }); //simpleTask will be emitted here.
+//         return Future.value(true);
+//       });
+//     });
+//   }
+// }
 
-Future showNotification() async{
-  AndroidNotificationDetails androidNotificationDetails =
-       AndroidNotificationDetails(
-          '${Random().nextInt(400)}',
-          'tasks',
-        playSound: true,
-        enableVibration: true,
-        priority: Priority.high,
-      );
-  var platformChannelSpecifies = NotificationDetails(
-    android: androidNotificationDetails
-  );
-
-  await flutterLocalNotificationsPlugin.show(
-           Random().nextInt(200),
-          tasksData![0].title,
-          'fsefes',
-          platformChannelSpecifies);
-
-}
-
-Future<void> callbackDispatcher() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
-
-  const InitializationSettings initializationSettings
-  = InitializationSettings(android: initializationSettingsAndroid);
-
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings)
-      .then((value) => debugPrint('Flutter Local Notifications Initialized'));
-
-  if (tasksData!.isNotEmpty || tasksData != null) {
-    Workmanager().executeTask((task, inputData) async {
-      showNotification()
-          .then((value) => debugPrint("Notification Pushed"))
-          .catchError((onError) {
-        debugPrint('Notification Error >>>> ' '$onError');
-      }); //simpleTask will be emitted here.
-      return Future.value(true);
-    });
-  }
-  else {
-    Timer(const Duration(seconds: 10), () {
-      Workmanager().executeTask((task, inputData) async {
-        showNotification()
-            .then((value) => debugPrint("Notification Pushed"))
-            .catchError((onError) {
-          debugPrint('Notification Error after Delay >>>> ' '$onError');
-        }); //simpleTask will be emitted here.
-        return Future.value(true);
-      });
-    });
-  }
-}
-
-class AppLayout extends StatefulWidget {
+class AppLayout extends StatelessWidget {
   const AppLayout({Key? key}) : super(key: key);
 
-  @override
-  State<AppLayout> createState() => AppLayoutState();
-
-
-}
-class AppLayoutState extends State<AppLayout> {
-  @override
-  void initState() {
-    Workmanager().initialize(
-        callbackDispatcher, // The top level function, aka callbackDispatcher
-        isInDebugMode: true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-    ).then((value) => debugPrint('WorkManager Initialized'));
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +91,7 @@ class AppLayoutState extends State<AppLayout> {
             conditionBuilder: (context)=>
             AvocadoCubit.get(context).caseModel != null && AvocadoCubit.get(context).lawyerData != null
                 && AvocadoCubit.get(context).clientsModel != null && AvocadoCubit.get(context).getCourtModel != null
-            && AvocadoCubit.get(context).getTasksModel != null,
+            && AvocadoCubit.get(context).getTasksModel != null && AvocadoCubit.get(context).getLawyers != null,
             widgetBuilder:(context)=> Scaffold(
               backgroundColor: Colors.transparent,
               appBar: NewGradientAppBar(

@@ -14,7 +14,7 @@ import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/notification_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
-import 'package:avocado/modules/tasks_screen.dart';
+import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -109,6 +109,27 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       emit(UpdateLawyerProfileError(lawyerUpdated!));
       if (kDebugMode) {
         print(lawyerUpdated?.message);
+        print(onError);
+      }
+    });
+  }
+  ClientsModel? searchClientsModel;
+  void searchClients(String keyWord){
+    emit(SearchClientsLoading());
+    DioHelper.getData(
+      url: 'clients_search/$keyWord',
+    ).then((value) {
+      searchClientsModel = ClientsModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print( 'Searched >> ' '${searchClientsModel?.clientsData![0].email}');
+      }
+      emit(SearchClientsSuccessful());
+    }
+    ).catchError((onError){
+      emit(SearchClientsError());
+      if (kDebugMode) {
+        print(lawyerData?.data![0].email);
         print(onError);
       }
     });
@@ -261,6 +282,27 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
+  CaseModel? searchCaseModel;
+  void searchCases({required String keyword}){
+    emit(SearchCasesDataLoading());
+    DioHelper.getData(
+      url: 'cases_search/$keyword',
+    ).then((value) {
+      searchCaseModel = CaseModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(searchCaseModel?.casesData![0].caseID);
+      }
+      emit(SearchCasesDataSuccessful());
+    }).catchError((onError){
+      emit(SearchCasesDataError());
+      if (kDebugMode) {
+        print(searchCaseModel?.casesData![0].courtNumber);
+        print(onError.toString());
+      }
+    });
+  }
+
   LawyersModel? getLawyers;
   void getEveryLawyer(){
     emit(GetLawyersDataLoading());
@@ -278,6 +320,28 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       emit(GetLawyersDataError());
       if (kDebugMode) {
         print(getLawyerModel?.data![0].email);
+        print(onError);
+      }
+    });
+  }
+
+  LawyersModel? searchLawyersModel;
+  void searchLawyers({required String? keyword}){
+    emit(SearchLawyersDataLoading());
+    DioHelper.getData(
+      url: 'lawyers_search/$keyword',
+    ).then((value) {
+      searchLawyersModel = LawyersModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(searchLawyersModel?.data![0].email);
+      }
+      emit(SearchLawyersDataSuccessful());
+    }
+    ).catchError((onError){
+      emit(SearchLawyersDataError());
+      if (kDebugMode) {
+        print(searchLawyersModel?.data![0].email);
         print(onError);
       }
     });
@@ -405,7 +469,6 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     ).catchError((onError){
       emit(GetExpertSessionDataError());
       if (kDebugMode) {
-        print(expertSessionModel!.expertSessionData![0].expertName);
         print(onError.toString());
       }
     });
@@ -616,21 +679,21 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
    }
 
-  static TasksModel? getNotifyTasksModel;
-  static bool isThereTasks = false;
-  static Future<void> getNotifyTasks(String? date) async {
-    DioHelper.getData(
-      url: 'tasks_search/$date',
-    ).then((value) {
-      getNotifyTasksModel = TasksModel.fromJson(value.data);
-      debugPrint(getNotifyTasksModel!.message);
-      if(getNotifyTasksModel!.tasksData!.isNotEmpty){isThereTasks = true;tasksData = getNotifyTasksModel!.tasksData;}
-      debugPrint(isThereTasks.toString());
-    }).catchError((error){
-      debugPrint(getNotifyTasksModel!.message);
-      debugPrint(error.toString());
-    });
-  }
+  // static TasksModel? getNotifyTasksModel;
+  // static bool isThereTasks = false;
+  // static Future<void> getNotifyTasks(String? date) async {
+  //   DioHelper.getData(
+  //     url: 'tasks_search/$date',
+  //   ).then((value) {
+  //     getNotifyTasksModel = TasksModel.fromJson(value.data);
+  //     debugPrint(getNotifyTasksModel!.message);
+  //     if(getNotifyTasksModel!.tasksData!.isNotEmpty){isThereTasks = true;tasksData = getNotifyTasksModel!.tasksData;}
+  //     debugPrint(isThereTasks.toString());
+  //   }).catchError((error){
+  //     debugPrint(getNotifyTasksModel!.message);
+  //     debugPrint(error.toString());
+  //   });
+  // }
 
   void changeLocalToAr (BuildContext context)async {
     await context.setLocale(Locale('ar'));

@@ -233,17 +233,19 @@ Future launch(url) async {
 
 Widget searchBar({
   context,
-  bool readOnly = true,
+  var controller,
+  bool readOnly = false,
   double height = 40,
   double width = double.infinity,
+  void Function(String)? onChange
 }){
   return Container(
     height: height,
     width: width,
     child: TextFormField(
+      autofocus: false,
       readOnly: readOnly,
       style: const TextStyle(color: Colors.grey),
-      onTap: () => navigateTo(context, SearchScreen()),
       decoration: InputDecoration(
         border: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
         filled: true,
@@ -255,6 +257,7 @@ Widget searchBar({
         prefixIcon: const Icon(Icons.search,color: Colors.black,),
         contentPadding: EdgeInsets.zero
       ),
+      onChanged: onChange,
     ),
   );
 }

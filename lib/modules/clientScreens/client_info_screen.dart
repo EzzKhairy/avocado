@@ -1,5 +1,5 @@
 import 'package:avocado/models/clients_model.dart';
-import 'package:avocado/modules/edit_client_info_screen.dart';
+import 'package:avocado/modules/clientScreens/edit_client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';

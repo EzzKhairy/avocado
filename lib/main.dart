@@ -46,11 +46,11 @@ void main()async
 
 
 
-  Workmanager().registerPeriodicTask(
-      '${Random().nextInt(200)}',
-      'Every 15 Mins',
-      frequency: const Duration(minutes: 15),
-  ).then((value) => debugPrint('Periodic Task Registered')).catchError((onError){"Periodic Task Error >>>> $onError";});
+  // Workmanager().registerPeriodicTask(
+  //     '${Random().nextInt(200)}',
+  //     'Every 15 Mins',
+  //     frequency: const Duration(minutes: 15),
+  // ).then((value) => debugPrint('Periodic Task Registered')).catchError((onError){"Periodic Task Error >>>> $onError";});
 
   runApp(
       EasyLocalization(
@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget
         listener: (context, state) {},
         builder: (context, state)
         {
-          AvocadoCubit.getNotifyTasks("2022-05-11");
+          //AvocadoCubit.getNotifyTasks("2022-05-11");
           return MaterialApp(
             theme: lightTheme,
             darkTheme: darkTheme,

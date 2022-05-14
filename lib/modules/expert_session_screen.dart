@@ -1,17 +1,12 @@
-import 'dart:async';
-
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/expert_session_model.dart';
-import 'package:avocado/models/session_model.dart';
-import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
-
 import 'expert_session__info_screen.dart';
 
 class ExpertSessionScreen extends StatelessWidget {
@@ -29,7 +24,7 @@ class ExpertSessionScreen extends StatelessWidget {
             List<ExpertSessionData>? expertSessionData = AvocadoCubit.get(context).expertSessionModel!.expertSessionData;
             return Conditional.single(
               context: context,
-              conditionBuilder: (context) => expertSessionData!.isNotEmpty,
+              conditionBuilder: (context) => state is GetExpertSessionDataSuccessful,
               widgetBuilder:(context)=> Scaffold(
                 appBar: NewGradientAppBar(
                   centerTitle: true,
@@ -58,14 +53,25 @@ class ExpertSessionScreen extends StatelessWidget {
                     children: [
                       searchBar(),
                       const SizedBox(height: 20,),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) => buildExpertSessionItem(expertSessionData![index],context),
-                        separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                        itemCount: expertSessionData!.length,
-                      ),
-                    ],
+                      Conditional.single(
+                        context: context,
+                        conditionBuilder: (context)=> expertSessionData!.isNotEmpty,
+                        widgetBuilder:(context) => ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => buildExpertSessionItem(expertSessionData![index],context),
+                          separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                          itemCount: expertSessionData!.length,
+                        ),
+                        fallbackBuilder: (context) => const Center(child: Text(
+                          'No Expert Sessions Included',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        ),
+                      ),                    ],
                   ),
                 ),
               ),
@@ -76,7 +82,6 @@ class ExpertSessionScreen extends StatelessWidget {
       }
     );
   }
-
 
   Widget buildExpertSessionItem(ExpertSessionData expertSessionData,context)=> GestureDetector(
     onTap: (){navigateTo(context, ExpertSessionInfoScreen(expertSessionData));},

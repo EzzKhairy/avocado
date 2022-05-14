@@ -1,7 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/clients_model.dart';
-import 'package:avocado/modules/clients_screen.dart';
+import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:avocado/shared/profile_components.dart';
@@ -31,7 +31,7 @@ class AddClientScreen extends StatelessWidget {
             print('asasasasa' '${state.model.message}');
             AvocadoCubit.get(context).getClients();
             showToast(context: context, msg: state.model.message);
-            navigateAndKill(context, const ClientsScreen());
+            navigateAndKill(context,  ClientsScreen());
           }
         }
         if(state is AddNewClientError)

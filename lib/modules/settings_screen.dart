@@ -1,6 +1,6 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/modules/cases_screen.dart';
-import 'package:avocado/modules/clients_screen.dart';
+import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/modules/courts_screen.dart';
 import 'package:avocado/modules/expert_session_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
@@ -67,7 +67,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 horizontalDivider(),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, const ClientsScreen());
+                    navigateTo(context,  ClientsScreen());
                   },
                   child: Container(
                     color: Colors.white,

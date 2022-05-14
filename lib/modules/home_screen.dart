@@ -4,8 +4,8 @@ import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/case_info_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
-import 'package:avocado/modules/clients_screen.dart';
-import 'package:avocado/modules/tasks_screen.dart';
+import 'package:avocado/modules/clientScreens/clients_screen.dart';
+import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 10,),
                           buildHomeCard(
-                            function: (){navigateTo(context, const ClientsScreen());},
+                            function: (){navigateTo(context,  ClientsScreen());},
                             title: LocaleKeys.totalClients.tr(),
                             icon: Icons.people_alt_outlined,
                             number: AvocadoCubit.get(context).clientsModel!.clientsData!.length,

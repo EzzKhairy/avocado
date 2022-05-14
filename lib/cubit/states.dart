@@ -21,6 +21,10 @@ class GetClientsLoading extends AvocadoStates{}
 class GetClientsSuccessful extends AvocadoStates{}
 class GetClientsError extends AvocadoStates{}
 
+class SearchClientsLoading extends AvocadoStates{}
+class SearchClientsSuccessful extends AvocadoStates{}
+class SearchClientsError extends AvocadoStates{}
+
 class UpdateClientProfileLoading extends AvocadoStates{}
 class UpdateClientProfileSuccessful extends AvocadoStates{
   final ClientsModel model;
@@ -72,6 +76,10 @@ class EditPressedState extends AvocadoStates{}
 class GetCasesDataLoading extends AvocadoStates{}
 class GetCasesDataSuccessful extends AvocadoStates{}
 class GetCasesDataError extends AvocadoStates{}
+
+class SearchCasesDataLoading extends AvocadoStates{}
+class SearchCasesDataSuccessful extends AvocadoStates{}
+class SearchCasesDataError extends AvocadoStates{}
 
 class GetSessionsDataLoading extends AvocadoStates{}
 class GetSessionsDataSuccessful extends AvocadoStates{}
@@ -164,5 +172,10 @@ class GetCasesByLawyerIdDataError extends AvocadoStates{}
 class GetLawyersDataLoading extends AvocadoStates{}
 class GetLawyersDataSuccessful extends AvocadoStates{}
 class GetLawyersDataError extends AvocadoStates{}
+
+class SearchLawyersDataLoading extends AvocadoStates{}
+class SearchLawyersDataSuccessful extends AvocadoStates{}
+class SearchLawyersDataError extends AvocadoStates{}
+
 
 
