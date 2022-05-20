@@ -100,9 +100,22 @@ class TasksScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${tasksData?.startTime}',
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          Container(
+            height: 100,
+            child: Column(
+              children: [
+                Text(
+                  '${tasksData?.startTime}',
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                if(tasksData?.endTime != null)
+                  Text(
+                  '${tasksData?.endTime}',
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
           const SizedBox(
             width: 10,
@@ -121,11 +134,11 @@ class TasksScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20)),
               child: Container(
                 height: 100,
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${tasksData?.title}'),
+                    Text('${tasksData?.title}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                     const SizedBox(
                       height: 5,
                     ),

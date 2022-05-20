@@ -22,4 +22,3 @@ void pop (context) {
   Navigator.pop(context);
 }
 
-List<TasksData>? tasksData = [];

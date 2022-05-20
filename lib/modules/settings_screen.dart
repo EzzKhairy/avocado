@@ -7,6 +7,8 @@ import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/modules/sessions_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -33,37 +35,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text('Ahlan Ahmed ',
+                    children:  [
+                      Text( LocaleKeys.ahlan.tr() + ' ' + AvocadoCubit.get(context).lawyerData!.data![0].name!.split(' ').elementAt(0),
                         style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),),
                       SizedBox(height: 5,),
-                      Text('Ahmed_Mohamed@gmail.com'),
+                      Text('${AvocadoCubit.get(context).lawyerData!.data![0].email}',style: TextStyle(letterSpacing: 1.5),),
                     ],
                   ),
                 ),
                 Container(
                     padding: const EdgeInsets.all(15),
-                    child: const Text('MY ACCOUNT',style: TextStyle(color: Colors.grey,fontSize: 15),)),
-                InkWell(
-                  onTap: (){
-                    //navigateTo(context, FavoritesScreen());
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                        Icon(Icons.favorite_border_rounded,color: gold,),
-                        separator(15, 0),
-                        const Text('Favorites',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
+                    child:  Text(LocaleKeys.myAccount.tr().toUpperCase(),style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),
                 horizontalDivider(),
                 InkWell(
                   onTap: (){
@@ -117,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Row(
                       children:
                       [
-                        Icon(Icons.assignment,color: gold,),
+                        Icon(Icons.cases_sharp,color: gold,),
                         separator(15, 0),
                         const Text('Cases',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                         const Spacer(),
@@ -138,7 +120,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Row(
                       children:
                       [
-                        Icon(Icons.assignment,color: gold,),
+                        Icon(Icons.villa,color: gold,),
                         separator(15, 0),
                         const Text('Courts',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                         const Spacer(),
@@ -152,7 +134,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 Container(
                     padding:const EdgeInsets.all(15),
-                    child: const Text('SETTINGS',style: TextStyle(color: Colors.grey,fontSize: 15),)),
+                    child:  Text('SETTINGS',style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),
                 InkWell(
                   onTap: (){},
                   child: Container(
@@ -183,27 +165,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 InkWell(
                   onTap: (){},
                   child: Container(
-                    color: Colors.white,
-                    padding:const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                         Icon(Icons.map_outlined,color: gold,),
-                        separator(15, 0),
-                        const Text('Country',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        const Text('Egypt'),
-                        separator(10,0),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
-                horizontalDivider(),
-                InkWell(
-                  onTap: (){},
-                  child: Container(
                     padding: const EdgeInsets.all(15),
                     color: Colors.white,
                     child: Row(
@@ -211,7 +172,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       [
                          Icon(Icons.flag_outlined,color: gold,),
                         separator(15, 0),
-                        const Text('Language',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                         Text(LocaleKeys.language.tr(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                         const Spacer(),
                         PopupMenuButton(
                           onSelected: (value){
@@ -220,7 +181,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             else
                               AvocadoCubit.get(context).changeLocalToEn(context);
                           },
-                          itemBuilder: (context) =>  [
+                          itemBuilder: (context) => const [
                             PopupMenuItem(
                               value: 'Arabic',
                               child: Text('عربي',style: TextStyle(color: Colors.black),),),
@@ -243,7 +204,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Container(
                     padding: const EdgeInsets.all(15),
-                    child: const Text('REACH OUT TO US',style: TextStyle(color: Colors.grey,fontSize: 15),)),
+                    child:  Text(LocaleKeys.reachUs.tr().toUpperCase(),style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),
                 InkWell(
                   onTap: (){
                     // ShopCubit.get(context).getFAQsData();
@@ -276,7 +237,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       [
                          Icon(Icons.phone_in_talk_outlined,color: gold,),
                         separator(15, 0),
-                        const Text('Contact Us',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                         Text(LocaleKeys.contactUs.tr(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                         const Spacer(),
                         const Icon(Icons.arrow_forward_ios_rounded),
                         separator(10,0),
@@ -297,10 +258,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children:
-                      const [
-                        Icon(Icons.power_settings_new),
-                        SizedBox(width: 10,),
-                        Text('SignOut',style: TextStyle(fontSize: 18),)
+                       [
+                        const Icon(Icons.power_settings_new),
+                        const SizedBox(width: 10,),
+                        Text(LocaleKeys.SignOut.tr(),style: const TextStyle(fontSize: 18),)
                       ],
                     ),
                   ),

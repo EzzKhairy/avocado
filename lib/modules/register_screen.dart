@@ -23,11 +23,6 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
         builder: (context) {
-          name.text = 'Omar Sherif';
-          phone.text = '30007150100777';
-          password.text = '123456789';
-          confirmPassword.text = '123456789';
-          emailAddress.text = 'omarsherifmetwaly@gmail.com';
           return BlocProvider(
             create: (context) => RegisterCubit(),
             child: BlocConsumer<RegisterCubit, AvocadoStates>(
@@ -35,7 +30,6 @@ class RegisterScreen extends StatelessWidget {
                 if (state is LawyerRegisterSuccessful) {
                   if(state.model.status == 'true') {
                     showToast(context: context, msg: state.model.message,backgroundColor: Colors.green);
-
                     CacheHelper.saveData(key: 'token', value: state.model.accessToken);
                   CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id);
                   AvocadoCubit.get(context).getLawyerProfile(lawyerId);
@@ -141,6 +135,9 @@ class RegisterScreen extends StatelessWidget {
                                             isPassword: true,
                                             suffix: Icons
                                                 .remove_red_eye_outlined,
+                                              suffixPressed: (){
+                                                RegisterCubit.get(context).changePasswordVisibility();
+                                              }
                                           ),
                                           const SizedBox(height: 10,),
                                           defaultFormField(
@@ -156,6 +153,9 @@ class RegisterScreen extends StatelessWidget {
                                             isPassword: true,
                                             suffix: Icons
                                                 .remove_red_eye_outlined,
+                                            suffixPressed: (){
+                                              RegisterCubit.get(context).changeConfirmPasswordVisibility();
+                                            }
                                           ),
                                           const SizedBox(height: 40,),
                                           defaultButton(

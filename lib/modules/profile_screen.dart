@@ -39,26 +39,6 @@ class ProfileScreen extends StatelessWidget {
             },
             builder: (context,state) {
               return Scaffold(
-            appBar: NewGradientAppBar(
-              title: Text(
-                'AVOCADO',
-                style: TextStyle(
-                  fontFamily: 'Nedian',
-                  fontSize: 25.0,
-                  color: gold,
-                ),
-              ),
-              gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0.842),
-                    Colors.black.withOpacity(0.845),
-                    Colors.black.withOpacity(0.89),
-                  ],
-                  begin: AlignmentDirectional.topEnd,
-                  end: AlignmentDirectional.bottomStart,
-                  stops: const [0.20,0.17,0.40]
-              ),
-            ),
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

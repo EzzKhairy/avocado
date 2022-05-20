@@ -1,7 +1,6 @@
 import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/modules/clientScreens/edit_client_info_screen.dart';
-import 'package:avocado/modules/edit_court_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -99,9 +98,14 @@ class CourtInfoScreen extends StatelessWidget {
                   radius: 25,
                   backgroundColor: Colors.black,
                   child: IconButton(
-                    icon: Icon(Icons.edit,color: gold,),
+                    icon: Icon(Icons.location_on_rounded,color: gold,),
                     onPressed: (){
-                      navigateTo(context, EditCourtInfoScreen(courtData));
+                      if(courtData.longitude != null && courtData.latitude != null) {
+                        viewLocation(courtData.longitude, courtData.latitude);
+                      }
+                      else{
+                        showToast(context: context, msg: 'Coordinates are not available');
+                      }
                     },
                   ),
                 ),

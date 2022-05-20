@@ -3,7 +3,6 @@ import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/modules/clientScreens/add_client_screen.dart';
-import 'package:avocado/modules/add_court_screen.dart';
 import 'package:avocado/modules/clientScreens/client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
@@ -70,17 +69,6 @@ class CourtsScreen extends StatelessWidget {
               ),
             ),
           ),
-          floatingActionButton: Padding(
-            padding: EdgeInsetsDirectional.only(end: 10,bottom: 10),
-            child: FloatingActionButton(
-              backgroundColor: Colors.black,
-              splashColor: Colors.blue,
-              onPressed: (){
-                navigateTo(context, AddCourtScreen());
-              },
-              child: Icon(Icons.add,color: gold,size: 35,),
-            ),
-          ),
         );
       },
     );
@@ -129,7 +117,12 @@ class CourtsScreen extends StatelessWidget {
               const Spacer(),
               InkWell(
                 onTap: (){
-                  viewLocation(double.parse(courtData.longitude), double.parse(courtData.latitude));
+                  if(courtData.longitude != null && courtData.latitude != null) {
+                    viewLocation(courtData.longitude, courtData.latitude);
+                  }
+                  else{
+                    showToast(context: context, msg: 'Coordinates are not available');
+                  }
                 },
                 child: CircleAvatar(
                     backgroundColor: avatarColor,

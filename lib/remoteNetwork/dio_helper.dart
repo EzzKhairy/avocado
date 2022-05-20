@@ -8,7 +8,7 @@ class DioHelper
   {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'https://gg-new-api-avo.herokuapp.com/public/api/',
+        baseUrl: 'https://ec2-54-196-138-182.compute-1.amazonaws.com/my_GP/api-passport/public/api/',
         receiveDataWhenStatusError: true,
         headers: {
           'Accept':'application/json',

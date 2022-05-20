@@ -70,7 +70,12 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(width: 10,),
                           buildHomeCard(
                             function: (){
-                              navigateTo(context, const LawyersScreen());
+                              if(AvocadoCubit.get(context).lawyerData?.data![0].role == 'Admin' || AvocadoCubit.get(context).lawyerData?.data![0].role == 'admin') {
+                                navigateTo(context, const LawyersScreen());
+                              }
+                              else{
+                                showToast(context: context, msg: 'Not Authurized');
+                              }
                             },
                             title: LocaleKeys.totalClients.tr(),
                             icon: Icons.people_alt_outlined,

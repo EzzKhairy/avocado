@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/clients_model.dart';
@@ -13,10 +15,12 @@ import 'package:avocado/models/session_model.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/notification_screen.dart';
+import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
 import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:dio/src/response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +33,32 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   AvocadoCubit() : super(InitialState());
 
   static AvocadoCubit get(context) => BlocProvider.of(context);
+
+  static var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  static Future showNotification() async{
+    AndroidNotificationDetails androidNotificationDetails =
+    AndroidNotificationDetails(
+      '${Random().nextInt(400)}',
+      'tasks',
+      playSound: true,
+      enableVibration: true,
+      priority: Priority.high,
+    );
+    var platformChannelSpecifies = NotificationDetails(
+        android: androidNotificationDetails
+    );
+    await getNotifyTasks("2022-05-11").then((value) async {
+      await flutterLocalNotificationsPlugin.show(
+          Random().nextInt(200),
+          getNotifyTasksModel?.tasksData![0].title ?? 'Null',
+          'fsefes',
+          platformChannelSpecifies);
+
+    });
+
+  }
+
 
 
  LawyersModel? getLawyerModel;
@@ -670,7 +700,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
         url: 'tasks_search/$date',
        ).then((value) {
       getTasksModel = TasksModel.fromJson(value.data);
-      debugPrint(getTasksModel!.message);
+      debugPrint('getTodayTasks >>> '  '${getTasksModel!.message}');
       emit(GetTasksSuccessful(getTasksModel!));
     }).catchError((error){
       emit(GetTasksError(getTasksModel!));
@@ -679,21 +709,19 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
    }
 
-  // static TasksModel? getNotifyTasksModel;
-  // static bool isThereTasks = false;
-  // static Future<void> getNotifyTasks(String? date) async {
-  //   DioHelper.getData(
-  //     url: 'tasks_search/$date',
-  //   ).then((value) {
-  //     getNotifyTasksModel = TasksModel.fromJson(value.data);
-  //     debugPrint(getNotifyTasksModel!.message);
-  //     if(getNotifyTasksModel!.tasksData!.isNotEmpty){isThereTasks = true;tasksData = getNotifyTasksModel!.tasksData;}
-  //     debugPrint(isThereTasks.toString());
-  //   }).catchError((error){
-  //     debugPrint(getNotifyTasksModel!.message);
-  //     debugPrint(error.toString());
-  //   });
-  // }
+  static TasksModel? getNotifyTasksModel;
+    static Future<void> getNotifyTasks(String? date) async {
+    DioHelper.getData(
+      url: 'tasks_search/$date',
+    ).then((value) {
+      getNotifyTasksModel = TasksModel.fromJson(value.data);
+      debugPrint('Notify Success >>> '  '${getNotifyTasksModel!.message}');
+    }).catchError((error){
+      debugPrint('Notify Error >>> '  '${getNotifyTasksModel!.message}');
+      debugPrint(error.toString());
+      });
+  }
+
 
   void changeLocalToAr (BuildContext context)async {
     await context.setLocale(Locale('ar'));
@@ -708,8 +736,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   List<Widget> screens = [
     const HomeScreen(),
     const TasksScreen(),
+    ProfileScreen(),
     const SettingsScreen(),
-    const NotificationScreen(),
   ];
 
   void changeBottomNav(int index)

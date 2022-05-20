@@ -6,6 +6,8 @@ import 'package:avocado/cubit/states.dart';
 import 'package:avocado/main.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:workmanager/workmanager.dart';
 
 // var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -38,48 +41,21 @@ import 'package:workmanager/workmanager.dart';
 //
 // }
 //
-// Future<void> callbackDispatcher() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//
-//   var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-//
-//   const AndroidInitializationSettings initializationSettingsAndroid =
-//   AndroidInitializationSettings('@mipmap/ic_launcher');
-//
-//   const InitializationSettings initializationSettings
-//   = InitializationSettings(android: initializationSettingsAndroid);
-//
-//   await flutterLocalNotificationsPlugin.initialize(initializationSettings)
-//       .then((value) => debugPrint('Flutter Local Notifications Initialized'));
-//
-//   if (tasksData!.isNotEmpty || tasksData != null) {
-//     Workmanager().executeTask((task, inputData) async {
-//       showNotification()
-//           .then((value) => debugPrint("Notification Pushed"))
-//           .catchError((onError) {
-//         debugPrint('Notification Error >>>> ' '$onError');
-//       }); //simpleTask will be emitted here.
-//       return Future.value(true);
-//     });
-//   }
-//   else {
-//     Timer(const Duration(seconds: 10), () {
-//       Workmanager().executeTask((task, inputData) async {
-//         showNotification()
-//             .then((value) => debugPrint("Notification Pushed"))
-//             .catchError((onError) {
-//           debugPrint('Notification Error after Delay >>>> ' '$onError');
-//         }); //simpleTask will be emitted here.
-//         return Future.value(true);
-//       });
-//     });
-//   }
-// }
 
-class AppLayout extends StatelessWidget {
+class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);
+  @override
+  State<AppLayout> createState() => _AppLayoutState();
+}
 
 
+class _AppLayoutState extends State<AppLayout> {
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
@@ -92,29 +68,26 @@ class AppLayout extends StatelessWidget {
             AvocadoCubit.get(context).caseModel != null && AvocadoCubit.get(context).lawyerData != null
                 && AvocadoCubit.get(context).clientsModel != null && AvocadoCubit.get(context).getCourtModel != null
             && AvocadoCubit.get(context).getTasksModel != null && AvocadoCubit.get(context).getLawyers != null,
-            widgetBuilder:(context)=> Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: NewGradientAppBar(
-                elevation: 5,
-                automaticallyImplyLeading: false,
-                title: Text(
-                  'AVOCADO',
-                  style: TextStyle(
-                    fontFamily: 'Nedian',
-                    fontSize: 25.0,
-                    color: gold,
-                  ),
-                ),
-                gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0.842),
-                      Colors.black.withOpacity(0.845),
-                      Colors.black.withOpacity(0.89),
-                    ],
-                    begin: AlignmentDirectional.topEnd,
-                    end: AlignmentDirectional.bottomStart,
-                    stops: const [0.20,0.17,0.40]
-                ),
+            widgetBuilder:(context)=> ScaffoldGradientBackground(
+              extendBody: true,
+              gradient:LinearGradient(
+                  colors: [
+                    Colors.black.withOpacity(0.842),
+                    Colors.black.withOpacity(0.845),
+                    Colors.black.withOpacity(0.89),
+                  ],
+                  begin: AlignmentDirectional.topEnd,
+                  end: AlignmentDirectional.bottomStart,
+                  stops: const [0.20, 0.17, 0.40]),
+              appBar: AppBar(
+                title:  Text(
+                        'AVOCADO',
+                        style: TextStyle(
+                        fontFamily: 'Nedian',
+                        fontSize: 25.0,
+                        color: gold,
+                        )),
+                backgroundColor: Colors.transparent,
               ),
               body: cubit.screens[cubit.currentIndex],
               bottomNavigationBar:
@@ -129,22 +102,22 @@ class AppLayout extends StatelessWidget {
                     },
                     backgroundColor: HexColor('ECECEC'),
                       padding: const EdgeInsetsDirectional.all(13),
-                      tabs: const [
+                      tabs:  [
                         GButton(
                           icon: Icons.home,
-                          text: 'Home',
+                          text: LocaleKeys.home.tr(),
                         ),
                         GButton(
-                          icon: Icons.toc,
-                          text: 'Tasks',
+                          icon: Icons.checklist_outlined,
+                          text: LocaleKeys.tasks.tr(),
                         ),
                         GButton(
                           icon: Icons.person,
-                          text: 'My Account',
+                          text: LocaleKeys.profile.tr(),
                         ),
                         GButton(
-                          icon: Icons.notifications,
-                          text: 'Alert',
+                          icon: Icons.menu,
+                          text: 'More',
                         )
                       ]
                   ),
