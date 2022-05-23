@@ -1,3 +1,4 @@
+import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/modules/login_screen.dart';
 import 'package:avocado/modules/search_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 void navigateTo(context, screen) => Navigator.push(
   context,
@@ -154,14 +156,31 @@ Widget scaleProgressIndicator(context){
     ),
   );
 }
+Future<void> Location(double lat, double lng) async {
+  var url = 'google.navigation:q=$lat,$lng&mode=d';
+  if (await canLaunchUrlString(url)) {
+  await launchUrlString(url);
+  } else {
+  throw 'Could not launch $url';
+  }
+}
 
 void viewLocation(double lat, double lng) async {
 var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
 if (await canLaunchUrl(uri)) {
-await launch(uri);
+await launchUrl(uri);
 } else {
 throw 'Could not launch ${uri.toString()}';
 }
+}
+
+Future<void> openMap({required double latitude, required double longitude}) async {
+  String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+  if (await canLaunchUrlString(googleUrl)) {
+    await launchUrlString(googleUrl);
+  } else {
+    throw 'Could not open the map.';
+  }
 }
 
 Widget horizontalDivider({
@@ -206,9 +225,17 @@ void signOut(context){
   {
     if(value)
     {
+      AvocadoCubit.get(context).lawyerData = null;
+      token = '';
+      lawyerId = null;
       navigateAndKill(context, LoginScreen());
     }
   });
+}
+
+void printFullText(String text) {
+  final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
 void showToast({
@@ -227,7 +254,7 @@ void showToast({
   );
 }
 
-Future launch(url) async {
+Future launchUrl(url) async {
   if (await launchUrl(url)) throw 'Could not launch $url';
 }
 

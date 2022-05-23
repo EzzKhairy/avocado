@@ -118,7 +118,7 @@ class CourtsScreen extends StatelessWidget {
               InkWell(
                 onTap: (){
                   if(courtData.longitude != null && courtData.latitude != null) {
-                    viewLocation(courtData.longitude, courtData.latitude);
+                    Location(courtData.longitude,courtData.latitude);
                   }
                   else{
                     showToast(context: context, msg: 'Coordinates are not available');

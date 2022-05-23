@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:avocado/cubit/states.dart';
@@ -19,6 +20,7 @@ import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
 import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
+import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:dio/src/response.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -26,6 +28,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 class AvocadoCubit extends Cubit <AvocadoStates>
@@ -143,6 +146,46 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
     });
   }
+
+  LawyersModel? lawyerPhotoUpdatedModel;
+  void updateLawyerProfilePhoto({
+    required int? lawyerID,
+    required String? name,
+    required String? email,
+    required String? address,
+    required String? role,
+    required String? lawyerNationalNumber,
+    String? profilePhoto,
+  }){
+    emit(UpdateLawyerProfilePhotoLoading());
+    DioHelper.putData(
+      url: 'lawyers/$lawyerID',
+      data: {
+        'email' : email,
+        'name' : name,
+        'Lawyer_National_Number' : lawyerNationalNumber,
+        'profile_photo_path' : profilePhoto
+      },
+
+    ).then((value) {
+      lawyerPhotoUpdatedModel = LawyersModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(lawyerPhotoUpdatedModel?.message);
+      }
+      getLawyerProfile(lawyerId);
+      emit(UpdateLawyerProfilePhotoSuccessful(lawyerPhotoUpdatedModel!));
+    }
+    ).catchError((onError){
+      emit(UpdateLawyerProfilePhotoError(lawyerPhotoUpdatedModel!));
+      if (kDebugMode) {
+        print(lawyerPhotoUpdatedModel?.message);
+        print(onError);
+      }
+    });
+  }
+
+
   ClientsModel? searchClientsModel;
   void searchClients(String keyWord){
     emit(SearchClientsLoading());
@@ -731,6 +774,31 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     await context.setLocale(Locale('en'));
     emit(ChangeLocalToEnState());
   }
+
+    final ImagePicker _picker = ImagePicker();
+    String? base64;
+    void pickImage({
+      required int? lawyerID,
+      required String? name,
+      required String? email,
+      required String? address,
+      required String? role,
+      required String? lawyerNationalNumber,
+}) async {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      var imageBytes = await image?.readAsBytes();
+      base64 = const Base64Codec().encode(imageBytes!);
+      updateLawyerProfilePhoto(
+          lawyerID: lawyerID,
+          name: name,
+          email: email,
+          address: address,
+          role: role,
+          lawyerNationalNumber: lawyerNationalNumber,
+          profilePhoto: '$base64'
+      );
+      debugPrint(base64);
+    }
 
   int currentIndex = 0;
   List<Widget> screens = [

@@ -106,7 +106,7 @@ class RegisterScreen extends StatelessWidget {
                                                 return ('phone is required');
                                               }
                                             },
-                                            label: 'Phone',
+                                            label: 'National ID',
                                             prefix: Icons.phone_outlined,
                                           ),
                                           const SizedBox(height: 10,),
@@ -132,7 +132,7 @@ class RegisterScreen extends StatelessWidget {
                                             },
                                             label: 'Password',
                                             prefix: Icons.lock_outline,
-                                            isPassword: true,
+                                            isPassword: RegisterCubit.get(context).isPassword ? true : false,
                                             suffix: Icons
                                                 .remove_red_eye_outlined,
                                               suffixPressed: (){
@@ -150,7 +150,7 @@ class RegisterScreen extends StatelessWidget {
                                             },
                                             label: 'Confirm Password',
                                             prefix: Icons.lock_outline,
-                                            isPassword: true,
+                                            isPassword: RegisterCubit.get(context).isConfirmPassword ? true : false,
                                             suffix: Icons
                                                 .remove_red_eye_outlined,
                                             suffixPressed: (){

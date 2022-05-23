@@ -35,6 +35,8 @@ class LoginScreen extends StatelessWidget {
                   CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id),
                   showToast(context: context, msg: state.model.message,backgroundColor: Colors.green),
                   AvocadoCubit.get(context).getLawyerProfile(lawyerId),
+                  print(lawyerId),
+                  print(token),
                   navigateTo(context, const AppLayout())
                 }
               else
@@ -45,6 +47,9 @@ class LoginScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
+            extendBody: true,
+            extendBodyBehindAppBar: true,
+            //backgroundColor: Colors.transparent,
             body:
             Container(
               decoration:  BoxDecoration(

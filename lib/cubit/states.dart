@@ -55,6 +55,16 @@ class UpdateLawyerProfileError extends AvocadoStates{
   UpdateLawyerProfileError(this.model);
 }
 
+class UpdateLawyerProfilePhotoLoading extends AvocadoStates{}
+class UpdateLawyerProfilePhotoSuccessful extends AvocadoStates{
+  final LawyersModel model;
+  UpdateLawyerProfilePhotoSuccessful(this.model);
+}
+class UpdateLawyerProfilePhotoError extends AvocadoStates{
+  final LawyersModel model;
+  UpdateLawyerProfilePhotoError(this.model);
+}
+
 class LawyerRegisterLoading extends AvocadoStates{}
 class LawyerRegisterSuccessful extends AvocadoStates{
   final LoginModel model;

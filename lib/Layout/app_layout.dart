@@ -69,7 +69,6 @@ class _AppLayoutState extends State<AppLayout> {
                 && AvocadoCubit.get(context).clientsModel != null && AvocadoCubit.get(context).getCourtModel != null
             && AvocadoCubit.get(context).getTasksModel != null && AvocadoCubit.get(context).getLawyers != null,
             widgetBuilder:(context)=> ScaffoldGradientBackground(
-              extendBody: true,
               gradient:LinearGradient(
                   colors: [
                     Colors.black.withOpacity(0.842),

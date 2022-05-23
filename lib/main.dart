@@ -10,8 +10,6 @@ import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/shared/bloc_observer.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -63,13 +61,6 @@ void main()async
   HttpOverrides.global = MyHttpOverrides();
 
 
-  //when the app is opened
-  FirebaseMessaging.onMessage.listen((event) {});
-  // when click on notification to open app
-  FirebaseMessaging.onMessageOpenedApp.listen((event) {});
-  // background notification
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
   Widget widget;
 
   bool? isDark = CacheHelper.getBoolean(key: 'isDark');
@@ -117,10 +108,6 @@ void main()async
           startWidget: widget ,
   ),
       ));
-}
-
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-
 }
 
 class MyApp extends StatelessWidget
