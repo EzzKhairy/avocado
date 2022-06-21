@@ -70,7 +70,6 @@ class CodegenLoader extends AssetLoader{
   "caseType": "نوع القضيه",
   "lawyer": "المحامي",
   "description": "وصف",
-  "case": "قضيه رقم",
   "status": "الحاله",
   "caseSummary": "ملخص القضيه",
   "editClient": "تعديل العميل",
@@ -81,7 +80,17 @@ class CodegenLoader extends AssetLoader{
   "gender": "النوع",
   "securityInformation": "المعلومات الأمنية",
   "investigation": "تحقيق",
-  "investigationPlace": "مكان التحقيق"
+  "investigationPlace": "مكان التحقيق",
+  "noTasks": "لا يوجد لديك مهام اليوم",
+  "openedAt": "تاريخ البدايه",
+  "viewAll": "اظهر الكل",
+  "discardChanges": "إلغاء التعديلات",
+  "name": "الاسم",
+  "nationalNumber": "ألرقم القومي",
+  "nationalId": "ألرقم القومي",
+  "whatsUpToday": "ماذا يوجد اليوم؟",
+  "sureDiscardChanges": "هل انت متأكد انك تريد الغاء التعديلات",
+  "cases": "قضيه رقم"
 };
 static const Map<String,dynamic> en = {
   "save": "Save",
@@ -139,7 +148,6 @@ static const Map<String,dynamic> en = {
   "caseType": "Case Type",
   "lawyer": "Lawyer",
   "description": "Description",
-  "case": "Case",
   "status": "Status",
   "caseSummary": "Case Summary",
   "editClient": "Edit Client",
@@ -150,7 +158,17 @@ static const Map<String,dynamic> en = {
   "gender": "Gender",
   "securityInformation": "Security Information",
   "investigation": "Investigation",
-  "investigationPlace": "Investigation Place"
+  "investigationPlace": "Investigation Place",
+  "noTasks": "No Tasks found for Today",
+  "openedAt": "Opened at",
+  "viewAll": "View All",
+  "discardChanges": "Discard Changes",
+  "name": "Name",
+  "nationalNumber": "National Number",
+  "nationalId": "National ID",
+  "whatsUpToday": "Whats up Today?",
+  "sureDiscardChanges": "Are you sure you want to discard the changes?",
+  "cases": "Case"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

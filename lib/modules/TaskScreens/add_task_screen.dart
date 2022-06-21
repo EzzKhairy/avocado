@@ -21,11 +21,19 @@ class AddTaskScreen extends StatelessWidget {
 
   var tasksFormKey  = GlobalKey<FormState>();
 
+  final dateFormat = DateFormat('yyyy-MM-dd');
+  final timeFormat = DateFormat('hh:mm');
+  final dateTimeFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
+
+  DateTime taskDate = DateTime.now();
+  DateTime taskTime =  DateTime.now();
+
+
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        dateController.text = DateFormat.yMMMd().format(DateTime.now().add(const Duration(days: 1)));
+        dateController.text = DateFormat.yMMMMd().format(DateTime.now().add(const Duration(days: 1)));
         return Scaffold(
           appBar: NewGradientAppBar(
             centerTitle: true,
@@ -47,150 +55,158 @@ class AddTaskScreen extends StatelessWidget {
                 end: AlignmentDirectional.bottomStart,
                 stops: const [0.20, 0.17, 0.40]),
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: tasksFormKey,
-              child:Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10,),
-                  const Text('TASK NAME',style: TextStyle( fontSize: 15,color: Colors.grey) ),
-                  profileFormField(
-                    controller: taskNameController,
-                    type: TextInputType.name,
-                    validate: (value)
-                    {
-                      if(value!.isEmpty)
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: tasksFormKey,
+                child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10,),
+                    const Text('TASK NAME',style: TextStyle( fontSize: 15,color: Colors.grey) ),
+                    profileFormField(
+                      controller: taskNameController,
+                      type: TextInputType.name,
+                      validate: (value)
                       {
-                        return 'name is required';
-                      }
-                    },
-                    hintText: 'Enter The Task Name',
-                  ),
-                  const SizedBox(height: 20,),
-                  const Text('DATE',style: TextStyle( fontSize: 15,color: Colors.grey) ),
-                  profileFormField(
-                    controller: dateController,
-                    type: TextInputType.phone,
-                    readonly: true,
-                    onTap: (){
-                      showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(const Duration(days: 90)),
-                    ).then((value) {
-                        print(value.toString());
-                        return dateController.text = DateFormat.yMMMd().format(value!);
-                    });
+                        if(value!.isEmpty)
+                        {
+                          return 'name is required';
+                        }
                       },
-                    validate: (value)
-                    {
-                      if(value!.isEmpty)
+                      hintText: 'Enter The Task Name',
+                    ),
+                    const SizedBox(height: 20,),
+                    const Text('DATE',style: TextStyle( fontSize: 15,color: Colors.grey) ),
+                    profileFormField(
+                      controller: dateController,
+                      type: TextInputType.phone,
+                      readonly: true,
+                      onTap: (){
+                        showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(const Duration(days: 90)),
+                      ).then((value) {
+                          print(value.toString());
+                          taskDate = DateTime.parse(dateFormat.format(value!));
+                          print(taskDate.toString());
+                          return dateController.text = DateFormat.yMMMMd().format(value);
+                      });
+                        },
+                      validate: (value)
                       {
-                        return 'phone is required';
+                        if(value!.isEmpty)
+                        {
+                          return 'phone is required';
+                        }
+                      },
+                      hintText: 'Enter The Task Date',
+                      suffix: Icons.calendar_today_outlined,
+                      suffixPressed: (){
+                        showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(const Duration(days: 90)),
+                        ).then((value) {
+                          taskDate = DateTime.parse(dateFormat.format(value!));
+                          print(taskDate.toString());
+                          return dateController.text = DateFormat.yMMMMd().format(value);
+                        }
+                        );
                       }
-                    },
-                    hintText: 'Enter The Task Date',
-                    suffix: Icons.calendar_today_outlined,
-                    suffixPressed: (){
-                      showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(const Duration(days: 90)),
-                      ).then((value) => dateController.text = DateFormat.yMMMd().format(value!));
-                    }
-                  ),
-                  const SizedBox(height: 20,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('START TIME',style: TextStyle( fontSize: 15,color: Colors.grey) ),
-                      profileFormField(
-                          controller: startTimeController,
-                          hintText: 'Start Time',
-                          validate: (value )
-                          {
-                            if(value!.isEmpty)
+                    ),
+                    const SizedBox(height: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('START TIME',style: TextStyle( fontSize: 15,color: Colors.grey) ),
+                        profileFormField(
+                            controller: startTimeController,
+                            hintText: 'Start Time',
+                            validate: (value )
                             {
-                              return 'Start Time is empty';
+                              if(value!.isEmpty)
+                              {
+                                return 'Start Time is empty';
+                              }
+                            },
+                            type: TextInputType.datetime,
+                            suffix: Icons.access_time_outlined,
+                            onTap: (){
+                              showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              ).then((value) {
+                                return startTimeController.text = value!.format(context).toString();
+                              });
+                            },
+                            suffixPressed: (){
+                              showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              ).then((value) {
+                                print(value!.format(context).toString());
+                                return startTimeController.text = (value.format(context).toString());
+                              });
                             }
-                          },
-                          type: TextInputType.datetime,
-                          suffix: Icons.access_time_outlined,
-                          readonly: true,
-                          onTap: (){
-                            showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                            ).then((value) {
-                              startTimeController.text = value!.format(context).toString();
-                            });
-                          },
-                          suffixPressed: (){
-                            showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                            ).then((value) {
-                              print(value!.format(context).toString());
-                              startTimeController.text = (value.format(context).toString());
-                            });
-                          }
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: const TextSpan(
-                            children: [
-                              TextSpan(text: 'END TIME',
-                                  style: TextStyle( fontSize: 15,color: Colors.grey)
-                              ),
-                              TextSpan(text: ' (Optional)',
-                                  style: TextStyle( fontSize: 10,color: Colors.grey)
-                              ),
-                      ]),),
-                      profileFormField(
-                          controller: endTimeController,
-                          hintText: 'End Time',
-                          validate: (value ) {},
-                          type: TextInputType.text,
-                          readonly: true,
-                          onTap: (){
-                            showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                            ).then((value) {
-                              endTimeController.text = value!.format(context).toString();
-                            });
-                          },
-                          suffix: Icons.access_time_outlined,
-                          suffixPressed: (){
-                            showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                            ).then((value) {
-                              endTimeController.text = value!.format(context).toString();
-                            });
-                          }
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20,),
-                  const Text('DESCRIPTION',style: TextStyle( fontSize: 15,color: Colors.grey) ,),
-                  profileFormField(
-                    controller: descriptionController,
-                    type: TextInputType.text,
-                    maxLines: 4,
-                    validate: (value) {},
-                    hintText: 'Enter The Task Description',
-                  ),
-                ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: const TextSpan(
+                              children: [
+                                TextSpan(text: 'END TIME',
+                                    style: TextStyle( fontSize: 15,color: Colors.grey)
+                                ),
+                                TextSpan(text: ' (Optional)',
+                                    style: TextStyle( fontSize: 10,color: Colors.grey)
+                                ),
+                        ]),),
+                        profileFormField(
+                            controller: endTimeController,
+                            hintText: 'End Time',
+                            validate: (value ) {},
+                            type: TextInputType.text,
+                            readonly: true,
+                            onTap: (){
+                              showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              ).then((value) {
+                                endTimeController.text = value!.format(context).toString();
+                              });
+                            },
+                            suffix: Icons.access_time_outlined,
+                            suffixPressed: (){
+                              showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              ).then((value) {
+                                endTimeController.text = value!.format(context).toString();
+                              });
+                            }
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20,),
+                    const Text('DESCRIPTION',style: TextStyle( fontSize: 15,color: Colors.grey) ,),
+                    profileFormField(
+                      controller: descriptionController,
+                      type: TextInputType.text,
+                      maxLines: 4,
+                      validate: (value) {},
+                      hintText: 'Enter The Task Description',
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -247,9 +263,14 @@ class AddTaskScreen extends StatelessWidget {
                           AvocadoCubit.get(context).addNewTask(
                               title: taskNameController.text,
                             date: dateController.text,
-                            startTime: startTimeController.text,
-                            endTime: endTimeController.text,
+                            startTime: startTimeController.text.split(' ').elementAt(0),
+                            endTime: endTimeController.text.split(' ').elementAt(0),
                             description: descriptionController.text
+                          );
+                          AvocadoCubit.get(context).ScheduleNotification(
+                              taskDate: taskDate,
+                              body: descriptionController.text,
+                              title: taskNameController.text
                           );
                         }
                       },

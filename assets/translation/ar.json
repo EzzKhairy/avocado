@@ -54,7 +54,6 @@
   "caseType": "نوع القضيه",
   "lawyer": "المحامي",
   "description": "وصف",
-  "case": "قضيه رقم",
   "status": "الحاله",
   "caseSummary": "ملخص القضيه",
   "editClient": "تعديل العميل",
@@ -65,5 +64,15 @@
   "gender": "النوع",
   "securityInformation": "المعلومات الأمنية",
   "investigation": "تحقيق",
-  "investigationPlace": "مكان التحقيق"
+  "investigationPlace": "مكان التحقيق",
+  "noTasks": "لا يوجد لديك مهام اليوم",
+  "openedAt": "تاريخ البدايه",
+  "viewAll": "اظهر الكل",
+  "discardChanges": "إلغاء التعديلات",
+  "name": "الاسم",
+  "nationalNumber": "ألرقم القومي",
+  "nationalId": "ألرقم القومي",
+  "whatsUpToday": "ماذا يوجد اليوم؟",
+  "sureDiscardChanges": "هل انت متأكد انك تريد الغاء التعديلات",
+  "cases": "قضيه رقم"
 }

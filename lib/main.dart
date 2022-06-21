@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/app_cubit.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
+import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/login_screen.dart';
 import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/shared/bloc_observer.dart';
@@ -19,35 +20,39 @@ import 'remoteNetwork/cache_helper.dart';
 import 'remoteNetwork/dio_helper.dart';
 import 'shared/styles/themes.dart';
 
-Future<void> callbackDispatcher() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
-
-  const InitializationSettings initializationSettings
-  = InitializationSettings(android: initializationSettingsAndroid);
-
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings)
-      .then((value) => debugPrint('Flutter Local Notifications Initialized'));
-
-  Workmanager().executeTask((task, inputData) async {
-    await AvocadoCubit.showNotification()
-        .then((value) => debugPrint("Notification Pushed"))
-        .catchError((onError) {
-      debugPrint('Notification Error >>>> ' '$onError');
-    }); //simpleTask will be emitted here.
-    return Future.value(true);
-  });
-}
+// Future<void> callbackDispatcher() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//
+//   var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+//
+//   const AndroidInitializationSettings initializationSettingsAndroid =
+//   AndroidInitializationSettings('@mipmap/ic_launcher');
+//
+//   const InitializationSettings initializationSettings
+//   = InitializationSettings(android: initializationSettingsAndroid);
+//
+//   await flutterLocalNotificationsPlugin.initialize(initializationSettings)
+//       .then((value) => debugPrint('Flutter Local Notifications Initialized'));
+//
+//   Workmanager().executeTask((task, inputData) async {
+//     TasksModel? tasksModel = await AvocadoCubit.getNotifyTasks("2022-05-14");
+//     await AvocadoCubit.showNotification(tasksModel)
+//         .then((value) {
+//       print('executeTask' '${tasksModel?.tasksData![0].title}');
+//       debugPrint("Notification Pushed");
+//         })
+//         .catchError((onError) {
+//       debugPrint('Notification Error >>>> ' '$onError');
+//     }); //simpleTask will be emitted here.
+//     return Future.value(true);
+//   });
+// }
 
 class MyHttpOverrides extends HttpOverrides{
   @override
   HttpClient createHttpClient(SecurityContext? context){
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
 
@@ -80,19 +85,19 @@ void main()async
     {
       widget = LoginScreen();
     }
-
+  //
   // Timer(Duration(seconds: 5), (){
   //   Workmanager().initialize(
   //     callbackDispatcher, // The top level function, aka callbackDispatcher
   //     isInDebugMode: true, // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
   //   );
   // });
-
+  //
   // Workmanager().registerPeriodicTask(
   //     '${Random().nextInt(200)}',
   //     'Every 15 Mins',
   //     frequency: const Duration(minutes: 15),
-  //   initialDelay: Duration(seconds: 5)
+  //     initialDelay: Duration(seconds: 5)
   // ).then((value) => debugPrint('Periodic Task Registered')).catchError((onError){"Periodic Task Error >>>> $onError";});
 
   runApp(
@@ -131,8 +136,8 @@ class MyApp extends StatelessWidget
             ..getClients()
             ..getCases()
             ..getCourts()
-              ..getTodayTasks("2022-05-11")
-              ..getEveryLawyer()
+            ..getTodayTasks("2022-05-14")
+            ..getEveryLawyer()
 
 
         ),
@@ -141,7 +146,6 @@ class MyApp extends StatelessWidget
         listener: (context, state) {},
         builder: (context, state)
         {
-          AvocadoCubit.getNotifyTasks("2022-05-11");
           return MaterialApp(
             theme: lightTheme,
             darkTheme: darkTheme,

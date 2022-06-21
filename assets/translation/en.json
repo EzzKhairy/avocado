@@ -54,7 +54,6 @@
   "caseType": "Case Type",
   "lawyer": "Lawyer",
   "description": "Description",
-  "case": "Case",
   "status": "Status",
   "caseSummary": "Case Summary",
   "editClient": "Edit Client",
@@ -65,5 +64,15 @@
   "gender": "Gender",
   "securityInformation": "Security Information",
   "investigation": "Investigation",
-  "investigationPlace": "Investigation Place"
+  "investigationPlace": "Investigation Place",
+  "noTasks": "No Tasks found for Today",
+  "openedAt": "Opened at",
+  "viewAll": "View All",
+  "discardChanges": "Discard Changes",
+  "name": "Name",
+  "nationalNumber": "National Number",
+  "nationalId": "National ID",
+  "whatsUpToday": "Whats up Today?",
+  "sureDiscardChanges": "Are you sure you want to discard the changes?",
+  "cases": "Case"
 }

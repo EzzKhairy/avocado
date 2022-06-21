@@ -56,7 +56,6 @@ abstract class  LocaleKeys {
   static const caseType = 'caseType';
   static const lawyer = 'lawyer';
   static const description = 'description';
-  static const cases = 'case';
   static const status = 'status';
   static const caseSummary = 'caseSummary';
   static const editClient = 'editClient';
@@ -68,5 +67,15 @@ abstract class  LocaleKeys {
   static const securityInformation = 'securityInformation';
   static const investigation = 'investigation';
   static const investigationPlace = 'investigationPlace';
+  static const noTasks = 'noTasks';
+  static const openedAt = 'openedAt';
+  static const viewAll = 'viewAll';
+  static const discardChanges = 'discardChanges';
+  static const name = 'name';
+  static const nationalNumber = 'nationalNumber';
+  static const nationalId = 'nationalId';
+  static const whatsUpToday = 'whatsUpToday';
+  static const sureDiscardChanges = 'sureDiscardChanges';
+  static const cases = 'cases';
 
 }

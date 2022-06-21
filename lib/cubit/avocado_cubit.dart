@@ -15,20 +15,19 @@ import 'package:avocado/models/records_model.dart';
 import 'package:avocado/models/session_model.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/home_screen.dart';
-import 'package:avocado/modules/notification_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
 import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
-import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
-import 'package:dio/src/response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 
 class AvocadoCubit extends Cubit <AvocadoStates>
@@ -39,7 +38,11 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
   static var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  static Future showNotification() async{
+    Future ScheduleNotification({
+      required DateTime taskDate,
+      required String body,
+      required String title
+    }) async{
     AndroidNotificationDetails androidNotificationDetails =
     AndroidNotificationDetails(
       '${Random().nextInt(400)}',
@@ -51,15 +54,15 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     var platformChannelSpecifies = NotificationDetails(
         android: androidNotificationDetails
     );
-    await getNotifyTasks("2022-05-11").then((value) async {
-      await flutterLocalNotificationsPlugin.show(
+      await flutterLocalNotificationsPlugin.zonedSchedule(
           Random().nextInt(200),
-          getNotifyTasksModel?.tasksData![0].title ?? 'Null',
-          'fsefes',
-          platformChannelSpecifies);
-
-    });
-
+          title.toString(),
+          body,
+          tz.TZDateTime.from(taskDate,tz.local),
+          platformChannelSpecifies,
+          androidAllowWhileIdle: true,
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime
+      );
   }
 
 
@@ -753,16 +756,19 @@ class AvocadoCubit extends Cubit <AvocadoStates>
    }
 
   static TasksModel? getNotifyTasksModel;
-    static Future<void> getNotifyTasks(String? date) async {
+    static Future<TasksModel?> getNotifyTasks(String? date) async {
     DioHelper.getData(
       url: 'tasks_search/$date',
     ).then((value) {
       getNotifyTasksModel = TasksModel.fromJson(value.data);
+      return getNotifyTasksModel;
       debugPrint('Notify Success >>> '  '${getNotifyTasksModel!.message}');
     }).catchError((error){
       debugPrint('Notify Error >>> '  '${getNotifyTasksModel!.message}');
+      return null;
       debugPrint(error.toString());
       });
+    return getNotifyTasksModel;
   }
 
 
