@@ -1,11 +1,13 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
+import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/case_info_screen.dart';
 import 'package:avocado/modules/cases_screen.dart';
 import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
+import 'package:avocado/modules/lawyer_cases_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
@@ -19,6 +21,7 @@ import 'lawyers_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit, AvocadoStates>(
@@ -41,9 +44,15 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           buildHomeCard(
                             function: (){
-                              navigateTo(context,  CasesScreen());
+                              if(AvocadoCubit.get(context).lawyerData!.data![0].role == 'Admin' || AvocadoCubit.get(context).lawyerData!.data![0].role == 'admin')
+                              {
+                              navigateTo(context, CasesScreen());
                               print (token);
-                              print(CacheHelper.getData(key: 'token'));
+                              print(CacheHelper.getData(key: 'token'));}
+                              else
+                                {
+                                  navigateTo(context, LawyerCasesScreen(lawyerId));
+                                }
                             },
                             title: LocaleKeys.totalCases.tr(),
                             icon: Icons.format_align_justify_outlined,
