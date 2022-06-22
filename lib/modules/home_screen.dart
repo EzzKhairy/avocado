@@ -9,6 +9,7 @@ import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/shared/views/case_info_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                         height: 165,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => buildCasesItem(casesData[index], context,width: MediaQuery.of(context).size.width*.70),
+                          itemBuilder: (context, index) => CaseInfoCard(casesData[index],width: MediaQuery.of(context).size.width*.70),
                           separatorBuilder: (context, index) => const SizedBox(width: 10,),
                           itemCount: casesData.length,
                         ),
@@ -221,90 +222,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
-
-  Widget buildCasesItem(CaseData caseData, context, {required width,})
-  => GestureDetector(
-      onTap: (){navigateTo(context, CaseInfoScreen(caseData));},
-      child: Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 5,
-        margin: const EdgeInsetsDirectional.all(2.5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          height: 160,
-          width: width,
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${caseData.caseID}'.toUpperCase(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 16,
-                    letterSpacing: 3,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: horizontalDivider(height: 1.5,hColor: Colors.grey),
-                ),
-                 Text(
-                  'Opened ${caseData.createdAt}'.split('T').elementAt(0),
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                Text(
-                  '${caseData.clientName}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                Text(
-                  '${caseData.caseType}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15,
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                Row(
-                  children: [
-                    const Spacer(),
-                    caseData.status == 'open'?
-                    Text(
-                      '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
-                      style: const TextStyle(
-                        color: Colors.green,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ):Text(
-                      '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
-                      style: const TextStyle(
-                        color: Colors.red,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
 
   Widget whatsUp(
       String? title,

@@ -4,19 +4,23 @@ import 'package:avocado/models/case_model.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/shared/views/case_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class CasesScreen extends StatelessWidget {
-  const CasesScreen({Key? key}) : super(key: key);
+  CasesScreen({Key? key}) : super(key: key);
+
+  var searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit, AvocadoStates>(
       listener: (context, state) {},
       builder: (context, state) {
         List<CaseData>? casesData = AvocadoCubit.get(context).caseModel?.casesData;
+        List<CaseData>? searchcasesData = AvocadoCubit.get(context).searchCaseModel?.casesData ?? [];
         return Scaffold(
           appBar: NewGradientAppBar(
             centerTitle: true,
@@ -46,15 +50,34 @@ class CasesScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    searchBar(),
+                    searchBar(
+                        controller: searchController,
+                        onChange: (value){
+                          if(value.isNotEmpty) {
+                            AvocadoCubit.get(context).searchCases(keyword: value);
+                          }
+                          else{
+                            AvocadoCubit.get(context).getCases();
+                          }
+                        }
+                    ),
                     const SizedBox(height: 20,),
+                    searchcasesData.isEmpty ?
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => HomeScreen().buildCasesItem(casesData![index],context,width: double.infinity),
+                      itemBuilder: (context, index) {
+                          return CaseInfoCard(casesData![index],width: double.infinity);},
                       separatorBuilder: (context, index) => const SizedBox(height: 10,),
                       itemCount: casesData!.length,
-                    ),
+                    ):
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return CaseInfoCard(searchcasesData[index],width: double.infinity);},
+                      separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                      itemCount: searchcasesData.length,)
                   ],
                 ),
               ),

@@ -74,5 +74,6 @@
   "nationalId": "National ID",
   "whatsUpToday": "Whats up Today?",
   "sureDiscardChanges": "Are you sure you want to discard the changes?",
-  "cases": "Case"
+  "cases": "Case",
+  "editProfile": "Edit Profile"
 }

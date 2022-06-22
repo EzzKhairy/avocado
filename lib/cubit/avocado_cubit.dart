@@ -14,6 +14,7 @@ import 'package:avocado/models/payments_model.dart';
 import 'package:avocado/models/records_model.dart';
 import 'package:avocado/models/session_model.dart';
 import 'package:avocado/models/tasks_model.dart';
+import 'package:avocado/modules/Lawyer_profile_new.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
@@ -810,7 +811,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   List<Widget> screens = [
     const HomeScreen(),
     const TasksScreen(),
-    ProfileScreen(),
+    LawyerProfileScreen(),
     const SettingsScreen(),
   ];
 
