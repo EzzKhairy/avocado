@@ -9,7 +9,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import '../cubit/avocado_cubit.dart';
+import '../../cubit/avocado_cubit.dart';
+import 'edit_Lawyer_Profile_screen.dart';
 
 class LawyerProfileScreen extends StatelessWidget {
   LawyerProfileScreen({Key? key}) : super(key: key);
@@ -62,7 +63,9 @@ class LawyerProfileScreen extends StatelessWidget {
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black),
                   minimumSize: MaterialStateProperty.all(const Size(250, 50)),
-                ), onPressed: () {  },
+                ), onPressed: () {
+                  navigateTo(context, EditLawyerProfileScreen(lawyersModel));
+              },
               )
             ),
             InfoCard(title: LocaleKeys.EmailAddress.tr(), body: '${lawyersModel.email}'),

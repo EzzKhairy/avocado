@@ -14,7 +14,7 @@ import 'package:avocado/models/payments_model.dart';
 import 'package:avocado/models/records_model.dart';
 import 'package:avocado/models/session_model.dart';
 import 'package:avocado/models/tasks_model.dart';
-import 'package:avocado/modules/Lawyer_profile_new.dart';
+import 'package:avocado/modules/lawyerProfile/Lawyer_profile_new.dart';
 import 'package:avocado/modules/home_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
@@ -113,6 +113,19 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     });
   }
 
+  bool isAdmin = false;
+  void checkAuthorization (lawyerId){
+    if(lawyerData?.data![0].role == 'Admin'){
+      isAdmin = true;
+      emit(CheckAuthorizationState());
+    }
+    else {
+      isAdmin = false;
+      emit(CheckAuthorizationState());
+
+    }
+  }
+
   LawyersModel? lawyerUpdated;
   void updateLawyerProfile({
     required int? lawyerID,
@@ -121,6 +134,9 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     required String? address,
     required String? role,
     required String? lawyerNationalNumber,
+    String? phoneNumber,
+    String? dateOfBirth,
+    String ? gender,
   }){
     emit(UpdateLawyerProfileLoading());
     DioHelper.putData(
@@ -131,6 +147,9 @@ class AvocadoCubit extends Cubit <AvocadoStates>
         'Lawyer_National_Number' : lawyerNationalNumber,
         'address' : address,
         'Role': role,
+        'phone' : phoneNumber,
+        'DOB': dateOfBirth,
+        'Gender' : gender,
       },
 
     ).then((value) {
@@ -341,6 +360,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   CaseModel? caseModel;
   void getCases(){
     emit(GetCasesDataLoading());
+    if(isAdmin){
     DioHelper.getData(
       url: 'cases',
     ).then((value) {
@@ -357,6 +377,26 @@ class AvocadoCubit extends Cubit <AvocadoStates>
         print(onError.toString());
       }
     });
+    }
+    else {
+      emit(GetCasesByLawyerIdDataLoading());
+      DioHelper.getData(
+        url: 'cases_foriegn/$lawyerId',
+      ).then((value) {
+        caseModel = CaseModel.fromJson(value.data);
+        //print(element);
+        if (kDebugMode) {
+          print(caseModel?.casesData![0].caseID);
+        }
+        emit(GetCasesByLawyerIdDataSuccessful());
+      }).catchError((onError){
+        emit(GetCasesByLawyerIdDataError());
+        if (kDebugMode) {
+          print(caseModel?.casesData![0].courtNumber);
+          print(onError.toString());
+        }
+      });
+    }
   }
 
   CaseModel? searchCaseModel;
@@ -814,6 +854,21 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     LawyerProfileScreen(),
     const SettingsScreen(),
   ];
+
+  String? gender;
+
+  changeGenderValue(value) {
+    gender = value;
+    emit(ChangeGenderState());
+  }
+
+  String? role;
+
+  changeRoleValue(value) {
+    role = value;
+    emit(ChangeGenderState());
+  }
+
 
   void changeBottomNav(int index)
   {

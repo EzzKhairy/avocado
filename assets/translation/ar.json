@@ -44,9 +44,10 @@
   "clients": "العملاء",
   "courts": "المحاكم",
   "sessions": "جلسات",
-  "totalCases": "اجمالي القضايا",
-  "totalClients": "اجمالي العملاء",
-  "totalTasks": "إجمالي المهام",
+  "totalCases": "القضايا",
+  "totalClients": "العملاء",
+  "totalTasks": "المهام",
+  "totalLawyers": "المحاميين",
   "profile": "ملفي الشخضي",
   "e_session": "جلسات الخبراء",
   "reachUs": "تواصل معنا",
@@ -75,5 +76,11 @@
   "whatsUpToday": "ماذا يوجد اليوم؟",
   "sureDiscardChanges": "هل انت متأكد انك تريد الغاء التعديلات",
   "cases": "قضيه رقم",
-  "editProfile": "تعديل الملف الشخصي"
+  "editProfile": "تعديل الملف الشخصي",
+  "yes": "نعم",
+  "no": "لا",
+  "role": "منصب",
+  "male": "ذكر",
+  "female": "انثي",
+  "admin": "مشرف"
 }

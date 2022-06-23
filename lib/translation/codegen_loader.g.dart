@@ -60,9 +60,10 @@ class CodegenLoader extends AssetLoader{
   "clients": "العملاء",
   "courts": "المحاكم",
   "sessions": "جلسات",
-  "totalCases": "اجمالي القضايا",
-  "totalClients": "اجمالي العملاء",
-  "totalTasks": "إجمالي المهام",
+  "totalCases": "القضايا",
+  "totalClients": "العملاء",
+  "totalTasks": "المهام",
+  "totalLawyers": "المحاميين",
   "profile": "ملفي الشخضي",
   "e_session": "جلسات الخبراء",
   "reachUs": "تواصل معنا",
@@ -90,7 +91,14 @@ class CodegenLoader extends AssetLoader{
   "nationalId": "ألرقم القومي",
   "whatsUpToday": "ماذا يوجد اليوم؟",
   "sureDiscardChanges": "هل انت متأكد انك تريد الغاء التعديلات",
-  "cases": "قضيه رقم"
+  "cases": "قضيه رقم",
+  "editProfile": "تعديل الملف الشخصي",
+  "yes": "نعم",
+  "no": "لا",
+  "role": "منصب",
+  "male": "ذكر",
+  "female": "انثي",
+  "admin": "مشرف"
 };
 static const Map<String,dynamic> en = {
   "save": "Save",
@@ -138,9 +146,10 @@ static const Map<String,dynamic> en = {
   "clients": "Clients",
   "courts": "Courts",
   "sessions": "Sessions",
-  "totalCases": "Total Cases",
-  "totalClients": "Total Clients",
-  "totalTasks": "Total Tasks",
+  "totalCases": "Cases",
+  "totalClients": "Clients",
+  "totalTasks": "Tasks",
+  "totalLawyers": "Lawyers",
   "profile": "Profile",
   "e_session": "Expert Sessions",
   "reachUs": "Reach Out to Us",
@@ -168,7 +177,14 @@ static const Map<String,dynamic> en = {
   "nationalId": "National ID",
   "whatsUpToday": "Whats up Today?",
   "sureDiscardChanges": "Are you sure you want to discard the changes?",
-  "cases": "Case"
+  "cases": "Case",
+  "editProfile": "Edit Profile",
+  "yes": "Yes",
+  "no": "No",
+  "role": "Role",
+  "male": "Male",
+  "female": "Female",
+  "admin": "Admin"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

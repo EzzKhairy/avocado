@@ -51,4 +51,24 @@ class LawyerData {
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['Lawyer_National_Number'] = lawyerNationalNumber;
+    data['name'] = name;
+    data['email'] = email;
+    data['email_verified_at'] = emailVerifiedAt;
+    data['status'] = status;
+    data['address'] = address;
+    data['profile_photo_path'] = profilePhotoPath;
+    data['Role'] = role;
+    data['DOB'] = dateOfBirth;
+    data['Gender'] = gender;
+    data['phone'] = phone;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['deleted_at'] = deletedAt;
+    return data;
+  }
 }

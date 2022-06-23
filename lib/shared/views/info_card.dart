@@ -22,7 +22,6 @@ class InfoCard extends StatelessWidget {
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          height: 70,
           width: width,
           padding: const EdgeInsets.all(10),
           child: Column(

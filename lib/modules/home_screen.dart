@@ -71,14 +71,14 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(width: 10,),
                           buildHomeCard(
                             function: (){
-                              if(AvocadoCubit.get(context).lawyerData?.data![0].role == 'Admin' || AvocadoCubit.get(context).lawyerData?.data![0].role == 'admin') {
+                              if(AvocadoCubit.get(context).isAdmin) {
                                 navigateTo(context, const LawyersScreen());
                               }
                               else{
                                 showToast(context: context, msg: 'Not Authurized');
                               }
                             },
-                            title: LocaleKeys.totalClients.tr(),
+                            title: LocaleKeys.totalLawyers.tr(),
                             icon: Icons.people_alt_outlined,
                             number: AvocadoCubit.get(context).getLawyers!.data!.length,
                           ),
@@ -177,9 +177,9 @@ class HomeScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Text(
-                    'Whats up Today?',
-                    style: TextStyle(
+                  Text(
+                    LocaleKeys.whatsUpToday.tr(),
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
                     ),
@@ -187,7 +187,7 @@ class HomeScreen extends StatelessWidget {
                   const Spacer(),
                   InkWell(
                     child: Text(
-                      'View All',
+                      LocaleKeys.viewAll.tr(),
                       style: TextStyle(color: gold),),
                     onTap: (){navigateTo(context, const TasksScreen());},
                   ),
@@ -211,7 +211,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(Icons.toc,size: 80,color: Colors.grey.shade400,textDirection: Directionality.of(context)),
-                      Text('No Tasks found \n for Today',style: TextStyle(color: Colors.grey.shade500),textAlign: TextAlign.center,)
+                      Text(LocaleKeys.noTasks.tr(),style: TextStyle(color: Colors.grey.shade500),textAlign: TextAlign.center,)
                     ],
                   ),
                 ),

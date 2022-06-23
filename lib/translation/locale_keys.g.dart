@@ -49,6 +49,7 @@ abstract class  LocaleKeys {
   static const totalCases = 'totalCases';
   static const totalClients = 'totalClients';
   static const totalTasks = 'totalTasks';
+  static const totalLawyers = 'totalLawyers';
   static const profile = 'profile';
   static const e_session = 'e_session';
   static const reachUs = 'reachUs';
@@ -77,5 +78,10 @@ abstract class  LocaleKeys {
   static const whatsUpToday = 'whatsUpToday';
   static const sureDiscardChanges = 'sureDiscardChanges';
   static const cases = 'cases';
+  static const editProfile = 'editProfile';
+  static const yes = 'yes';
+  static const no = 'no';
+  static const role = 'role';
+  static const admin = 'admin';
 
 }

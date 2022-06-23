@@ -134,6 +134,7 @@ class MyApp extends StatelessWidget
           create: (context) => AvocadoCubit()
             ..getLawyerProfile(lawyerId)
             ..getClients()
+            ..checkAuthorization(lawyerId)
             ..getCases()
             ..getCourts()
             ..getTodayTasks("2022-05-14")

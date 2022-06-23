@@ -65,7 +65,7 @@ class _AppLayoutState extends State<AppLayout> {
           return Conditional.single(
             context: context,
             conditionBuilder: (context)=>
-            AvocadoCubit.get(context).caseModel != null && AvocadoCubit.get(context).lawyerData != null
+            (AvocadoCubit.get(context).caseModel != null) && AvocadoCubit.get(context).lawyerData != null
                 && AvocadoCubit.get(context).clientsModel != null && AvocadoCubit.get(context).getCourtModel != null
             && AvocadoCubit.get(context).getTasksModel != null && AvocadoCubit.get(context).getLawyers != null,
             widgetBuilder:(context)=> ScaffoldGradientBackground(

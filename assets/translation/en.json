@@ -44,9 +44,10 @@
   "clients": "Clients",
   "courts": "Courts",
   "sessions": "Sessions",
-  "totalCases": "Total Cases",
-  "totalClients": "Total Clients",
-  "totalTasks": "Total Tasks",
+  "totalCases": "Cases",
+  "totalClients": "Clients",
+  "totalTasks": "Tasks",
+  "totalLawyers": "Lawyers",
   "profile": "Profile",
   "e_session": "Expert Sessions",
   "reachUs": "Reach Out to Us",
@@ -75,5 +76,11 @@
   "whatsUpToday": "Whats up Today?",
   "sureDiscardChanges": "Are you sure you want to discard the changes?",
   "cases": "Case",
-  "editProfile": "Edit Profile"
+  "editProfile": "Edit Profile",
+  "yes": "Yes",
+  "no": "No",
+  "role": "Role",
+  "male": "Male",
+  "female": "Female",
+  "admin": "Admin"
 }
