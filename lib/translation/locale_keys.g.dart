@@ -83,5 +83,10 @@ abstract class  LocaleKeys {
   static const no = 'no';
   static const role = 'role';
   static const admin = 'admin';
-
+  static const confirmPassword = 'confirmPassword';
+  static const notMatch = 'notMatch';
+  static const legistilation = 'legistilation';
+  static const models = 'models';
+  static const male = 'male';
+  static const female = 'female';
 }

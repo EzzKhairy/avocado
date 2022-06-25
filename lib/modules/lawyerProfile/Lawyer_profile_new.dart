@@ -57,7 +57,7 @@ class LawyerProfileScreen extends StatelessWidget {
                   children: [
                     Icon(Icons.edit,color: gold,),
                     SizedBox(width: 10,),
-                    Text('Edit Profile',style: TextStyle(color: gold,fontSize: 20,letterSpacing: 1.5),),
+                    Text(LocaleKeys.editProfile.tr(),style: TextStyle(color: gold,fontSize: 20,letterSpacing: 1.5),),
                   ],
                 ),
                 style: ButtonStyle(

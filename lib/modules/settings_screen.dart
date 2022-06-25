@@ -5,6 +5,7 @@ import 'package:avocado/modules/courts_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/shared/views/settings_card.dart';
 import 'package:avocado/translation/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return  SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Container(
             color: Colors.grey[300],
             child: Column(
@@ -46,100 +47,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     padding: const EdgeInsets.all(15),
                     child:  Text(LocaleKeys.myAccount.tr().toUpperCase(),style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),
                 horizontalDivider(),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context,  ClientsScreen());
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                         Icon(Icons.group_outlined,color: gold,),
-                        separator(15, 0),
-                        const Text('Clients',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
+                SettingsCard(goTo: ClientsScreen(), cardName: LocaleKeys.clients.tr(),cardIcon: Icons.group,),
                 horizontalDivider(),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, ProfileScreen());
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                         Icon(Icons.person_outline,color: gold,),
-                        separator(15, 0),
-                        const Text('Profile',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
+                SettingsCard(goTo: ProfileScreen(), cardName: LocaleKeys.profile.tr(),cardIcon: Icons.person),
                 horizontalDivider(),
-                InkWell(
-                  onTap: (){
-                    if(AvocadoCubit.get(context).lawyerData!.data![0].role == 'Admin' || AvocadoCubit.get(context).lawyerData!.data![0].role == 'admin')
-                    {
-                    navigateTo(context, CasesScreen());}
-                    else
-                      {
-                        navigateTo(context, LawyerCasesScreen(lawyerId));
-                      }
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                        Icon(Icons.cases_sharp,color: gold,),
-                        separator(15, 0),
-                        const Text('Cases',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
+                SettingsCard(goTo: CasesScreen(), cardName: LocaleKeys.totalCases.tr(),cardIcon: Icons.cases_sharp),
                 horizontalDivider(),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, const CourtsScreen());
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                        Icon(Icons.villa,color: gold,),
-                        separator(15, 0),
-                        const Text('Courts',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
-
-
+                SettingsCard(goTo: const CourtsScreen(), cardName: LocaleKeys.courts.tr(),cardIcon: Icons.villa),
+                horizontalDivider(),
+                SettingsCard(goTo: const CourtsScreen(), cardName: LocaleKeys.legistilation.tr(),cardIcon: Icons.picture_as_pdf),
+                horizontalDivider(),
+                SettingsCard(goTo: const CourtsScreen(), cardName: LocaleKeys.models.tr(),cardIcon: Icons.topic_outlined),
                 Container(
                     padding:const EdgeInsets.all(15),
-                    child:  Text('SETTINGS',style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),
+                    child:  Text(LocaleKeys.Settings.tr(),style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),
                 InkWell(
                   onTap: (){},
                   child: Container(
@@ -150,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       [
                          Icon(Icons.dark_mode_outlined,color: gold,),
                         separator(15, 0),
-                        const Text('Dark Mode',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                         Text(LocaleKeys.darkMode.tr(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                         const Spacer(),
                         // Switch(
                         //   value: value ,
@@ -167,46 +88,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 horizontalDivider(),
-                InkWell(
-                  onTap: (){},
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    color: Colors.white,
-                    child: Row(
-                      children:
-                      [
-                         Icon(Icons.flag_outlined,color: gold,),
-                        separator(15, 0),
-                         Text(LocaleKeys.language.tr(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        PopupMenuButton(
-                          onSelected: (value){
-                            if(value == 'Arabic')
-                              AvocadoCubit.get(context).changeLocalToAr(context);
-                            else
-                              AvocadoCubit.get(context).changeLocalToEn(context);
-                          },
-                          itemBuilder: (context) => const [
-                            PopupMenuItem(
-                              value: 'Arabic',
-                              child: Text('عربي',style: TextStyle(color: Colors.black),),),
-                            PopupMenuItem(
-                              value: 'English',
-                              child: Text('English',style: TextStyle(color: Colors.black)),),
-                          ],
-                          child: Row(
-                            children: [
-                              const Text('English'),
-                              separator(10,0),
-                              const Icon(Icons.arrow_forward_ios_rounded),
-                            ],
-                          ),
-                        ),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
+                SettingsCard(cardName: LocaleKeys.language.tr(),cardIcon: Icons.flag,isLanguage: true,),
                 Container(
                     padding: const EdgeInsets.all(15),
                     child:  Text(LocaleKeys.reachUs.tr().toUpperCase(),style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),
@@ -271,7 +153,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 50,),
               ],
             ),
           ),

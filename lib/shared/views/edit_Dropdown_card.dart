@@ -1,22 +1,21 @@
-  import 'package:flutter/material.dart';
+  import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 import '../../cubit/avocado_cubit.dart';
+import '../../translation/locale_keys.g.dart';
 import '../constants.dart';
 import '../profile_components.dart';
 
 class EditDropdownCard extends StatelessWidget {
   IconData prefix;
   String title;
-  String value;
-  List<String> choice;
-  void Function(String?)? onChange;
+
+  DropdownButton dropdownButton;
 
   EditDropdownCard({
     required this.prefix,
-    required this.value,
     required this.title,
-    required this.choice,
-    required this.onChange,
+    required this.dropdownButton,
     Key? key
   }) : super(key: key);
 
@@ -46,31 +45,7 @@ class EditDropdownCard extends StatelessWidget {
               ),
               SizedBox(
                 width: double.infinity,
-                child: DropdownButton<String>(
-                  alignment: AlignmentDirectional.centerEnd,
-                  value: value,
-                  icon: Expanded(
-                    child: Row(
-                      children: const[
-                        Spacer(),
-                         Icon(Icons.arrow_drop_down),
-                      ],
-                    ),
-                  ),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.black,),
-                  underline: Container(
-                      height: 2,
-                      color: gold
-                  ),
-                  onChanged: onChange,
-                  items: choice.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
+                child: dropdownButton
               ),
             ],
           ),

@@ -28,12 +28,17 @@ class InfoCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children:[
-              Text(title,style: TextStyle(color: Colors.grey.shade500,
-              )),
+              Text(title,style: TextStyle(color: Colors.grey.shade500
+              ),textAlign: TextAlign.left,),
               const SizedBox(
                 height: 5,
               ),
-              Text(body,style: TextStyle(fontSize: 18))
+              Row(
+                children: [
+                  const SizedBox(width: 15,),
+                  Text(body,style: TextStyle(fontSize: 18)),
+                ],
+              )
             ],
           ),
         ),

@@ -53,6 +53,13 @@ class EditLawyerProfileScreen extends StatelessWidget {
         },
       builder: (context,state) {
           print(lawyersModel.id);
+          dynamic pickedProfilePic = AvocadoCubit.get(context).pickedImage;
+          dynamic profilePic;
+          if (pickedProfilePic == null) {
+            profilePic = NetworkImage('${lawyersModel.profilePhotoPath}');
+          } else {
+            profilePic = FileImage(pickedProfilePic);
+          }
         return Scaffold(
         appBar: NewGradientAppBar(
           centerTitle: true,
@@ -80,6 +87,7 @@ class EditLawyerProfileScreen extends StatelessWidget {
             key: clientFormKey,
             child: Column(
               children: [
+                SizedBox(height: 10,),
                 InkWell(
                   onTap: () async {
                     AvocadoCubit.get(context).pickImage(
@@ -90,13 +98,15 @@ class EditLawyerProfileScreen extends StatelessWidget {
                       role: lawyersModel.role,
                       lawyerNationalNumber:
                       lawyersModel.lawyerNationalNumber,
+                      phoneNumber: lawyersModel.phone,
+                      dateOfBirth: lawyersModel.dateOfBirth,
+                      gender: lawyersModel.gender
                     );
                   },
                   child: CircleAvatar(
-                    radius: 45,
+                    radius: 75,
                     backgroundColor: Colors.transparent,
-                    backgroundImage: NetworkImage(
-                        '${lawyersModel.profilePhotoPath ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZG3qkyaZZsnYyKv3-iTLyK_WT6QFmBQz3IQ&usqp=CAU'}'),
+                    backgroundImage: profilePic,
                   ),
                 ),
                 SizedBox(height: 20,),
@@ -139,26 +149,71 @@ class EditLawyerProfileScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: EditDropdownCard(
-                          value: '${lawyersModel.gender == null ? 'Not Found' : lawyersModel.gender}',
-                          choice:  ['Male','Female'],
                           prefix: Icons.transgender,
-                          title: 'Gender',
-                        onChange: (value){
-                            AvocadoCubit.get(context).changeGenderValue(value);
-                        },
+                          title: LocaleKeys.gender.tr(),
+                        dropdownButton:DropdownButton<String>(
+                          value: lawyersModel.gender,
+                          icon: Expanded(
+                            child: Row(
+                              children: const [
+                                Spacer(),
+                                Icon(Icons.arrow_drop_down),
+
+                              ],
+                            ),
+                          ),
+                          elevation: 16,
+                          underline: Container(
+                            height: 2,
+                            color: gold,
+                          ),
+                          onChanged: (String? newValue) {
+                            AvocadoCubit.get(context)
+                                .changeGenderValue(newValue);
+                          },
+                          items: <String>['Male', 'Female']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value == 'Male' ? LocaleKeys.male.tr() : LocaleKeys.female.tr()),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
                     Expanded(
                       child: EditDropdownCard(
-                          value: '${lawyersModel.role == null ? 'Not Found' : lawyersModel.role}',
-                          choice:  ['Admin','Lawyer'],
                           prefix: Icons.transgender,
-                          title: 'Role',
-                        onChange: (value){
-                          AvocadoCubit.get(context).changeRoleValue(value);
-                        },
+                          title: LocaleKeys.role.tr(),
+                        dropdownButton: DropdownButton<String>(
+                          value: lawyersModel.role,
+                          icon: Expanded(
+                            child: Row(
+                              children: const [
+                                Spacer(),
+                                Icon(Icons.arrow_drop_down),
+                              ],
+                            ),
+                          ),
+                          elevation: 16,
+                          underline: Container(
+                            height: 2,
+                            color: gold,
+                          ),
+                          onChanged: lawyersModel.role == 'Admin' || lawyersModel.role == 'admin' ? (String? newValue) {
+                            AvocadoCubit.get(context)
+                                .changeRoleValue(newValue);
+                          } : null,
+                          items: <String>['Admin', 'Lawyer']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value == 'Admin' ? LocaleKeys.admin.tr() : LocaleKeys.lawyer.tr().substring(2)),
+                            );
+                          }).toList(),
+                        ),
+                          ),
                       ),
-                    ),
                   ],
                 ),
                 SizedBox(height: 60)

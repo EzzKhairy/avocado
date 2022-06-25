@@ -6,8 +6,11 @@ import 'package:avocado/modules/login_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../translation/locale_keys.g.dart';
 
 class RegisterScreen extends StatelessWidget {
    RegisterScreen({Key? key}) : super(key: key);
@@ -91,10 +94,10 @@ class RegisterScreen extends StatelessWidget {
                                             type: TextInputType.name,
                                             validate: (value) {
                                               if (value == null) {
-                                                return ('name is required');
+                                                return (LocaleKeys.ThisFieldMustBeFilled.tr());
                                               }
                                             },
-                                            label: 'Name',
+                                            label: LocaleKeys.name.tr(),
                                             prefix: Icons.person_outline,
                                           ),
                                           const SizedBox(height: 10,),
@@ -103,11 +106,11 @@ class RegisterScreen extends StatelessWidget {
                                             type: TextInputType.phone,
                                             validate: (value) {
                                               if (value == null) {
-                                                return ('phone is required');
+                                                return (LocaleKeys.ThisFieldMustBeFilled.tr());
                                               }
                                             },
-                                            label: 'National ID',
-                                            prefix: Icons.phone_outlined,
+                                            label: LocaleKeys.nationalId.tr(),
+                                            prefix: Icons.credit_card_outlined,
                                           ),
                                           const SizedBox(height: 10,),
                                           defaultFormField(
@@ -115,10 +118,10 @@ class RegisterScreen extends StatelessWidget {
                                             type: TextInputType.emailAddress,
                                             validate: (value) {
                                               if (value == null) {
-                                                return ('email address is required');
+                                                return (LocaleKeys.ThisFieldMustBeFilled.tr());
                                               }
                                             },
-                                            label: 'Email Address',
+                                            label: LocaleKeys.EmailAddress.tr(),
                                             prefix: Icons.email_outlined,
                                           ),
                                           const SizedBox(height: 10,),
@@ -127,10 +130,10 @@ class RegisterScreen extends StatelessWidget {
                                             type: TextInputType.visiblePassword,
                                             validate: (value) {
                                               if (value == null) {
-                                                return ('password is required');
+                                                return (LocaleKeys.ThisFieldMustBeFilled.tr());
                                               }
                                             },
-                                            label: 'Password',
+                                            label: LocaleKeys.password.tr(),
                                             prefix: Icons.lock_outline,
                                             isPassword: RegisterCubit.get(context).isPassword ? true : false,
                                             suffix: Icons
@@ -145,10 +148,13 @@ class RegisterScreen extends StatelessWidget {
                                             type: TextInputType.visiblePassword,
                                             validate: (value) {
                                               if (value == null) {
-                                                return ('password not match');
+                                                return (LocaleKeys.ThisFieldMustBeFilled.tr());
+                                              }
+                                              else if(value != password.text){
+                                                return LocaleKeys.notMatch.tr();
                                               }
                                             },
-                                            label: 'Confirm Password',
+                                            label: LocaleKeys.confirmPassword.tr(),
                                             prefix: Icons.lock_outline,
                                             isPassword: RegisterCubit.get(context).isConfirmPassword ? true : false,
                                             suffix: Icons
@@ -159,7 +165,7 @@ class RegisterScreen extends StatelessWidget {
                                           ),
                                           const SizedBox(height: 40,),
                                           defaultButton(
-                                              text: 'Register',
+                                              text: LocaleKeys.Register.tr(),
                                               function: () {
                                                 if(signUpFormKey.currentState!.validate()) {
                                                 cubit.lawyerRegister(
@@ -176,9 +182,9 @@ class RegisterScreen extends StatelessWidget {
                                             mainAxisAlignment: MainAxisAlignment
                                                 .center,
                                             children: [
-                                              const Text(
-                                                "Already have an account?",
-                                                style: TextStyle(
+                                               Text(
+                                                LocaleKeys.alreadyhaveanAccount.tr(),
+                                                style: const TextStyle(
                                                   color: Colors.white,
                                                 ),
                                               ),
@@ -188,7 +194,7 @@ class RegisterScreen extends StatelessWidget {
                                                       context, LoginScreen());
                                                 },
                                                 child: Text(
-                                                  'Sign In',
+                                                  LocaleKeys.SignIn.tr(),
                                                   style: TextStyle(
                                                     color: gold,
                                                   ),

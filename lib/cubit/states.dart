@@ -190,4 +190,6 @@ class SearchLawyersDataError extends AvocadoStates{}
 class ChangeGenderState extends AvocadoStates{}
 class ChangeRoleState extends AvocadoStates{}
 class CheckAuthorizationState extends AvocadoStates{}
+class ProfileImagePickedSuccessful extends AvocadoStates{}
+class ProfileImagePickedError extends AvocadoStates{}
 

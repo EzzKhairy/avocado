@@ -98,7 +98,11 @@ class CodegenLoader extends AssetLoader{
   "role": "منصب",
   "male": "ذكر",
   "female": "انثي",
-  "admin": "مشرف"
+  "admin": "مشرف",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "notMatch": "كلمة المرور غير متطابقة",
+  "legistilation": "التشريعات",
+  "models": "النماذج"
 };
 static const Map<String,dynamic> en = {
   "save": "Save",
@@ -184,7 +188,11 @@ static const Map<String,dynamic> en = {
   "role": "Role",
   "male": "Male",
   "female": "Female",
-  "admin": "Admin"
+  "admin": "Admin",
+  "confirmPassword": "Confirm Password",
+  "notMatch": "password doesn\\'t match",
+  "legistilation": "Legislations",
+  "models": "Models"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

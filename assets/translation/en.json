@@ -82,5 +82,9 @@
   "role": "Role",
   "male": "Male",
   "female": "Female",
-  "admin": "Admin"
+  "admin": "Admin",
+  "confirmPassword": "Confirm Password",
+  "notMatch": "password doesn\\'t match",
+  "legistilation": "Legislations",
+  "models": "Models"
 }

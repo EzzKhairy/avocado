@@ -82,5 +82,9 @@
   "role": "منصب",
   "male": "ذكر",
   "female": "انثي",
-  "admin": "مشرف"
+  "admin": "مشرف",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "notMatch": "كلمة المرور غير متطابقة",
+  "legistilation": "التشريعات",
+  "models": "النماذج"
 }

@@ -6,6 +6,8 @@ import 'package:avocado/modules/register_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                   CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id),
                   showToast(context: context, msg: state.model.message,backgroundColor: Colors.green),
                   AvocadoCubit.get(context).getLawyerProfile(lawyerId),
-                  print(lawyerId),
+                  print('cached data >>>' '${CacheHelper.getData(key: 'id')}'),
                   print(token),
                   navigateTo(context, const AppLayout())
                 }
@@ -97,10 +99,10 @@ class LoginScreen extends StatelessWidget {
                                     type: TextInputType.emailAddress,
                                     validate: (String?value) {
                                       if (value!.isEmpty) {
-                                        return ('please enter email');
+                                        return (LocaleKeys.ThisFieldMustBeFilled.tr());
                                       }
                                     },
-                                    label: 'Email Address',
+                                    label: LocaleKeys.EmailAddress.tr(),
                                     prefix: Icons.email_outlined,
                                   ),
                                   const SizedBox(
@@ -116,16 +118,16 @@ class LoginScreen extends StatelessWidget {
                                     },
                                     validate: (String?value) {
                                       if (value!.isEmpty) {
-                                        return ('Password is too short');
+                                        return (LocaleKeys.ThisFieldMustBeFilled.tr());
                                       }
                                     },
-                                    label: 'Password',
+                                    label: LocaleKeys.password.tr(),
                                     prefix: Icons.lock_outline_rounded,
                                   ),
                                   const SizedBox(
                                     height: 50.0,
                                   ),
-                                  defaultButton(text: 'Login',
+                                  defaultButton(text: LocaleKeys.login.tr(),
                                       function: (){
                                         AvocadoLoginCubit.get(context).lawyerLogin(
                                             email: emailController.text,
@@ -139,9 +141,9 @@ class LoginScreen extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(
-                                        "Don't have an account?",
-                                        style: TextStyle(
+                                      Text(
+                                        LocaleKeys.Donthaveanaccount.tr(),
+                                        style: const TextStyle(
                                           color: Colors.white,
                                         ),
                                       ),
@@ -150,7 +152,7 @@ class LoginScreen extends StatelessWidget {
                                           navigateTo(context, RegisterScreen());
                                         },
                                         child: Text(
-                                          'REGISTER NOW',
+                                            LocaleKeys.Register.tr(),
                                           style: TextStyle(
                                             color: HexColor('D8C690'),
                                           ),

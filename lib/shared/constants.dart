@@ -22,3 +22,5 @@ void pop (context) {
   Navigator.pop(context);
 }
 
+//static const male = 'male';
+//   static const female = 'female';

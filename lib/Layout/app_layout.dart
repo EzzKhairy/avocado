@@ -79,6 +79,8 @@ class _AppLayoutState extends State<AppLayout> {
                   end: AlignmentDirectional.bottomStart,
                   stops: const [0.20, 0.17, 0.40]),
               appBar: AppBar(
+                automaticallyImplyLeading:false,
+                titleTextStyle: TextStyle(letterSpacing: 2),
                 title:  Text(
                         'AVOCADO',
                         style: TextStyle(

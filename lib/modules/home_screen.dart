@@ -29,9 +29,6 @@ class HomeScreen extends StatelessWidget {
       listener: (BuildContext context, state) {},
       builder: (BuildContext context, state) {
         List<CaseData>? casesData = AvocadoCubit.get(context).caseModel?.casesData;
-        if(casesData!.isEmpty){return const Center(child: CircularProgressIndicator());}
-        else
-          {
             return Scaffold(
               body: SingleChildScrollView(
                 child: Padding(
@@ -45,19 +42,12 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           buildHomeCard(
                             function: (){
-                              if(AvocadoCubit.get(context).lawyerData!.data![0].role == 'Admin' || AvocadoCubit.get(context).lawyerData!.data![0].role == 'admin')
-                              {
                               navigateTo(context, CasesScreen());
                               print (token);
-                              print(CacheHelper.getData(key: 'token'));}
-                              else
-                                {
-                                  navigateTo(context, LawyerCasesScreen(lawyerId));
-                                }
-                            },
+                              print(CacheHelper.getData(key: 'token'));},
                             title: LocaleKeys.totalCases.tr(),
                             icon: Icons.format_align_justify_outlined,
-                            number: casesData.length,
+                            number: casesData!.length,
                           ),
                           const SizedBox(width: 10,),
                           buildHomeCard(
@@ -111,8 +101,6 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           }
-
-      },
     );
   }
 

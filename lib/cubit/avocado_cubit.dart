@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:avocado/cubit/states.dart';
@@ -179,6 +180,9 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     required String? role,
     required String? lawyerNationalNumber,
     String? profilePhoto,
+    String? phoneNumber,
+    String? dateOfBirth,
+    String ? gender,
   }){
     emit(UpdateLawyerProfilePhotoLoading());
     DioHelper.putData(
@@ -186,8 +190,13 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       data: {
         'email' : email,
         'name' : name,
+        'address' : address,
+        'Role': role,
         'Lawyer_National_Number' : lawyerNationalNumber,
-        'profile_photo_path' : profilePhoto
+        'profile_photo_path' : profilePhoto,
+        'phone' : phoneNumber,
+        'DOB': dateOfBirth,
+        'Gender' : gender,
       },
 
     ).then((value) {
@@ -823,6 +832,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
     final ImagePicker _picker = ImagePicker();
+    File? pickedImage;
     String? base64;
     void pickImage({
       required int? lawyerID,
@@ -831,9 +841,19 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       required String? address,
       required String? role,
       required String? lawyerNationalNumber,
+      String? phoneNumber,
+      String? dateOfBirth,
+      String ? gender,
 }) async {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      var imageBytes = await image?.readAsBytes();
+      final XFile? pickedImageXFile = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedImageXFile != null) {
+        pickedImage = File(pickedImageXFile.path);
+        emit(ProfileImagePickedSuccessful());
+      } else {
+        print('No Image Selected');
+        emit(ProfileImagePickedError());
+      }
+      var imageBytes = await pickedImage?.readAsBytes();
       base64 = const Base64Codec().encode(imageBytes!);
       updateLawyerProfilePhoto(
           lawyerID: lawyerID,
@@ -842,7 +862,10 @@ class AvocadoCubit extends Cubit <AvocadoStates>
           address: address,
           role: role,
           lawyerNationalNumber: lawyerNationalNumber,
-          profilePhoto: '$base64'
+          profilePhoto: '$base64',
+          phoneNumber: phoneNumber,
+        dateOfBirth: dateOfBirth,
+        gender: gender,
       );
       debugPrint(base64);
     }
