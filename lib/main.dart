@@ -68,7 +68,7 @@ void main()async
 
   Widget widget;
 
-  bool? isDark = CacheHelper.getBoolean(key: 'isDark');
+  bool? isDark = CacheHelper.getData(key: 'isDark');
 
   //bool? showOnBoarding = CacheHelper.getData(key : 'ShowOnBoarding');
   token = CacheHelper.getData(key : 'token');

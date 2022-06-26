@@ -1,5 +1,5 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
-import 'package:avocado/modules/cases_screen.dart';
+import 'package:avocado/modules/casesScreen/cases_screen.dart';
 import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/modules/courts_screen.dart';
 import 'package:avocado/modules/profile_screen.dart';

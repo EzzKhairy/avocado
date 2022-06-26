@@ -187,6 +187,11 @@ class SearchLawyersDataLoading extends AvocadoStates{}
 class SearchLawyersDataSuccessful extends AvocadoStates{}
 class SearchLawyersDataError extends AvocadoStates{}
 
+class PdfLoading extends AvocadoStates{}
+class PdfSuccessful extends AvocadoStates{}
+class PdfError extends AvocadoStates{}
+
+
 class ChangeGenderState extends AvocadoStates{}
 class ChangeRoleState extends AvocadoStates{}
 class CheckAuthorizationState extends AvocadoStates{}

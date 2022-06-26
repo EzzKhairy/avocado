@@ -32,6 +32,7 @@ class CaseData
   int? lawyerID;
   String? createdAt;
   String? updatedAt;
+  String? attachments;
 
   CaseData.fromJson(Map<String, dynamic>json)
   {
@@ -48,5 +49,6 @@ class CaseData
     createdAt =json['created_at'];
     updatedAt =json['updated_at'];
     status = json['status'];
+    attachments = json['Attachment'];
   }
 }

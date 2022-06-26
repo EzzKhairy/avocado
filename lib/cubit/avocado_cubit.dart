@@ -32,19 +32,18 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 
-class AvocadoCubit extends Cubit <AvocadoStates>
-{
+class AvocadoCubit extends Cubit <AvocadoStates> {
   AvocadoCubit() : super(InitialState());
 
   static AvocadoCubit get(context) => BlocProvider.of(context);
 
   static var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-    Future ScheduleNotification({
-      required DateTime taskDate,
-      required String body,
-      required String title
-    }) async{
+  Future ScheduleNotification({
+    required DateTime taskDate,
+    required String body,
+    required String title
+  }) async {
     AndroidNotificationDetails androidNotificationDetails =
     AndroidNotificationDetails(
       '${Random().nextInt(400)}',
@@ -56,21 +55,22 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     var platformChannelSpecifies = NotificationDetails(
         android: androidNotificationDetails
     );
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-          Random().nextInt(200),
-          title.toString(),
-          body,
-          tz.TZDateTime.from(taskDate,tz.local),
-          platformChannelSpecifies,
-          androidAllowWhileIdle: true,
-          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime
-      );
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        Random().nextInt(200),
+        title.toString(),
+        body,
+        tz.TZDateTime.from(taskDate, tz.local),
+        platformChannelSpecifies,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation
+            .absoluteTime
+    );
   }
 
 
+  LawyersModel? getLawyerModel;
 
- LawyersModel? getLawyerModel;
-  void getLawyerById(int? lawyerID){
+  void getLawyerById(int? lawyerID) {
     emit(GetLawyerProfileLoading());
     DioHelper.getData(
       url: 'lawyers/$lawyerID',
@@ -82,7 +82,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetLawyerProfileSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetLawyerProfileError());
       if (kDebugMode) {
         print(getLawyerModel?.data![0].email);
@@ -93,19 +93,20 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
 
   LawyersModel? lawyerData;
-  void getLawyerProfile(int? lawyerID){
+
+  void getLawyerProfile(int? lawyerID) {
     emit(GetLawyerProfileLoading());
     DioHelper.getData(
-        url: 'lawyers/$lawyerID',
+      url: 'lawyers/$lawyerID',
     ).then((value) {
       lawyerData = LawyersModel.fromJson(value.data);
-        //print(element);
+      //print(element);
       if (kDebugMode) {
         print(lawyerData?.data![0].email);
       }
       emit(GetLawyerProfileSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetLawyerProfileError());
       if (kDebugMode) {
         print(lawyerData?.data![0].email);
@@ -115,19 +116,20 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   bool isAdmin = false;
-  void checkAuthorization (lawyerId){
-    if(lawyerData?.data![0].role == 'Admin'){
+
+  void checkAuthorization(lawyerId) {
+    if (lawyerData?.data![0].role?.toUpperCase() == 'ADMIN') {
       isAdmin = true;
       emit(CheckAuthorizationState());
     }
     else {
       isAdmin = false;
       emit(CheckAuthorizationState());
-
     }
   }
 
   LawyersModel? lawyerUpdated;
+
   void updateLawyerProfile({
     required int? lawyerID,
     required String? name,
@@ -138,19 +140,19 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     String? phoneNumber,
     String? dateOfBirth,
     String ? gender,
-  }){
+  }) {
     emit(UpdateLawyerProfileLoading());
     DioHelper.putData(
       url: 'lawyers/$lawyerID',
       data: {
-        'email' : email,
-        'name' : name,
-        'Lawyer_National_Number' : lawyerNationalNumber,
-        'address' : address,
+        'email': email,
+        'name': name,
+        'Lawyer_National_Number': lawyerNationalNumber,
+        'address': address,
         'Role': role,
-        'phone' : phoneNumber,
+        'phone': phoneNumber,
         'DOB': dateOfBirth,
-        'Gender' : gender,
+        'Gender': gender,
       },
 
     ).then((value) {
@@ -162,7 +164,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       getLawyerProfile(lawyerId);
       emit(UpdateLawyerProfileSuccessful(lawyerUpdated!));
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(UpdateLawyerProfileError(lawyerUpdated!));
       if (kDebugMode) {
         print(lawyerUpdated?.message);
@@ -172,6 +174,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   LawyersModel? lawyerPhotoUpdatedModel;
+
   void updateLawyerProfilePhoto({
     required int? lawyerID,
     required String? name,
@@ -183,20 +186,20 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     String? phoneNumber,
     String? dateOfBirth,
     String ? gender,
-  }){
+  }) {
     emit(UpdateLawyerProfilePhotoLoading());
     DioHelper.putData(
       url: 'lawyers/$lawyerID',
       data: {
-        'email' : email,
-        'name' : name,
-        'address' : address,
+        'email': email,
+        'name': name,
+        'address': address,
         'Role': role,
-        'Lawyer_National_Number' : lawyerNationalNumber,
-        'profile_photo_path' : profilePhoto,
-        'phone' : phoneNumber,
+        'Lawyer_National_Number': lawyerNationalNumber,
+        'profile_photo_path': profilePhoto,
+        'phone': phoneNumber,
         'DOB': dateOfBirth,
-        'Gender' : gender,
+        'Gender': gender,
       },
 
     ).then((value) {
@@ -208,7 +211,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       getLawyerProfile(lawyerId);
       emit(UpdateLawyerProfilePhotoSuccessful(lawyerPhotoUpdatedModel!));
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(UpdateLawyerProfilePhotoError(lawyerPhotoUpdatedModel!));
       if (kDebugMode) {
         print(lawyerPhotoUpdatedModel?.message);
@@ -219,7 +222,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
 
   ClientsModel? searchClientsModel;
-  void searchClients(String keyWord){
+
+  void searchClients(String keyWord) {
     emit(SearchClientsLoading());
     DioHelper.getData(
       url: 'clients_search/$keyWord',
@@ -227,11 +231,11 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       searchClientsModel = ClientsModel.fromJson(value.data);
       //print(element);
       if (kDebugMode) {
-        print( 'Searched >> ' '${searchClientsModel?.clientsData![0].email}');
+        print('Searched >> ' '${searchClientsModel?.clientsData![0].email}');
       }
       emit(SearchClientsSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(SearchClientsError());
       if (kDebugMode) {
         print(lawyerData?.data![0].email);
@@ -241,7 +245,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   ClientsModel? clientsModel;
-  void getClients(){
+
+  void getClients() {
     emit(GetClientsLoading());
     DioHelper.getData(
       url: 'clients',
@@ -253,7 +258,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetClientsSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetClientsError());
       if (kDebugMode) {
         print(lawyerData?.data![0].email);
@@ -263,6 +268,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   ClientsModel? updateClientModel;
+
   void updateClientProfile({
     required int? clientsID,
     required int? lawyerID,
@@ -271,17 +277,17 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     required String? email,
     String? address,
     String? phone,
-  }){
+  }) {
     emit(UpdateClientProfileLoading());
     DioHelper.putData(
       url: 'clients/$clientsID',
       data: {
-        'email' : email,
-        'Lawyer_id' : lawyerID,
-        'name' : name,
-        'Client_National_Number' : clientNationalNumber,
-        'address' : address,
-        'phone' : phone,
+        'email': email,
+        'Lawyer_id': lawyerID,
+        'name': name,
+        'Client_National_Number': clientNationalNumber,
+        'address': address,
+        'phone': phone,
       },
 
     ).then((value) {
@@ -292,7 +298,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(UpdateClientProfileSuccessful(updateClientModel!));
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(UpdateClientProfileError(updateClientModel!));
       if (kDebugMode) {
         print(updateClientModel?.message);
@@ -302,6 +308,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   ClientsModel? NewClientModel;
+
   void addNewClient({
     required String? lawyerID,
     required String? clientNationalNumber,
@@ -309,17 +316,17 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     required String? email,
     String? address,
     String? phone,
-  }){
+  }) {
     emit(AddNewClientLoading());
     DioHelper.postData(
       url: 'clients',
       data: {
-        'email' : email,
-        'Lawyer_id' : lawyerID,
-        'name' : name,
-        'Client_National_Number' : clientNationalNumber,
-        'address' : address,
-        'phone' : phone,
+        'email': email,
+        'Lawyer_id': lawyerID,
+        'name': name,
+        'Client_National_Number': clientNationalNumber,
+        'address': address,
+        'phone': phone,
       },
 
     ).then((value) {
@@ -330,7 +337,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(AddNewClientSuccessful(NewClientModel!));
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(AddNewClientError(NewClientModel!));
       if (kDebugMode) {
         print(NewClientModel?.message);
@@ -341,14 +348,15 @@ class AvocadoCubit extends Cubit <AvocadoStates>
 
   bool isEdit = false;
   String editText = 'EDIT';
+
   void editPressed({
     required int? lawyerID,
     required String? email,
     required String? lawyerNationalNumber,
     required String? address,
     required String? name,
-     role,
-  }){
+    role,
+  }) {
     isEdit = !isEdit;
     if (isEdit) {
       editText = 'SAVE';
@@ -367,25 +375,26 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   CaseModel? caseModel;
-  void getCases(){
+
+  void getCases() {
     emit(GetCasesDataLoading());
-    if(isAdmin){
-    DioHelper.getData(
-      url: 'cases',
-    ).then((value) {
-      caseModel = CaseModel.fromJson(value.data);
-      //print(element);
-      if (kDebugMode) {
-        print(caseModel?.casesData![0].caseID);
-      }
-      emit(GetCasesDataSuccessful());
-    }).catchError((onError){
-      emit(GetCasesDataError());
-      if (kDebugMode) {
-        print(caseModel?.casesData![0].courtNumber);
-        print(onError.toString());
-      }
-    });
+    if (isAdmin) {
+      DioHelper.getData(
+        url: 'cases',
+      ).then((value) {
+        caseModel = CaseModel.fromJson(value.data);
+        //print(element);
+        if (kDebugMode) {
+          print(caseModel?.casesData![0].caseID);
+        }
+        emit(GetCasesDataSuccessful());
+      }).catchError((onError) {
+        emit(GetCasesDataError());
+        if (kDebugMode) {
+          print(caseModel?.casesData![0].courtNumber);
+          print(onError.toString());
+        }
+      });
     }
     else {
       emit(GetCasesByLawyerIdDataLoading());
@@ -398,7 +407,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
           print(caseModel?.casesData![0].caseID);
         }
         emit(GetCasesByLawyerIdDataSuccessful());
-      }).catchError((onError){
+      }).catchError((onError) {
         emit(GetCasesByLawyerIdDataError());
         if (kDebugMode) {
           print(caseModel?.casesData![0].courtNumber);
@@ -409,7 +418,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   CaseModel? searchCaseModel;
-  void searchCases({required String keyword}){
+
+  void searchCases({required String keyword}) {
     emit(SearchCasesDataLoading());
     DioHelper.getData(
       url: 'cases_search/$keyword',
@@ -420,7 +430,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
         print(searchCaseModel?.casesData![0].caseID);
       }
       emit(SearchCasesDataSuccessful());
-    }).catchError((onError){
+    }).catchError((onError) {
       emit(SearchCasesDataError());
       if (kDebugMode) {
         print(searchCaseModel?.casesData![0].courtNumber);
@@ -430,7 +440,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   LawyersModel? getLawyers;
-  void getEveryLawyer(){
+
+  void getEveryLawyer() {
     emit(GetLawyersDataLoading());
     DioHelper.getData(
       url: 'lawyers',
@@ -442,7 +453,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetLawyersDataSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetLawyersDataError());
       if (kDebugMode) {
         print(getLawyerModel?.data![0].email);
@@ -452,7 +463,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   LawyersModel? searchLawyersModel;
-  void searchLawyers({required String? keyword}){
+
+  void searchLawyers({required String? keyword}) {
     emit(SearchLawyersDataLoading());
     DioHelper.getData(
       url: 'lawyers_search/$keyword',
@@ -464,7 +476,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(SearchLawyersDataSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(SearchLawyersDataError());
       if (kDebugMode) {
         print(searchLawyersModel?.data![0].email);
@@ -474,7 +486,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   CaseModel? getLawyerCases;
-  void getCasesByLawyerId({required int? lawyerId}){
+
+  void getCasesByLawyerId({required int? lawyerId}) {
     emit(GetCasesByLawyerIdDataLoading());
     DioHelper.getData(
       url: 'cases_foriegn/$lawyerId',
@@ -485,7 +498,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
         print(caseModel?.casesData![0].caseID);
       }
       emit(GetCasesByLawyerIdDataSuccessful());
-    }).catchError((onError){
+    }).catchError((onError) {
       emit(GetCasesByLawyerIdDataError());
       if (kDebugMode) {
         print(caseModel?.casesData![0].courtNumber);
@@ -495,7 +508,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   SessionModel? sessionModel;
-  void getSessions({required int ?caseId}){
+
+  void getSessions({required int ?caseId}) {
     emit(GetSessionsDataLoading());
     DioHelper.getData(
       url: 'sessions_foriegn/$caseId',
@@ -504,20 +518,22 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       //print(element);
       emit(GetSessionsDataSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetSessionsDataError());
       if (kDebugMode) {
         print(onError.toString());
       }
     });
   }
-  void resetSession(){
+
+  void resetSession() {
     sessionModel = null;
     emit(RestSessionsDataSuccesful());
   }
 
   RecordsModel? recordsModel;
-  void getRecords({required int? caseId}){
+
+  void getRecords({required int? caseId}) {
     emit(GetRecordsDataLoading());
     DioHelper.getData(
       url: 'records_foriegn/$caseId',
@@ -527,7 +543,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       emit(GetRecordsDataSuccessful());
       print(recordsModel!.recordsData![0].clientName);
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetRecordsDataError());
       if (kDebugMode) {
         print(onError.toString());
@@ -536,7 +552,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   ExpensesModel? expensesModel;
-  void getExpenses({required int? caseId}){
+
+  void getExpenses({required int? caseId}) {
     emit(GetExpensesDataLoading());
     DioHelper.getData(
       url: 'expenses_foriegn/$caseId',
@@ -548,7 +565,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetExpensesDataSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetExpensesDataError());
       if (kDebugMode) {
         print(expensesModel?.message);
@@ -558,7 +575,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   PaymentsModel? paymentsModel;
-  void getPayments({required int? caseId}){
+
+  void getPayments({required int? caseId}) {
     emit(GetPaymentsDataLoading());
     DioHelper.getData(
       url: 'payments_foriegn/$caseId',
@@ -570,7 +588,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetPaymentsDataSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetPaymentsDataError());
       if (kDebugMode) {
         print(paymentsModel?.message);
@@ -580,7 +598,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   ExpertSessionModel? expertSessionModel;
-  void getExpertSessions({required int? caseId}){
+
+  void getExpertSessions({required int? caseId}) {
     emit(GetExpertSessionDataLoading());
     DioHelper.getData(
       url: 'expert_sessions_foriegn/$caseId',
@@ -592,7 +611,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetExpertSessionDataSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetExpertSessionDataError());
       if (kDebugMode) {
         print(onError.toString());
@@ -601,7 +620,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   InvestigationModel? investigationModel;
-  void getInvestigations({required int? caseId}){
+
+  void getInvestigations({required int? caseId}) {
     emit(GetInvestigationsDataLoading());
     DioHelper.getData(
       url: 'investigations_foriegn/$caseId',
@@ -613,7 +633,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetInvestigationsDataSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetInvestigationsDataError());
       if (kDebugMode) {
         print(investigationModel?.investigationData![0].topic);
@@ -623,7 +643,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   InvestigationPlacesModel? investigationPlacesModel;
-  void getInvestigationPlaces(){
+
+  void getInvestigationPlaces() {
     emit(GetInvestigationsPlacesDataLoading());
     DioHelper.getData(
       url: 'investigations',
@@ -635,7 +656,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetInvestigationsPlacesDataSuccessful());
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetInvestigationsPlacesDataError());
       if (kDebugMode) {
         print(investigationPlacesModel?.data![0].name);
@@ -645,6 +666,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   CourtModel? updateCourtModel;
+
   void updateCourtProfile({
     required int? courtID,
     required String? address,
@@ -652,16 +674,16 @@ class AvocadoCubit extends Cubit <AvocadoStates>
     String? longitude,
     String? latitude,
     String? phone,
-  }){
+  }) {
     emit(UpdateCourtDataLoading());
     DioHelper.putData(
       url: 'courts/$courtID',
       data: {
-        'Latitude' : latitude,
-        'name' : name,
-        'Longtude' : longitude,
-        'address' : address,
-        'phone' : phone,
+        'Latitude': latitude,
+        'name': name,
+        'Longtude': longitude,
+        'address': address,
+        'phone': phone,
       },
 
     ).then((value) {
@@ -672,7 +694,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(UpdateCourtDataSuccessful(updateCourtModel!));
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(UpdateCourtDataError(updateCourtModel!));
       if (kDebugMode) {
         print(updateCourtModel?.message);
@@ -682,22 +704,23 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   CourtModel? addCourtModel;
+
   void AddCourtProfile({
     required String? address,
     required String? name,
     String? longitude,
     String? latitude,
     required String phone,
-  }){
+  }) {
     emit(AddCourtDataLoading());
     DioHelper.postData(
       url: 'courts',
       data: {
-        'Latitude' : latitude,
-        'name' : name,
-        'Longtude' : longitude,
-        'address' : address,
-        'phone' : phone,
+        'Latitude': latitude,
+        'name': name,
+        'Longtude': longitude,
+        'address': address,
+        'phone': phone,
       },
 
     ).then((value) {
@@ -708,7 +731,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(AddCourtDataSuccessful(addCourtModel!));
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(AddCourtDataError(addCourtModel!));
       if (kDebugMode) {
         print(addCourtModel?.message);
@@ -718,7 +741,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   CourtModel? getCourtModel;
-  void getCourts(){
+
+  void getCourts() {
     emit(GetCourtDataLoading());
     DioHelper.getData(
       url: 'courts',
@@ -730,7 +754,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetCourtDataSuccessful(getCourtModel!));
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetCourtDataError(getCourtModel!));
       if (kDebugMode) {
         print(getCourtModel?.message);
@@ -740,7 +764,8 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   CourtModel? getCourtByIdModel;
-  void getCourtById(courtId){
+
+  void getCourtById(courtId) {
     emit(GetCourtDataLoading());
     DioHelper.getData(
       url: 'courts/$courtId',
@@ -752,7 +777,7 @@ class AvocadoCubit extends Cubit <AvocadoStates>
       }
       emit(GetCourtDataSuccessful(getCourtByIdModel!));
     }
-    ).catchError((onError){
+    ).catchError((onError) {
       emit(GetCourtDataError(getCourtByIdModel!));
       if (kDebugMode) {
         print(getCourtByIdModel?.message);
@@ -762,113 +787,119 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
   TasksModel? AddTasksModel;
+
   void addNewTask({
-  required String title,
-  required String date,
-  required String startTime,
+    required String title,
+    required String date,
+    required String startTime,
     String? endTime,
     String? description,
-  }){
+  }) {
     emit(AddNewTaskLoading());
     DioHelper.postData(
         url: 'tasks',
         data: {
-          'Title' : title,
-          'Date':date,
-          'StartTime' : startTime,
-          'EndTime':endTime,
-          'Description':description
+          'Title': title,
+          'Date': date,
+          'StartTime': startTime,
+          'EndTime': endTime,
+          'Description': description
         }).then((value) {
-          AddTasksModel = TasksModel.fromJson(value.data);
-          print(AddTasksModel!.message);
-          emit(AddNewTaskSuccessful(AddTasksModel!));
-    }).catchError((error){
+      AddTasksModel = TasksModel.fromJson(value.data);
+      print(AddTasksModel!.message);
+      emit(AddNewTaskSuccessful(AddTasksModel!));
+    }).catchError((error) {
       emit(AddNewTaskError(AddTasksModel!));
       print(AddTasksModel!.message);
       print(error.toString());
     });
   }
 
-   TasksModel? getTasksModel;
-   void getTodayTasks(String? date){
+  TasksModel? getTasksModel;
+
+  void getTodayTasks(String? date) {
     emit(GetTasksLoading());
     DioHelper.getData(
-        url: 'tasks_search/$date',
-       ).then((value) {
+      url: 'tasks_search/$date',
+    ).then((value) {
       getTasksModel = TasksModel.fromJson(value.data);
-      debugPrint('getTodayTasks >>> '  '${getTasksModel!.message}');
+      debugPrint('getTodayTasks >>> ' '${getTasksModel!.message}');
       emit(GetTasksSuccessful(getTasksModel!));
-    }).catchError((error){
+    }).catchError((error) {
       emit(GetTasksError(getTasksModel!));
       debugPrint(getTasksModel!.message);
       debugPrint(error.toString());
     });
-   }
+  }
 
   static TasksModel? getNotifyTasksModel;
-    static Future<TasksModel?> getNotifyTasks(String? date) async {
+
+  static Future<TasksModel?> getNotifyTasks(String? date) async {
     DioHelper.getData(
       url: 'tasks_search/$date',
     ).then((value) {
       getNotifyTasksModel = TasksModel.fromJson(value.data);
       return getNotifyTasksModel;
-      debugPrint('Notify Success >>> '  '${getNotifyTasksModel!.message}');
-    }).catchError((error){
-      debugPrint('Notify Error >>> '  '${getNotifyTasksModel!.message}');
+      debugPrint('Notify Success >>> ' '${getNotifyTasksModel!.message}');
+    }).catchError((error) {
+      debugPrint('Notify Error >>> ' '${getNotifyTasksModel!.message}');
       return null;
       debugPrint(error.toString());
-      });
+    });
     return getNotifyTasksModel;
   }
 
 
-  void changeLocalToAr (BuildContext context)async {
+  void changeLocalToAr(BuildContext context) async {
     await context.setLocale(Locale('ar'));
     emit(ChangeLocalToArState());
   }
-  void changeLocalToEn (BuildContext context) async {
+
+  void changeLocalToEn(BuildContext context) async {
     await context.setLocale(Locale('en'));
     emit(ChangeLocalToEnState());
   }
 
-    final ImagePicker _picker = ImagePicker();
-    File? pickedImage;
-    String? base64;
-    void pickImage({
-      required int? lawyerID,
-      required String? name,
-      required String? email,
-      required String? address,
-      required String? role,
-      required String? lawyerNationalNumber,
-      String? phoneNumber,
-      String? dateOfBirth,
-      String ? gender,
-}) async {
-      final XFile? pickedImageXFile = await _picker.pickImage(source: ImageSource.gallery);
-      if (pickedImageXFile != null) {
-        pickedImage = File(pickedImageXFile.path);
-        emit(ProfileImagePickedSuccessful());
-      } else {
-        print('No Image Selected');
-        emit(ProfileImagePickedError());
-      }
-      var imageBytes = await pickedImage?.readAsBytes();
-      base64 = const Base64Codec().encode(imageBytes!);
-      updateLawyerProfilePhoto(
-          lawyerID: lawyerID,
-          name: name,
-          email: email,
-          address: address,
-          role: role,
-          lawyerNationalNumber: lawyerNationalNumber,
-          profilePhoto: '$base64',
-          phoneNumber: phoneNumber,
-        dateOfBirth: dateOfBirth,
-        gender: gender,
-      );
-      debugPrint(base64);
+  final ImagePicker _picker = ImagePicker();
+  File? pickedImage;
+  String? base64;
+
+  void pickImage({
+    required int? lawyerID,
+    required String? name,
+    required String? email,
+    required String? address,
+    required String? role,
+    required String? lawyerNationalNumber,
+    String? phoneNumber,
+    String? dateOfBirth,
+    String ? gender,
+  }) async {
+    final XFile? pickedImageXFile = await _picker.pickImage(
+        source: ImageSource.gallery);
+    if (pickedImageXFile != null) {
+      pickedImage = File(pickedImageXFile.path);
+      emit(ProfileImagePickedSuccessful());
+    } else {
+      print('No Image Selected');
+      emit(ProfileImagePickedError());
     }
+    var imageBytes = await pickedImage?.readAsBytes();
+    base64 = const Base64Codec().encode(imageBytes!);
+    updateLawyerProfilePhoto(
+      lawyerID: lawyerID,
+      name: name,
+      email: email,
+      address: address,
+      role: role,
+      lawyerNationalNumber: lawyerNationalNumber,
+      profilePhoto: '$base64',
+      phoneNumber: phoneNumber,
+      dateOfBirth: dateOfBirth,
+      gender: gender,
+    );
+    debugPrint(base64);
+  }
 
   int currentIndex = 0;
   List<Widget> screens = [
@@ -893,15 +924,17 @@ class AvocadoCubit extends Cubit <AvocadoStates>
   }
 
 
-  void changeBottomNav(int index)
-  {
+  void changeBottomNav(int index) {
     currentIndex = index;
     emit(ChangeNavBarState());
   }
 
   bool isChanged = false;
-  void toggleIsChanged(){
+
+  void toggleIsChanged() {
     isChanged = true;
     emit(ChangeNavBarState());
   }
+
+
 }

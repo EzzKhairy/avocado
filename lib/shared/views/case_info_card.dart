@@ -1,7 +1,9 @@
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/case_model.dart';
-import '../../modules/case_info_screen.dart';
+import '../../modules/casesScreen/case_info_screen.dart';
 import '../components.dart';
 
 class CaseInfoCard extends StatelessWidget {
@@ -25,7 +27,6 @@ class CaseInfoCard extends StatelessWidget {
         margin: const EdgeInsetsDirectional.all(2.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          height: 160,
           width: width,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -47,14 +48,14 @@ class CaseInfoCard extends StatelessWidget {
                   child: horizontalDivider(height: 1.5,hColor: Colors.grey),
                 ),
                 Text(
-                  'Opened ${caseData.createdAt}'.split('T').elementAt(0),
+                  '${LocaleKeys.openedAt.tr()} ' ' ${caseData.createdAt}'.split('T').elementAt(0),
                   maxLines: 1,
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
                   ),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(height: 4.5,),
                 Text(
                   '${caseData.clientName}',
                   style: const TextStyle(

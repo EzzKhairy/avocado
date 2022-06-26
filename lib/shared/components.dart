@@ -6,6 +6,7 @@ import 'package:avocado/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -309,4 +310,17 @@ MaterialColor buildMaterialColor(Color color) {
     );
   });
   return MaterialColor(color.value, swatch);
+}
+
+Widget imagePreview(String? image){
+  return FullScreenWidget(
+    child: Center(
+      child: Image.network(
+        "$image",
+        fit: BoxFit.cover,
+        width: double.infinity,
+        alignment: AlignmentDirectional.topCenter,
+      ),
+    ),
+  );
 }

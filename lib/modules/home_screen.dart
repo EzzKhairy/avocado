@@ -3,8 +3,8 @@ import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/models/tasks_model.dart';
-import 'package:avocado/modules/case_info_screen.dart';
-import 'package:avocado/modules/cases_screen.dart';
+import 'package:avocado/modules/casesScreen/case_info_screen.dart';
+import 'package:avocado/modules/casesScreen/cases_screen.dart';
 import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
 import 'package:avocado/modules/lawyer_cases_screen.dart';
@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                       buildTaskHomeItem(context,AvocadoCubit.get(context).getTasksModel),
                       const SizedBox(height: 15,),
                       Container(
-                        height: 165,
+                        height: 190,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => CaseInfoCard(casesData[index],width: MediaQuery.of(context).size.width*.70),

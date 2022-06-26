@@ -1,7 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
-import 'package:avocado/modules/case_info_screen.dart';
+import 'package:avocado/modules/casesScreen/case_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter/material.dart';

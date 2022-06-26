@@ -86,5 +86,8 @@
   "confirmPassword": "تأكيد كلمة المرور",
   "notMatch": "كلمة المرور غير متطابقة",
   "legistilation": "التشريعات",
-  "models": "النماذج"
+  "models": "النماذج",
+  "attachments": "المستندات",
+  "inProgress": "قيد العمل",
+  "closed": "مغلقه"
 }

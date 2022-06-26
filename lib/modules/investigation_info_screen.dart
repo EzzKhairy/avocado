@@ -37,15 +37,6 @@ class InvestigationInfoScreen extends StatelessWidget {
                 conditionBuilder: (context) => state is GetLawyerProfileSuccessful || state is GetInvestigationsDataSuccessful,
                 widgetBuilder:(context) => Scaffold(
                     appBar: NewGradientAppBar(
-                      automaticallyImplyLeading: false,
-                      leading: IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: (){
-                            AvocadoCubit.get(context).resetSession();
-                            lawyerName = '';
-                            pop(context);
-                          }
-                      ),
                       centerTitle: true,
                       title: Text(
                         'Investigation Summary'.toUpperCase(),

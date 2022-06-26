@@ -23,7 +23,7 @@ class AppCubit extends Cubit<AvocadoStates>
     else {
       isDark =! isDark;
     }
-    CacheHelper.putBoolean(key: 'isDark', value: isDark).then((value)
+    CacheHelper.saveData(key: 'isDark', value: isDark).then((value)
     {
       if(isDark)
       {
