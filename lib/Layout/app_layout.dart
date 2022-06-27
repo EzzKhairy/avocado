@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
-import 'package:avocado/main.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:avocado/translation/locale_keys.g.dart';
@@ -11,36 +7,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
-import 'package:workmanager/workmanager.dart';
 
-// var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-//
-// Future showNotification() async{
-//   AndroidNotificationDetails androidNotificationDetails =
-//        AndroidNotificationDetails(
-//           '${Random().nextInt(400)}',
-//           'tasks',
-//         playSound: true,
-//         enableVibration: true,
-//         priority: Priority.high,
-//       );
-//   var platformChannelSpecifies = NotificationDetails(
-//     android: androidNotificationDetails
-//   );
-//
-//   await flutterLocalNotificationsPlugin.show(
-//            Random().nextInt(200),
-//           tasksData![0].title,
-//           'fsefes',
-//           platformChannelSpecifies);
-//
-// }
-//
+
 
 class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);

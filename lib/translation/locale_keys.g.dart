@@ -96,13 +96,33 @@ abstract class  LocaleKeys {
   static const addNewTask = 'addNewTask';
   static const taskName = 'taskName';
   static const EnterTaskName = 'EnterTaskName';
-  static const EnterTaskDescrepsion = 'EnterTaskDescription';
+  static const EnterTaskDescription = 'EnterTaskDescription';
   static const date = 'date';
   static const startTime = 'startTime';
   static const endTime = 'endTime';
   static const optional = 'optional';
-  static const male = 'male';
-  static const female = 'female';
   static const notFound = 'notFound';
   static const errorhappened = 'errorhappened';
+  static const phoneNumber11digits = 'phoneNumber11digits';
+  static const searchCases = 'searchCases';
+  static const searchClients = 'searchClients';
+  static const searchLawyers = 'searchLawyers';
+  static const e_name = 'e_name';
+  static const e_office_address = 'e_office_address';
+  static const sessionDate = 'sessionDate';
+  static const sessionReason = 'sessionReason';
+  static const decision = 'decision';
+  static const nextDate = 'nextDate';
+  static const noE_Session = 'noE_Session';
+  static const client = 'client';
+  static const contender = 'contender';
+  static const note = 'note';
+  static const noInvestigations = 'noInvestigations';
+  static const noRecordIncluding = 'noRecordIncluding';
+  static const roleNumber = 'roleNumber';
+  static const requirements = 'requirements';
+  static const more = 'more';
+  static const male = 'male';
+  static const female = 'female';
+
 }

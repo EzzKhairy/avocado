@@ -21,7 +21,7 @@ class PaymentsData
 {
   int? id;
   String? name;
-  int? amount;
+  String? amount;
   String? note;
   int? caseId;
   String? createdAt;

@@ -4,11 +4,13 @@ import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/modules/lawyer_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../translation/locale_keys.g.dart';
 
 class LawyersScreen extends StatelessWidget {
   const LawyersScreen({Key? key}) : super(key: key);
@@ -19,25 +21,17 @@ class LawyersScreen extends StatelessWidget {
       builder: (context,state) {
               List<LawyerData>? lawyerData = AvocadoCubit.get(context).getLawyers!.data;
               return Scaffold(
-              appBar: NewGradientAppBar(
+              appBar: AppBar(
                 centerTitle: true,
                 title: Text(
-                  'Lawyers'.toUpperCase(),
+                  LocaleKeys.totalLawyers.tr(),
                   style: TextStyle(
                     fontFamily: 'Nedian',
-                    fontSize: 25.0,
+                    fontSize: 20.0,
                     color: gold,
                   ),
                 ),
-                gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0.842),
-                      Colors.black.withOpacity(0.845),
-                      Colors.black.withOpacity(0.89),
-                    ],
-                    begin: AlignmentDirectional.topEnd,
-                    end: AlignmentDirectional.bottomStart,
-                    stops: const [0.20, 0.17, 0.40]),
+                backgroundColor: Colors.black,
               ),
                 body: SingleChildScrollView(
                   child: Padding(

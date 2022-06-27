@@ -1,7 +1,9 @@
 import 'package:avocado/shared/constants.dart';
 import 'package:avocado/shared/profile_components.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+
+import '../translation/locale_keys.g.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
    ChangePasswordScreen({Key? key}) : super(key: key);
@@ -12,29 +14,17 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NewGradientAppBar(
-          title: Text(
-            'AVOCADO',
-            style: TextStyle(
-              fontFamily: 'Nedian',
-              fontSize: 23.0,
-              color: gold,
-              fontWeight: FontWeight.bold,
-            ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Change password',
+          style: TextStyle(
+            fontFamily: 'Nedian',
+            fontSize: 20.0,
+            color: gold,
           ),
-        gradient: LinearGradient(
-            colors: [
-              Colors.black.withOpacity(0.70),
-              Colors.black.withOpacity(0.75),
-              Colors.black.withOpacity(0.60),
-              Colors.black.withOpacity(0.65),
-              Colors.black.withOpacity(0.70),
-              Colors.black.withOpacity(0.95),
-            ],
-            begin: AlignmentDirectional.topEnd,
-            end: AlignmentDirectional.bottomStart,
-            stops: const [0.15,0.15,0.15,0.15,0.15,0.60]
         ),
+        backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

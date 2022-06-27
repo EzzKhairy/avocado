@@ -2,8 +2,11 @@ import 'package:avocado/models/lawyers_model.dart';
 import 'package:avocado/modules/lawyer_cases_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../translation/locale_keys.g.dart';
 
 class LawyerInfoScreen extends StatelessWidget {
   final LawyerData lawyerData;
@@ -12,19 +15,17 @@ class LawyerInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         centerTitle: true,
         title: Text(
-          'Lawyers'.toUpperCase(),
+          LocaleKeys.totalLawyers.tr(),
           style: TextStyle(
             fontFamily: 'Nedian',
-            fontSize: 25.0,
+            fontSize: 20.0,
             color: gold,
           ),
         ),
+        backgroundColor: Colors.black,
       ),
       body: Column(
         children: [

@@ -14,7 +14,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'dart:math' as math;
 
 import '../../translation/locale_keys.g.dart';
@@ -42,35 +41,17 @@ class CaseInfoScreen extends StatelessWidget {
                 context: context,
                 conditionBuilder: (context) => state is GetLawyerProfileSuccessful || state is GetCourtDataSuccessful,
                 widgetBuilder:(context) => Scaffold(
-                    appBar: NewGradientAppBar(
-                      automaticallyImplyLeading: false,
-                      leading: IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: (){
-                            AvocadoCubit.get(context).resetSession();
-                            lawyerName = '';
-                            courtName = '';
-                            pop(context);
-                          }
-                      ),
+                    appBar: AppBar(
                       centerTitle: true,
                       title: Text(
-                        LocaleKeys.caseSummary.tr().toUpperCase(),
+                        LocaleKeys.caseSummary.tr(),
                         style: TextStyle(
                           fontFamily: 'Nedian',
-                          fontSize: 25.0,
+                          fontSize: 20.0,
                           color: gold,
                         ),
                       ),
-                      gradient: LinearGradient(
-                          colors: [
-                            Colors.black.withOpacity(0.842),
-                            Colors.black.withOpacity(0.845),
-                            Colors.black.withOpacity(0.89),
-                          ],
-                          begin: AlignmentDirectional.topEnd,
-                          end: AlignmentDirectional.bottomStart,
-                          stops: const [0.20, 0.17, 0.40]),
+                      backgroundColor: Colors.black,
                     ),
                     body: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -102,13 +83,13 @@ class CaseInfoScreen extends StatelessWidget {
                                                 color: Colors.black)),
                                         caseData.status == 'open'?
                                         TextSpan(
-                                            text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
+                                            text: LocaleKeys.inProgress.tr(),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
                                                 color: Colors.green)) :
                                         TextSpan(
-                                            text: '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
+                                            text: LocaleKeys.closed.tr(),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
@@ -142,40 +123,7 @@ class CaseInfoScreen extends StatelessWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.black),
-                              width: MediaQuery.of(context).size.width,
-                              child: Padding(
-                                padding:
-                                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      LocaleKeys.description.tr(),
-                                      style: TextStyle(
-                                        color: gold,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                                          " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
-                                          " when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                                          "when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            innerWidget(context),
                             const SizedBox(
                               height: 10,
                             ),
@@ -193,7 +141,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       imagePreview(caseData.attachments);
                                     }
                                   },
-                                  child: const Text('Attachments',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
+                                  child: Text(LocaleKeys.attachments.tr(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
                               ),
                             ),
                             Row(
@@ -228,7 +176,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       onPressed: (){
                                         navigateTo(context, RecordsScreen(caseData.id));
                                       },
-                                      child: const Text('Records')
+                                      child:  Text(LocaleKeys.records.tr())
                                   ),
                                 ),
                                 const SizedBox(width: 15,),
@@ -253,7 +201,7 @@ class CaseInfoScreen extends StatelessWidget {
                                         navigateTo(context, ExpensesScreen(caseData.id));
                                       },
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                                      child: const Text('Expenses',style: TextStyle(color: Colors.white),)
+                                      child: Text(LocaleKeys.expenses.tr(),style: const TextStyle(color: Colors.white),)
                                   ),
                                 ),
                                 const SizedBox(width: 15,),
@@ -262,7 +210,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       onPressed: (){
                                         navigateTo(context, PaymentsScreen(caseData.id));
                                       },
-                                      child: const Text('Payments')
+                                      child: Text(LocaleKeys.expenses.tr())
                                   ),
                                 ),
                               ],
@@ -280,96 +228,12 @@ class CaseInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget buildSessionItem(SessionData? sessionData,context)=> GestureDetector(
-    onTap: (){navigateTo(context, SessionInfoScreen(sessionData));},
-    child: Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      elevation: 5,
-      margin: const EdgeInsetsDirectional.all(2.5),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: SizedBox(
-        height: 160,
-        width: MediaQuery.of(context).size.width*75/100,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Role.No ${sessionData?.roleNumber}'.toUpperCase(),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 16,
-                  letterSpacing: 3,
-                ),
-              ),
-              Padding(
-                padding:  const EdgeInsets.symmetric(vertical: 5.0),
-                child: horizontalDivider(height: 1.5,hColor: Colors.grey),
-              ),
-              Text(
-                'Opened ${sessionData?.createdAt}'.split('T').elementAt(0),
-                maxLines: 1,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 10,),
-              Text(
-                '${sessionData?.presentLawyerName}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 10,),
-              Text(
-                '${sessionData?.sessionReason}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
-              const SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    '${sessionData?.sessionDate}',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '${sessionData?.nextDate}',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
 
 
   Widget buildCaseInfoScreenItem({
     required context,
     required String? title,
     required String? info,
-    bool extras = false,
-    num? animationValue
   }) =>
       Card(
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -407,12 +271,6 @@ class CaseInfoScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Spacer(),
-                  if(extras)
-                    Transform.rotate(
-                      child: const Icon(Icons.arrow_forward_ios_outlined),
-                      angle: math.pi * animationValue! / 2,
-                  ),
                 ],
               ),
             ),
@@ -421,7 +279,6 @@ class CaseInfoScreen extends StatelessWidget {
   Widget innerWidget(context) => Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: Colors.black),
-        height: 200,
         width: MediaQuery.of(context).size.width,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -429,7 +286,7 @@ class CaseInfoScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Description',
+                LocaleKeys.description.tr(),
                 style: TextStyle(
                   color: gold,
                   fontSize: 16,
@@ -437,10 +294,8 @@ class CaseInfoScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                    " Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-                    ", when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+              Text(
+                '${caseData.content}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

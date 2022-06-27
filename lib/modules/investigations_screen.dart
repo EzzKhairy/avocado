@@ -4,10 +4,12 @@ import 'package:avocado/models/investegation_model.dart';
 import 'package:avocado/modules/investigation_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+
+import '../translation/locale_keys.g.dart';
 
 class InvestigationsScreen extends StatelessWidget {
   final int? caseID;
@@ -25,25 +27,17 @@ class InvestigationsScreen extends StatelessWidget {
               context: context,
               conditionBuilder: (context) => state is GetInvestigationsDataSuccessful,
               widgetBuilder: (context) => Scaffold(
-                appBar: NewGradientAppBar(
+                appBar: AppBar(
                   centerTitle: true,
                   title: Text(
-                    'Investigations'.toUpperCase(),
+                    LocaleKeys.investigation.tr(),
                     style: TextStyle(
                       fontFamily: 'Nedian',
-                      fontSize: 25.0,
+                      fontSize: 20.0,
                       color: gold,
                     ),
                   ),
-                  gradient: LinearGradient(
-                      colors: [
-                        Colors.black.withOpacity(0.842),
-                        Colors.black.withOpacity(0.845),
-                        Colors.black.withOpacity(0.89),
-                      ],
-                      begin: AlignmentDirectional.topEnd,
-                      end: AlignmentDirectional.bottomStart,
-                      stops: const [0.20, 0.17, 0.40]),
+                  backgroundColor: Colors.black,
                 ),
                 body: SingleChildScrollView(
                   child: Padding(
@@ -110,7 +104,7 @@ class InvestigationsScreen extends StatelessWidget {
                 child: horizontalDivider(height: 1.5,hColor: Colors.grey),
               ),
               Text(
-                'Opened ${investigationData.createdAt}'.split('T').elementAt(0),
+                '${LocaleKeys.openedAt.tr()} ${investigationData.createdAt}'.split('T').elementAt(0),
                 maxLines: 1,
                 style: const TextStyle(
                   fontSize: 16,

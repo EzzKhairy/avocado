@@ -6,7 +6,6 @@ import 'package:avocado/translation/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddTaskScreen extends StatelessWidget {
   AddTaskScreen({Key? key}) : super(key: key);
@@ -173,7 +172,7 @@ class AddTaskScreen extends StatelessWidget {
                       controller: descriptionController,
                       type: TextInputType.text,
                       maxLines: 4,
-                      hintText: LocaleKeys.EnterTaskDescrepsion.tr(),
+                      hintText: LocaleKeys.EnterTaskDescription.tr(),
                     ),
                   ],
                 ),

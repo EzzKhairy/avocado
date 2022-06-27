@@ -3,10 +3,12 @@ import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/expenses_model.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+
+import '../translation/locale_keys.g.dart';
 
 class ExpensesScreen extends StatelessWidget {
   final int? caseId;
@@ -25,25 +27,17 @@ class ExpensesScreen extends StatelessWidget {
               context: context,
               conditionBuilder: (context) => state is GetExpensesDataSuccessful,
               widgetBuilder:(context) => Scaffold(
-                appBar: NewGradientAppBar(
+                appBar: AppBar(
                   centerTitle: true,
                   title: Text(
-                    'Expenses'.toUpperCase(),
+                    LocaleKeys.expenses.tr(),
                     style: TextStyle(
                       fontFamily: 'Nedian',
-                      fontSize: 25.0,
+                      fontSize: 20.0,
                       color: gold,
                     ),
                   ),
-                  gradient: LinearGradient(
-                      colors: [
-                        Colors.black.withOpacity(0.842),
-                        Colors.black.withOpacity(0.845),
-                        Colors.black.withOpacity(0.89),
-                      ],
-                      begin: AlignmentDirectional.topEnd,
-                      end: AlignmentDirectional.bottomStart,
-                      stops: const [0.20, 0.17, 0.40]),
+                  backgroundColor: Colors.black,
                 ),
                 body: Padding(
                   padding: const EdgeInsets.all(10),

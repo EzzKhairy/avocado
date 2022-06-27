@@ -5,7 +5,6 @@ import 'package:avocado/modules/change_password_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import '../shared/profile_components.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';

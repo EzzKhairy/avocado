@@ -10,12 +10,14 @@ import 'package:avocado/modules/session_info_screen.dart';
 import 'package:avocado/modules/sessions_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'dart:math' as math;
+
+import '../translation/locale_keys.g.dart';
 
 
 class RecordInfoScreen extends StatelessWidget {
@@ -35,34 +37,17 @@ class RecordInfoScreen extends StatelessWidget {
                 context: context,
                 conditionBuilder: (context) => state is GetLawyerProfileSuccessful || state is GetRecordsDataSuccessful,
                 widgetBuilder:(context) => Scaffold(
-                    appBar: NewGradientAppBar(
-                      automaticallyImplyLeading: false,
-                      leading: IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: (){
-                            AvocadoCubit.get(context).resetSession();
-                            lawyerName = '';
-                            pop(context);
-                          }
-                      ),
+                    appBar: AppBar(
                       centerTitle: true,
                       title: Text(
-                        'Record Summary'.toUpperCase(),
+                        LocaleKeys.records.tr(),
                         style: TextStyle(
                           fontFamily: 'Nedian',
-                          fontSize: 22.0,
+                          fontSize: 20.0,
                           color: gold,
                         ),
                       ),
-                      gradient: LinearGradient(
-                          colors: [
-                            Colors.black.withOpacity(0.842),
-                            Colors.black.withOpacity(0.845),
-                            Colors.black.withOpacity(0.89),
-                          ],
-                          begin: AlignmentDirectional.topEnd,
-                          end: AlignmentDirectional.bottomStart,
-                          stops: const [0.20, 0.17, 0.40]),
+                      backgroundColor: Colors.black,
                     ),
                     body: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -138,44 +123,11 @@ class RecordInfoScreen extends StatelessWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                            // if(sessionModel!=null && sessionModel.sessionData!.isNotEmpty)
-                            //     ExpansionWidget(
-                            //   titleBuilder: (double animationValue, _,
-                            //       bool isExpand, toogleFunction) {
-                            //     return InkWell(
-                            //       onTap: () => toogleFunction(animated: true),
-                            //       child: buildCaseInfoScreenItem(
-                            //           animationValue: animationValue,
-                            //           extras: true,
-                            //           context: context,
-                            //           title: 'Sessions',
-                            //           info:
-                            //               '${sessionModel.sessionData!.length}'
-                            //               ' Sessions included'),
-                            //     );
-                            //   },
-                            //   content: SizedBox(
-                            //     height: 180,
-                            //     child: ListView.separated(
-                            //         scrollDirection: Axis.horizontal,
-                            //         itemBuilder: (context, index) {
-                            //           return buildSessionItem(
-                            //               sessionModel.sessionData![index],
-                            //               context);
-                            //         },
-                            //         separatorBuilder: (context, index) =>
-                            //             const SizedBox(
-                            //               width: 10,
-                            //             ),
-                            //         itemCount:
-                            //             sessionModel.sessionData!.length),
-                            //   ),
-                            // )
                             Container(
                               width: double.infinity,
                               child: ElevatedButton(
                                   onPressed: (){},
-                                  child: Text('Attachments',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
+                                  child: Text(LocaleKeys.attachments.tr(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
                               ),
                             ),
                           ],

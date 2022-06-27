@@ -118,7 +118,26 @@ class CodegenLoader extends AssetLoader{
   "endTime": "وقت النهايه",
   "optional": "(إختياري)",
   "notFound": "غير موجود",
-  "errorhappened": "حدث خطأ ما برجاء المحاوله مره اخري"
+  "errorhappened": "حدث خطأ ما برجاء المحاوله مره اخري",
+  "phoneNumber11digits": "يجب أن يتكون رقم الهاتف من 11 رقمًا",
+  "searchCases": "بحث بعنوان القضيه",
+  "searchClients": "بحث بإسم العميل",
+  "searchLawyers": "بحث بإسم المحامي",
+  "e_name": "اسم الخبير",
+  "e_office_address": "عنوان مكتب الخبير",
+  "sessionDate": "تاريخ الجلسه",
+  "sessionReason": "سبب الجلسه",
+  "decision": "قرار الجلسه",
+  "nextDate": "تاريخ الجلسه القادمه",
+  "noE_Session": "لا يوجد جلسات خبراء",
+  "client": "العميل",
+  "contender": "المنافس",
+  "note": "ملاحظه",
+  "noInvestigations": "لا يوجد تحقيقات",
+  "noRecordIncluding": "لا يوجد محاضر",
+  "roleNumber": "ترتيب الجلسه",
+  "requirements": "متطلبات الجلسه",
+  "more": "المزيد"
 };
 static const Map<String,dynamic> en = {
   "save": "Save",
@@ -224,7 +243,26 @@ static const Map<String,dynamic> en = {
   "endTime": "End Time",
   "optional": "(Optional)",
   "notFound": "Not Found",
-  "errorhappened": "Error occurred , Please Try Again"
+  "errorhappened": "Error occurred , Please Try Again",
+  "phoneNumber11digits": "The phone Number must be 11 digits",
+  "searchCases": "Search by title",
+  "searchClients": "Search by name",
+  "searchLawyers": "Search by name",
+  "e_name": "Expert Name",
+  "e_office_address": "Expert Office Address",
+  "sessionDate": "Session Date",
+  "sessionReason": "Session Reason",
+  "decision": "Decision",
+  "nextDate": "Next Date",
+  "noE_Session": "No Expert Sessions Included",
+  "client": "Client",
+  "contender": "Contender",
+  "note": "Note",
+  "noInvestigations": "No investigations included",
+  "noRecordIncluding": "No records included",
+  "roleNumber": "Role Number",
+  "requirements": "Requirements",
+  "more": "More"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

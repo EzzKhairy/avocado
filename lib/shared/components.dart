@@ -1,6 +1,5 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/modules/login_screen.dart';
-import 'package:avocado/modules/search_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:avocado/translation/locale_keys.g.dart';

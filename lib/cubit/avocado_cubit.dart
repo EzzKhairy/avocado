@@ -703,43 +703,6 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
     });
   }
 
-  CourtModel? addCourtModel;
-
-  void AddCourtProfile({
-    required String? address,
-    required String? name,
-    String? longitude,
-    String? latitude,
-    required String phone,
-  }) {
-    emit(AddCourtDataLoading());
-    DioHelper.postData(
-      url: 'courts',
-      data: {
-        'Latitude': latitude,
-        'name': name,
-        'Longtude': longitude,
-        'address': address,
-        'phone': phone,
-      },
-
-    ).then((value) {
-      addCourtModel = CourtModel.fromJson(value.data);
-      //print(element);
-      if (kDebugMode) {
-        print(addCourtModel?.message);
-      }
-      emit(AddCourtDataSuccessful(addCourtModel!));
-    }
-    ).catchError((onError) {
-      emit(AddCourtDataError(addCourtModel!));
-      if (kDebugMode) {
-        print(addCourtModel?.message);
-        print(onError);
-      }
-    });
-  }
-
   CourtModel? getCourtModel;
 
   void getCourts() {

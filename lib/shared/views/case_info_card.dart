@@ -77,14 +77,14 @@ class CaseInfoCard extends StatelessWidget {
                     const Spacer(),
                     caseData.status == 'open'?
                     Text(
-                      '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
+                      LocaleKeys.inProgress.tr(),
                       style: const TextStyle(
                         color: Colors.green,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ):Text(
-                      '${caseData.status}'[0].toUpperCase() + '${caseData.status}'.substring(1),
+                      LocaleKeys.closed.tr(),
                       style: const TextStyle(
                         color: Colors.red,
                         fontSize: 15,
