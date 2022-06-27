@@ -1,7 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/records_model.dart';
-import 'package:avocado/modules/record_info_screen.dart';
+import 'package:avocado/modules/recordsScreens/record_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 
-import '../translation/locale_keys.g.dart';
+import '../../translation/locale_keys.g.dart';
 
 class RecordsScreen extends StatelessWidget {
   final int? caseID;

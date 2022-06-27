@@ -899,5 +899,15 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
     emit(ChangeNavBarState());
   }
 
+  final dateFormat = DateFormat('yyyy-MM-dd');
+  void init(){
+    getLawyerProfile(lawyerId);
+    getClients();
+    checkAuthorization(lawyerId);
+    getCases();
+    getCourts();
+    getTodayTasks(dateFormat.format(DateTime.now()));
+    getEveryLawyer();
+  }
 
 }

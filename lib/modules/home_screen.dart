@@ -7,7 +7,7 @@ import 'package:avocado/modules/casesScreen/case_info_screen.dart';
 import 'package:avocado/modules/casesScreen/cases_screen.dart';
 import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
-import 'package:avocado/modules/lawyer_cases_screen.dart';
+import 'package:avocado/modules/lawyerScreens/lawyer_cases_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
@@ -18,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 
 import '../translation/locale_keys.g.dart';
-import 'lawyers_screen.dart';
+import 'lawyerScreens/lawyers_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

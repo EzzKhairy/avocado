@@ -34,12 +34,15 @@ class LoginScreen extends StatelessWidget {
               if(state.model.status == 'true')
                 {
                   CacheHelper.saveData(key: 'token', value: state.model.accessToken),
-                  CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id),
-                  showToast(context: context, msg: state.model.message,backgroundColor: Colors.green),
-                  AvocadoCubit.get(context).getLawyerProfile(lawyerId),
-                  print('cached data >>>' '${CacheHelper.getData(key: 'id')}'),
-                  print(token),
-                  navigateAndKill(context, const AppLayout())
+                  CacheHelper.saveData(key: 'id', value: state.model.lawyersData?.id).then((value) async {
+                    lawyerId = await CacheHelper.getData(key: 'id');
+                    showToast(context: context, msg: state.model.message,backgroundColor: Colors.green);
+                    AvocadoCubit.get(context).init();
+                    print('cached data >>>' '${CacheHelper.getData(key: 'id')}');
+                    print(token);
+                    navigateAndKill(context, const AppLayout());
+                  })
+
                 }
               else
                 {

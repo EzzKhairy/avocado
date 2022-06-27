@@ -7,14 +7,13 @@ import 'package:avocado/cubit/app_cubit.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/login_screen.dart';
-import 'package:avocado/modules/session_info_screen.dart';
+import 'package:avocado/modules/sesssionScreens/session_info_screen.dart';
 import 'package:avocado/shared/bloc_observer.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:workmanager/workmanager.dart';
 import 'cubit/states.dart';
 import 'remoteNetwork/cache_helper.dart';
 import 'remoteNetwork/dio_helper.dart';
@@ -130,18 +129,7 @@ class MyApp extends StatelessWidget
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context)=> AppCubit()),
-        BlocProvider(
-          create: (context) => AvocadoCubit()
-            ..getLawyerProfile(lawyerId)
-            ..getClients()
-            ..checkAuthorization(lawyerId)
-            ..getCases()
-            ..getCourts()
-            ..getTodayTasks("2022-05-14")
-            ..getEveryLawyer()
-
-
-        ),
+        BlocProvider(create: (context) => AvocadoCubit()..init()),
       ],
       child: BlocConsumer<AppCubit, AvocadoStates>(
         listener: (context, state) {},

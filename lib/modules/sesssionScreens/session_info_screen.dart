@@ -3,7 +3,7 @@ import 'package:avocado/shared/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../translation/locale_keys.g.dart';
+import '../../translation/locale_keys.g.dart';
 
 class SessionInfoScreen extends StatelessWidget {
   SessionData? sessionData;

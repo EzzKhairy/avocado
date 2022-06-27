@@ -46,9 +46,6 @@ dependencies:
   google_nav_bar: ^5.0.5
   calendar_agenda: ^0.0.2+3
   url_launcher: ^6.1.0
-  expansion_widget: ^0.0.3
-  background_fetch: ^1.0.3
-  workmanager: ^0.4.1
   flutter_local_notifications: ^9.5.2
   easy_localization: ^3.0.0
   image_picker: ^0.8.5+3

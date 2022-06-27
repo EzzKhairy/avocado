@@ -1,7 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
-import 'package:avocado/models/case_model.dart';
-import 'package:avocado/modules/casesScreen/case_info_screen.dart';
+import 'package:avocado/models/investegation_model.dart';
+import 'package:avocado/modules/investigationScreens/investigation_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,28 +9,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 
-import '../translation/locale_keys.g.dart';
+import '../../translation/locale_keys.g.dart';
 
-class LawyerCasesScreen extends StatelessWidget {
-  final int? lawyerId;
-  const LawyerCasesScreen(this.lawyerId,{Key? key}) : super(key: key);
+class InvestigationsScreen extends StatelessWidget {
+  final int? caseID;
+  const InvestigationsScreen(this.caseID,{Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        AvocadoCubit.get(context).getCasesByLawyerId(lawyerId: lawyerId);
+        AvocadoCubit.get(context).getInvestigations(caseId: caseID);
         return BlocConsumer<AvocadoCubit, AvocadoStates>(
           listener: (context, state) {},
           builder: (context, state) {
-            List<CaseData>? casesData = AvocadoCubit.get(context).getLawyerCases?.casesData;
+            List<InvestigationData>? investigationData = AvocadoCubit.get(context).investigationModel?.investigationData;
             return Conditional.single(
               context: context,
-              conditionBuilder:(context) => state is GetCasesByLawyerIdDataSuccessful,
-              widgetBuilder: (context) =>  Scaffold(
+              conditionBuilder: (context) => state is GetInvestigationsDataSuccessful,
+              widgetBuilder: (context) => Scaffold(
                 appBar: AppBar(
                   centerTitle: true,
                   title: Text(
-                    LocaleKeys.totalCases.tr(),
+                    LocaleKeys.investigation.tr(),
                     style: TextStyle(
                       fontFamily: 'Nedian',
                       fontSize: 20.0,
@@ -39,29 +39,29 @@ class LawyerCasesScreen extends StatelessWidget {
                   ),
                   backgroundColor: Colors.black,
                 ),
-                body: Conditional.single(
-                    conditionBuilder: (context) => casesData?.length != null,
-                    widgetBuilder:(context)=> SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            searchBar(),
-                            const SizedBox(height: 20,),
-                            ListView.separated(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) => buildLawyerCasesItem(casesData![index],context),
-                              separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                              itemCount: casesData!.length,
-                            ),
-                          ],
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        searchBar(),
+                        const SizedBox(height: 20,),
+                        Conditional.single(
+                          context: context,
+                          conditionBuilder: (context) => investigationData!.isNotEmpty,
+                          widgetBuilder: (context) => ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) => buildInvestigationItem(investigationData![index],context),
+                            separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                            itemCount: investigationData!.length,
+                          ),
+                          fallbackBuilder: (context) => const Center(child: Text('No investigations included'),),
                         ),
-                      ),
+                      ],
                     ),
-                    context: context,
-                    fallbackBuilder: (context) => scaleProgressIndicator(context)
+                  ),
                 ),
               ),
               fallbackBuilder: (context) => scaleProgressIndicator(context),
@@ -72,9 +72,10 @@ class LawyerCasesScreen extends StatelessWidget {
     );
   }
 
-  Widget buildLawyerCasesItem(CaseData caseData, context)
+
+  Widget buildInvestigationItem(InvestigationData investigationData, context,)
   => GestureDetector(
-    onTap: (){navigateTo(context, CaseInfoScreen(caseData));},
+    onTap: (){navigateTo(context, InvestigationInfoScreen(investigationData));},
     child: Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5,
@@ -89,7 +90,7 @@ class LawyerCasesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${caseData.caseID}'.toUpperCase(),
+                '${investigationData.investigationId}'.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -103,7 +104,7 @@ class LawyerCasesScreen extends StatelessWidget {
                 child: horizontalDivider(height: 1.5,hColor: Colors.grey),
               ),
               Text(
-                '${LocaleKeys.openedAt.tr()} ${caseData.createdAt}'.split('T').elementAt(0),
+                '${LocaleKeys.openedAt.tr()} ${investigationData.createdAt}'.split('T').elementAt(0),
                 maxLines: 1,
                 style: const TextStyle(
                   fontSize: 16,
@@ -112,7 +113,7 @@ class LawyerCasesScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               Text(
-                '${caseData.clientName}',
+                '${investigationData.client}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -120,34 +121,13 @@ class LawyerCasesScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               Text(
-                '${caseData.caseType}',
+                '${investigationData.topic}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 15,
                 ),
               ),
               const SizedBox(height: 10,),
-              Row(
-                children: [
-                  const Spacer(),
-                  caseData.status == 'open'?
-                  Text(
-                    LocaleKeys.inProgress.tr(),
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ):Text(
-                    LocaleKeys.inProgress.tr(),
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ],
-              ),
             ],
           ),
         ),
