@@ -61,32 +61,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Container(
                     padding:const EdgeInsets.all(15),
                     child:  Text(LocaleKeys.Settings.tr(),style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),
-                InkWell(
-                  onTap: (){},
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children:
-                      [
-                         Icon(Icons.dark_mode_outlined,color: gold,),
-                        separator(15, 0),
-                         Text(LocaleKeys.darkMode.tr(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        const Spacer(),
-                        // Switch(
-                        //   value: value ,
-                        //   onChanged: (newValue){
-                        //     setState(() {
-                        //       value = newValue;
-                        //     });
-                        //
-                        //   },
-                       // ),
-                        separator(10,0),
-                      ],
-                    ),
-                  ),
-                ),
                 horizontalDivider(),
                 SettingsCard(cardName: LocaleKeys.language.tr(),cardIcon: Icons.flag,isLanguage: true,),
                 Container(

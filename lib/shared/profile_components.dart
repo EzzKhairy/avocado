@@ -1,4 +1,6 @@
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -8,7 +10,7 @@ Widget profileFormField({
   Function(String?)? onSubmit,
   Function(String?)? onChange,
   VoidCallback? onTap,
-  required String? Function(String?)? validate,
+  String? Function(String?)? validate,
   String? label,
   IconData ?prefix,
   bool isPassword = false,
@@ -29,7 +31,12 @@ Widget profileFormField({
   onTap: onTap,
   enabled: isEnabled,
   readOnly: readonly,
-  validator: validate,
+  validator: validate ?? (value) {
+    if(value!.isEmpty) {
+      return LocaleKeys.ThisFieldMustBeFilled.tr();
+    }
+    return null;
+  },
   cursorColor: Colors.black,
   initialValue: initialValue,
   textAlignVertical: TextAlignVertical.center,

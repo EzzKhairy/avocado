@@ -2,8 +2,12 @@ import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/modules/clientScreens/edit_client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/shared/views/info_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../../translation/locale_keys.g.dart';
 
 class ClientInfoScreen extends StatelessWidget {
   ClientsData clientsData;
@@ -14,17 +18,16 @@ class ClientInfoScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         centerTitle: true,
         title: Text(
-          'Clients',
+          LocaleKeys.clients.tr(),
           style: TextStyle(
             fontFamily: 'Nedian',
             fontSize: 25.0,
             color: gold,
           ),
         ),
+        backgroundColor: Colors.black,
       ),
       body: Column(
         children: [
@@ -37,17 +40,9 @@ class ClientInfoScreen extends StatelessWidget {
                   child: Container(
                     height: 200,
                     width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.black.withOpacity(0.842),
-                          Colors.black.withOpacity(0.845),
-                          Colors.black.withOpacity(0.89),
-                        ],
-                        begin: AlignmentDirectional.topEnd,
-                        end: AlignmentDirectional.bottomStart,
-                        stops: const [0.20, 0.17, 0.40]),
-                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(60),bottomRight: Radius.circular(60))
+                    decoration: const BoxDecoration(
+                     color: Colors.black,
+                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60),bottomRight: Radius.circular(60))
                     ),
                     ),
                   alignment: AlignmentDirectional.topCenter,
@@ -78,8 +73,10 @@ class ClientInfoScreen extends StatelessWidget {
                   backgroundColor: Colors.black,
                   child: IconButton(
                     icon: Icon(Icons.phone,color: gold,),
-                    onPressed: (){
-                      launchUrlString('tel:${'${clientsData.phone}'}');
+                    onPressed: ()async{
+                      await canLaunchUrlString('tel:${clientsData.phone}')
+                          ? launchUrlString('tel:${clientsData.phone}')
+                          : showToast(context: context, msg: LocaleKeys.errorhappened.tr());
                     },
                   ),
                 ),
@@ -88,8 +85,10 @@ class ClientInfoScreen extends StatelessWidget {
                   backgroundColor: Colors.black,
                   child: IconButton(
                     icon: Icon(Icons.message,color: gold,),
-                    onPressed: (){
-                      launchUrlString('sms:${clientsData.phone}');
+                    onPressed: ()async{
+                      await canLaunchUrlString('sms:${clientsData.phone}')
+                          ? launchUrlString('sms:${clientsData.phone}')
+                          : showToast(context: context, msg: LocaleKeys.errorhappened.tr());
                     },
                   ),
                 ),
@@ -106,83 +105,9 @@ class ClientInfoScreen extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              color: Colors.grey.shade200,
-              margin: const EdgeInsets.all(8.0),
-              elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Container(
-                height: 70,
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
-                    Text('Email',style: TextStyle(color: Colors.grey.shade500)),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text('${clientsData.email}',style: TextStyle(fontSize: 18))
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              color: Colors.grey.shade200,
-              margin: const EdgeInsets.all(8.0),
-              elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Container(
-                height: 70,
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
-                    Text('Address',style: TextStyle(color: Colors.grey.shade500,
-                    )),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text('${clientsData.address}',style: TextStyle(fontSize: 18))
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              color: Colors.grey.shade200,
-              margin: const EdgeInsets.all(8.0),
-              elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Container(
-                height: 70,
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
-                    Text('National Number',style: TextStyle(color: Colors.grey.shade500,
-                    )),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text('${clientsData.clientNationalNumber != null ? clientsData.clientNationalNumber : 'Not Found'}',style: TextStyle(fontSize: 18))
-                  ],
-                ),
-              ),
-            ),
-          ),
+          InfoCard(title: LocaleKeys.EmailAddress.tr(), body: '${clientsData.email}'),
+          InfoCard(title: LocaleKeys.address.tr(), body: '${clientsData.address}'),
+          InfoCard(title: LocaleKeys.nationalNumber.tr(), body: '${clientsData.clientNationalNumber}')
         ],
       ),
     );

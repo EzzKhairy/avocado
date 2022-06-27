@@ -2,6 +2,8 @@ import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:avocado/shared/profile_components.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -35,25 +37,17 @@ class AddTaskScreen extends StatelessWidget {
       builder: (context) {
         dateController.text = DateFormat.yMMMMd().format(DateTime.now().add(const Duration(days: 1)));
         return Scaffold(
-          appBar: NewGradientAppBar(
+          appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Add New Task',
+              LocaleKeys.addNewTask.tr(),
               style: TextStyle(
                 fontFamily: 'Nedian',
                 fontSize: 20.0,
                 color: gold,
               ),
             ),
-            gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.842),
-                  Colors.black.withOpacity(0.845),
-                  Colors.black.withOpacity(0.89),
-                ],
-                begin: AlignmentDirectional.topEnd,
-                end: AlignmentDirectional.bottomStart,
-                stops: const [0.20, 0.17, 0.40]),
+            backgroundColor: Colors.black,
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -64,21 +58,14 @@ class AddTaskScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 10,),
-                    const Text('TASK NAME',style: TextStyle( fontSize: 15,color: Colors.grey) ),
+                    Text(LocaleKeys.taskName.tr().toUpperCase(),style: const TextStyle( fontSize: 15,color: Colors.grey) ),
                     profileFormField(
                       controller: taskNameController,
                       type: TextInputType.name,
-                      validate: (value)
-                      {
-                        if(value!.isEmpty)
-                        {
-                          return 'name is required';
-                        }
-                      },
-                      hintText: 'Enter The Task Name',
+                      hintText:LocaleKeys.EnterTaskName.tr(),
                     ),
                     const SizedBox(height: 20,),
-                    const Text('DATE',style: TextStyle( fontSize: 15,color: Colors.grey) ),
+                    Text(LocaleKeys.date.tr(),style: const TextStyle( fontSize: 15,color: Colors.grey) ),
                     profileFormField(
                       controller: dateController,
                       type: TextInputType.phone,
@@ -96,14 +83,6 @@ class AddTaskScreen extends StatelessWidget {
                           return dateController.text = DateFormat.yMMMMd().format(value);
                       });
                         },
-                      validate: (value)
-                      {
-                        if(value!.isEmpty)
-                        {
-                          return 'phone is required';
-                        }
-                      },
-                      hintText: 'Enter The Task Date',
                       suffix: Icons.calendar_today_outlined,
                       suffixPressed: (){
                         showDatePicker(
@@ -123,17 +102,10 @@ class AddTaskScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('START TIME',style: TextStyle( fontSize: 15,color: Colors.grey) ),
+                        Text(LocaleKeys.startTime.tr().toUpperCase(),style: const TextStyle( fontSize: 15,color: Colors.grey) ),
                         profileFormField(
                             controller: startTimeController,
-                            hintText: 'Start Time',
-                            validate: (value )
-                            {
-                              if(value!.isEmpty)
-                              {
-                                return 'Start Time is empty';
-                              }
-                            },
+                            hintText: LocaleKeys.startTime.tr(),
                             type: TextInputType.datetime,
                             suffix: Icons.access_time_outlined,
                             onTap: (){
@@ -161,19 +133,18 @@ class AddTaskScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
-                          text: const TextSpan(
+                          text:  TextSpan(
                               children: [
-                                TextSpan(text: 'END TIME',
-                                    style: TextStyle( fontSize: 15,color: Colors.grey)
+                                TextSpan(text: LocaleKeys.endTime.tr().toUpperCase(),
+                                    style: const TextStyle( fontSize: 15,color: Colors.grey)
                                 ),
-                                TextSpan(text: ' (Optional)',
-                                    style: TextStyle( fontSize: 10,color: Colors.grey)
+                                TextSpan(text: LocaleKeys.optional.tr(),
+                                    style: const TextStyle( fontSize: 10,color: Colors.grey)
                                 ),
                         ]),),
                         profileFormField(
                             controller: endTimeController,
-                            hintText: 'End Time',
-                            validate: (value ) {},
+                            hintText: LocaleKeys.endTime.tr(),
                             type: TextInputType.text,
                             readonly: true,
                             onTap: (){
@@ -197,13 +168,12 @@ class AddTaskScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20,),
-                    const Text('DESCRIPTION',style: TextStyle( fontSize: 15,color: Colors.grey) ,),
+                     Text(LocaleKeys.description.tr().toUpperCase(),style: const TextStyle( fontSize: 15,color: Colors.grey) ,),
                     profileFormField(
                       controller: descriptionController,
                       type: TextInputType.text,
                       maxLines: 4,
-                      validate: (value) {},
-                      hintText: 'Enter The Task Description',
+                      hintText: LocaleKeys.EnterTaskDescrepsion.tr(),
                     ),
                   ],
                 ),
@@ -241,10 +211,10 @@ class AddTaskScreen extends StatelessWidget {
                                 builder:
                                     (context) => baseAlertDialog(
                                   context: context,
-                                  title: 'Discard Changes',
-                                  content: 'Are you sure you want to discard the changes?',
-                                  outlinedButtonText: 'No',
-                                  elevatedButtonText: 'Yes',
+                                  title:LocaleKeys.discardChanges.tr(),
+                                  content: LocaleKeys.sureDiscardChanges.tr(),
+                                  outlinedButtonText: LocaleKeys.no.tr(),
+                                  elevatedButtonText: LocaleKeys.yes.tr(),
                                 )
                             );
                             if (shouldPop == true)
@@ -252,7 +222,7 @@ class AddTaskScreen extends StatelessWidget {
                           }
                         }
                       },
-                      child: const Text('CANCEL',style: TextStyle(fontSize: 18))
+                      child:  Text(LocaleKeys.cancel.tr(),style: const TextStyle(fontSize: 18))
                   ),
                 ),
                 verticalDivider(height: 25,vColor: gold),
@@ -274,7 +244,7 @@ class AddTaskScreen extends StatelessWidget {
                           );
                         }
                       },
-                      child: const Text('SAVE',style: TextStyle(fontSize: 18),)
+                      child: Text(LocaleKeys.save.tr(),style: const TextStyle(fontSize: 18),)
                   ),
                 ),
               ],

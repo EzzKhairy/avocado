@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                   AvocadoCubit.get(context).getLawyerProfile(lawyerId),
                   print('cached data >>>' '${CacheHelper.getData(key: 'id')}'),
                   print(token),
-                  navigateTo(context, const AppLayout())
+                  navigateAndKill(context, const AppLayout())
                 }
               else
                 {

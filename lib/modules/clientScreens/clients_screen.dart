@@ -5,11 +5,14 @@ import 'package:avocado/modules/clientScreens/add_client_screen.dart';
 import 'package:avocado/modules/clientScreens/client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../../translation/locale_keys.g.dart';
 
 class ClientsScreen extends StatelessWidget {
    ClientsScreen({Key? key}) : super(key: key);
@@ -23,25 +26,17 @@ class ClientsScreen extends StatelessWidget {
           List<ClientsData>? clientData = AvocadoCubit.get(context).clientsModel?.clientsData;
           List<ClientsData>? searchClientData = AvocadoCubit.get(context).searchClientsModel?.clientsData ?? [];
           return Scaffold(
-          appBar: NewGradientAppBar(
+          appBar:AppBar(
             centerTitle: true,
             title: Text(
-              'Clients',
+              LocaleKeys.clients.tr(),
               style: TextStyle(
                 fontFamily: 'Nedian',
-                fontSize: 25.0,
+                fontSize: 20.0,
                 color: gold,
               ),
             ),
-            gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.842),
-                  Colors.black.withOpacity(0.845),
-                  Colors.black.withOpacity(0.89),
-                ],
-                begin: AlignmentDirectional.topEnd,
-                end: AlignmentDirectional.bottomStart,
-                stops: const [0.20, 0.17, 0.40]),
+            backgroundColor: Colors.black,
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -117,7 +112,6 @@ class ClientsScreen extends StatelessWidget {
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          height: 70,
           width: double.infinity,
           padding: const EdgeInsets.all(10),
           child: Row(
@@ -145,13 +139,15 @@ class ClientsScreen extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  Text('${clientsData.phone}')
+                  Text(clientsData.phone??LocaleKeys.notFound.tr())
                 ],
               ),
               const Spacer(),
               InkWell(
-                onTap: (){
-                  launchUrlString('tel:${clientsData.phone}');
+                onTap: ()async{
+                   await canLaunchUrlString('tel:${clientsData.phone}')
+                       ? launchUrlString('tel:${clientsData.phone}') 
+                       : showToast(context: context, msg: LocaleKeys.errorhappened.tr());
                 },
                 child: CircleAvatar(
                     backgroundColor: avatarColor,

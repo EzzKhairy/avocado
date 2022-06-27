@@ -102,7 +102,23 @@ class CodegenLoader extends AssetLoader{
   "confirmPassword": "تأكيد كلمة المرور",
   "notMatch": "كلمة المرور غير متطابقة",
   "legistilation": "التشريعات",
-  "models": "النماذج"
+  "models": "النماذج",
+  "attachments": "المستندات",
+  "inProgress": "قيد العمل",
+  "closed": "مغلقه",
+  "expenses": "مصاريف",
+  "payments": "المدفوعات",
+  "records": "محاضر",
+  "addNewTask": "اضافة مهمه جديده",
+  "taskName": "اسم المهمه",
+  "EnterTaskName": "قم بإدخال اسم المهمه",
+  "EnterTaskDescription": "قم بإدخال وصف المهمه",
+  "date": "التاريخ",
+  "startTime": "وقت البدايه",
+  "endTime": "وقت النهايه",
+  "optional": "(إختياري)",
+  "notFound": "غير موجود",
+  "errorhappened": "حدث خطأ ما برجاء المحاوله مره اخري"
 };
 static const Map<String,dynamic> en = {
   "save": "Save",
@@ -192,7 +208,23 @@ static const Map<String,dynamic> en = {
   "confirmPassword": "Confirm Password",
   "notMatch": "password doesn\\'t match",
   "legistilation": "Legislations",
-  "models": "Models"
+  "models": "Models",
+  "attachments": "Attachments",
+  "inProgress": "In Progress",
+  "closed": "Closed",
+  "expenses": "Expenses",
+  "payments": "Payments",
+  "records": "Records",
+  "addNewTask": "Add New Task",
+  "taskName": "Task Name",
+  "EnterTaskName": "Enter The Task Name",
+  "EnterTaskDescription": "Enter The Task Description",
+  "date": "Date",
+  "startTime": "Start Time",
+  "endTime": "End Time",
+  "optional": "(Optional)",
+  "notFound": "Not Found",
+  "errorhappened": "Error occurred , Please Try Again"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

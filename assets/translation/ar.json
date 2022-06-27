@@ -89,5 +89,19 @@
   "models": "النماذج",
   "attachments": "المستندات",
   "inProgress": "قيد العمل",
-  "closed": "مغلقه"
+  "closed": "مغلقه",
+  "expenses": "مصاريف",
+  "payments": "المدفوعات",
+  "records": "محاضر",
+  "addNewTask": "اضافة مهمه جديده",
+  "taskName": "اسم المهمه",
+  "EnterTaskName": "قم بإدخال اسم المهمه",
+  "EnterTaskDescription": "قم بإدخال وصف المهمه",
+  "date": "التاريخ",
+  "startTime": "وقت البدايه",
+  "endTime": "وقت النهايه",
+  "optional": "(إختياري)",
+  "notFound": "غير موجود",
+  "errorhappened": "حدث خطأ ما برجاء المحاوله مره اخري",
+  "phoneNumber11digits": "يجب أن يتكون رقم الهاتف من 11 رقمًا"
 }

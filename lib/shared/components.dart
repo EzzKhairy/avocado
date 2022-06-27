@@ -3,6 +3,8 @@ import 'package:avocado/modules/login_screen.dart';
 import 'package:avocado/modules/search_screen.dart';
 import 'package:avocado/remoteNetwork/cache_helper.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -280,7 +282,7 @@ Widget searchBar({
         fillColor: HexColor("C4C4C4"),
         disabledBorder: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
         focusedBorder: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
-        hintText: "Search",
+        hintText:LocaleKeys.search.tr(),
         hintStyle: const TextStyle(fontSize: 15,color: Colors.black),
         prefixIcon: const Icon(Icons.search,color: Colors.black,),
         contentPadding: EdgeInsets.zero
@@ -307,6 +309,7 @@ MaterialColor buildMaterialColor(Color color) {
       g + ((ds < 0 ? g : (255 - g)) * ds).round(),
       b + ((ds < 0 ? b : (255 - b)) * ds).round(),
       1,
+
     );
   });
   return MaterialColor(color.value, swatch);

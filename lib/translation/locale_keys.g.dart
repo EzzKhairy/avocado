@@ -87,6 +87,22 @@ abstract class  LocaleKeys {
   static const notMatch = 'notMatch';
   static const legistilation = 'legistilation';
   static const models = 'models';
+  static const attachments = 'attachments';
+  static const inProgress = 'inProgress';
+  static const closed = 'closed';
+  static const expenses = 'expenses';
+  static const payments = 'payments';
+  static const records = 'records';
+  static const addNewTask = 'addNewTask';
+  static const taskName = 'taskName';
+  static const EnterTaskName = 'EnterTaskName';
+  static const EnterTaskDescrepsion = 'EnterTaskDescription';
+  static const date = 'date';
+  static const startTime = 'startTime';
+  static const endTime = 'endTime';
+  static const optional = 'optional';
   static const male = 'male';
   static const female = 'female';
+  static const notFound = 'notFound';
+  static const errorhappened = 'errorhappened';
 }

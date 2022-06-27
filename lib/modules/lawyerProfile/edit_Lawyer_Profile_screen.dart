@@ -61,26 +61,17 @@ class EditLawyerProfileScreen extends StatelessWidget {
             profilePic = FileImage(pickedProfilePic);
           }
         return Scaffold(
-        appBar: NewGradientAppBar(
+        appBar:AppBar(
           centerTitle: true,
           title: Text(
             LocaleKeys.editProfile.tr(),
             style: TextStyle(
               fontFamily: 'Nedian',
-              fontSize: 25.0,
+              fontSize: 20.0,
               color: gold,
             ),
           ),
-          gradient: LinearGradient(
-              colors: [
-                Colors.black.withOpacity(0.842),
-                Colors.black.withOpacity(0.845),
-                Colors.black.withOpacity(0.89),
-              ],
-              begin: AlignmentDirectional.topEnd,
-              end: AlignmentDirectional.bottomStart,
-              stops: const [0.20,0.17,0.40]
-          ),
+          backgroundColor: Colors.black,
         ),
         body: SingleChildScrollView(
           child: Form(

@@ -5,6 +5,7 @@ import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:avocado/shared/profile_components.dart';
+import 'package:avocado/shared/views/edit_Info_card.dart';
 import 'package:avocado/translation/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -41,239 +42,49 @@ class AddClientScreen extends StatelessWidget {
       },
       builder: (context,state) {
         return Scaffold(
-          appBar: NewGradientAppBar(
+          appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'ADD CLIENT',
+              LocaleKeys.addClient.tr(),
               style: TextStyle(
                 fontFamily: 'Nedian',
-                fontSize: 25.0,
+                fontSize: 20.0,
                 color: gold,
               ),
             ),
-            gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.842),
-                  Colors.black.withOpacity(0.845),
-                  Colors.black.withOpacity(0.89),
-                ],
-                begin: AlignmentDirectional.topEnd,
-                end: AlignmentDirectional.bottomStart,
-                stops: const [0.20,0.17,0.40]
-            ),
+            backgroundColor: Colors.black,
           ),
           body: SingleChildScrollView(
             child: Form(
               key: clientFormKey,
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Card(
-                      color: Colors.grey.shade200,
-                      margin: const EdgeInsets.all(8.0),
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:[
-                            Row(
-                              children: [
-                                SizedBox(width: 5,),
-                                Icon(Icons.person,size: 15,color: gold,),
-                                SizedBox(width: 5,),
-                                Text('Name',style: TextStyle(color: Colors.grey.shade500,)),
-                              ],
-                            ),
-                            profileFormField(
-                                controller: nameController,
-                                validate: (value){
-                                  if(value!.isEmpty) {
-                                    return LocaleKeys.ThisFieldMustBeFilled.tr();
-                                  }
-                                  else if(value.compareTo(nameController.text)!=0){
-                                    AvocadoCubit.get(context).toggleIsChanged();
-                                  }
-                                },
-                                type: TextInputType.text
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                  EditInfoCard(
+                      controller: nameController,
+                      prefix: Icons.person,
+                      title: LocaleKeys.name.tr()
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Card(
-                      color: Colors.grey.shade200,
-                      margin: const EdgeInsets.all(8.0),
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:[
-                            Row(
-                              children: [
-                                SizedBox(width: 5,),
-                                Icon(Icons.phone,size: 15,color: gold,),
-                                SizedBox(width: 5,),
-                                Text(LocaleKeys.phoneNumber.tr(),style: TextStyle(color: Colors.grey.shade500,)),
-                              ],
-                            ),
-                            profileFormField(
-                                controller: phoneController,
-                                validate: (value){
-                                  if(value!.isEmpty) {
-                                    return LocaleKeys.ThisFieldMustBeFilled.tr();
-                                  }
-                                  else if(value.length != 11)
-                                  {
-                                    return 'The phone Number must be 11 digits';
-                                  }
-                                  else if(value.compareTo(phoneController.text)!=0){
-                                    AvocadoCubit.get(context).toggleIsChanged();
-                                  }
-                                },
-                                type: TextInputType.text
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                  EditInfoCard(
+                      controller: emailController,
+                      prefix: Icons.email_outlined,
+                      title: LocaleKeys.EmailAddress.tr()
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Card(
-                      color: Colors.grey.shade200,
-                      margin: const EdgeInsets.all(8.0),
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:[
-                            Row(
-                              children: [
-                                SizedBox(width: 5,),
-                                Icon(Icons.email,size: 15,color: gold,),
-                                SizedBox(width: 5,),
-                                Text(LocaleKeys.EmailAddress.tr(),style: TextStyle(color: Colors.grey.shade500,)),
-                              ],
-                            ),
-                            profileFormField(
-                                controller: emailController,
-                                validate: (value){
-                                  if(value!.isEmpty) {
-                                    return LocaleKeys.ThisFieldMustBeFilled.tr();
-                                  }
-                                  else if (value.contains('@') == false) {
-                                    return 'Email Formula is incorrect';
-                                  }
-                                  else if(value.compareTo(emailController.text)!=0){
-                                    AvocadoCubit.get(context).toggleIsChanged();
-                                  }
-                                },
-                                type: TextInputType.text
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                  EditInfoCard(
+                      controller: phoneController,
+                      prefix: Icons.phone,
+                      title: LocaleKeys.phoneNumber.tr()
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Card(
-                      color: Colors.grey.shade200,
-                      margin: const EdgeInsets.all(8.0),
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:[
-                            Row(
-                              children: [
-                                SizedBox(width: 5,),
-                                Icon(Icons.location_on,size: 15,color: gold,),
-                                SizedBox(width: 5,),
-                                Text(LocaleKeys.address.tr(),style: TextStyle(color: Colors.grey.shade500,)),
-                              ],
-                            ),
-                            profileFormField(
-                              controller: addressController,
-                              validate: (value){
-                                if(value!.isEmpty) {
-                                  return LocaleKeys.ThisFieldMustBeFilled.tr();
-                                }
-                                else if(value.compareTo(addressController.text)!=0){
-                                  AvocadoCubit.get(context).toggleIsChanged();
-                                }
-                              },
-                              type: TextInputType.text,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                  EditInfoCard(
+                      controller: addressController,
+                      prefix: Icons.location_on,
+                      title: LocaleKeys.address.tr()
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Card(
-                      color: Colors.grey.shade200,
-                      margin: const EdgeInsets.all(8.0),
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:[
-                            Row(
-                              children: [
-                                SizedBox(width: 5,),
-                                Icon(Icons.phone,size: 15,color: gold,),
-                                SizedBox(width: 5,),
-                                Text('National Number',style: TextStyle(color: Colors.grey.shade500,)),
-                              ],
-                            ),
-                            profileFormField(
-                                controller: nationalNumberController,
-                                validate: (value){
-                                  if(value!.isEmpty) {
-                                    return LocaleKeys.ThisFieldMustBeFilled.tr();
-                                  }
-                                  else if(value.length != 14)
-                                  {
-                                    return 'The National Number must be 14 digits';
-                                  }
-                                  else if(value.compareTo(phoneController.text)!=0){
-                                    AvocadoCubit.get(context).toggleIsChanged();
-                                  }
-                                },
-                                type: TextInputType.text
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                  EditInfoCard(
+                      controller: nationalNumberController,
+                      prefix: Icons.credit_card_outlined,
+                      title: LocaleKeys.nationalNumber.tr()
                   ),
-                  SizedBox(height: 60,)
+                  const SizedBox(height: 60,)
 
                 ],
               ),
@@ -309,10 +120,10 @@ class AddClientScreen extends StatelessWidget {
                               builder:
                                   (context) => baseAlertDialog(
                                 context: context,
-                                title: 'Discard Changes',
-                                content: 'Are you sure you want to discard the changes?',
-                                outlinedButtonText: 'No',
-                                elevatedButtonText: 'Yes',
+                                    title: LocaleKeys.discardChanges.tr(),
+                                    content: LocaleKeys.sureDiscardChanges.tr(),
+                                    outlinedButtonText: LocaleKeys.no.tr(),
+                                    elevatedButtonText: LocaleKeys.yes.tr(),
                               )
                           );
                           if (shouldPop == true)
@@ -324,7 +135,7 @@ class AddClientScreen extends StatelessWidget {
                         }
                       }
                     },
-                    child: Text(LocaleKeys.cancel.tr(),style: TextStyle(fontSize: 18),)
+                    child: Text(LocaleKeys.cancel.tr().toUpperCase(),style: TextStyle(fontSize: 18),)
                 ),
                 verticalDivider(height: 25,vColor: gold),
                 TextButton(
@@ -340,7 +151,7 @@ class AddClientScreen extends StatelessWidget {
                         );
                       }
                     },
-                    child: Text(LocaleKeys.save.tr(),style: TextStyle(fontSize: 18),)
+                    child: Text(LocaleKeys.save.tr().toUpperCase(),style: TextStyle(fontSize: 18),)
                 ),
               ],
             ),

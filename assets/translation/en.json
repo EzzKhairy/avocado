@@ -89,5 +89,19 @@
   "models": "Models",
   "attachments": "Attachments",
   "inProgress": "In Progress",
-  "closed": "Closed"
+  "closed": "Closed",
+  "expenses": "Expenses",
+  "payments": "Payments",
+  "records": "Records",
+  "addNewTask": "Add New Task",
+  "taskName": "Task Name",
+  "EnterTaskName": "Enter The Task Name",
+  "EnterTaskDescription": "Enter The Task Description",
+  "date": "Date",
+  "startTime": "Start Time",
+  "endTime": "End Time",
+  "optional": "(Optional)",
+  "notFound": "Not Found",
+  "errorhappened": "Error occurred , Please Try Again",
+  "phoneNumber11digits": "The phone Number must be 11 digits"
 }

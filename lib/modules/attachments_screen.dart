@@ -20,7 +20,7 @@ class PDFViewerScreen extends StatelessWidget {
           print(doc);
           return Scaffold(
               appBar: AppBar(
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.black,
                 elevation: 0,
                 centerTitle: true,
                 title: Text(
