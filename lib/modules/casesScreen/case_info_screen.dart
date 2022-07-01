@@ -35,8 +35,8 @@ class CaseInfoScreen extends StatelessWidget {
         return BlocConsumer<AvocadoCubit, AvocadoStates>(
           listener: (context, state) {},
           builder: (context, state) {
-           lawyerName = AvocadoCubit.get(context).getLawyerModel?.data![0].name ?? 'Not Found';
-           courtName = AvocadoCubit.get(context).getCourtByIdModel?.courtData![0].name ?? 'Not Found';
+           lawyerName = AvocadoCubit.get(context).getLawyerModel?.data![0].name ?? LocaleKeys.notFound.tr();
+           courtName = AvocadoCubit.get(context).getCourtByIdModel?.courtData![0].name ?? LocaleKeys.notFound.tr();
             return Conditional.single(
                 context: context,
                 conditionBuilder: (context) => state is GetLawyerProfileSuccessful || state is GetCourtDataSuccessful,

@@ -31,7 +31,7 @@ class RecordInfoScreen extends StatelessWidget {
         return BlocConsumer<AvocadoCubit, AvocadoStates>(
           listener: (context, state) {},
           builder: (context, state) {
-           lawyerName = AvocadoCubit.get(context).getLawyerModel?.data![0].name ?? 'Not Found';
+           lawyerName = AvocadoCubit.get(context).getLawyerModel?.data![0].name ?? LocaleKeys.notFound.tr();
             return Conditional.single(
                 context: context,
                 conditionBuilder: (context) => state is GetLawyerProfileSuccessful || state is GetRecordsDataSuccessful,
@@ -60,7 +60,7 @@ class RecordInfoScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Record: ''${recordsData.recordId?.toUpperCase()}',
+                                    '${recordsData.recordId?.toUpperCase()}',
                                     style: const TextStyle(
                                         letterSpacing: 2,
                                         fontWeight: FontWeight.bold, fontSize: 20),
@@ -76,23 +76,23 @@ class RecordInfoScreen extends StatelessWidget {
                             ),
                             buildRecordInfoScreenItem(
                                 context: context,
-                                title: 'Topic',
+                                title: LocaleKeys.title.tr(),
                                 info: '${recordsData.topic}'),
                             const SizedBox(
                               height: 10,
                             ),
                             buildRecordInfoScreenItem(
-                                context: context, title: 'Client', info: '${recordsData.clientName}'),
+                                context: context, title: LocaleKeys.client.tr(), info: '${recordsData.clientName}'),
                             const SizedBox(
                               height: 10,
                             ),
                             buildRecordInfoScreenItem(
-                                context: context, title: 'Lawyer', info: '${lawyerName}'),
+                                context: context, title: LocaleKeys.lawyer.tr(), info: '${lawyerName}'),
                             const SizedBox(
                               height: 10,
                             ),
                             buildRecordInfoScreenItem(
-                                context: context, title: 'Contender', info: '${recordsData.contender}'),
+                                context: context, title: LocaleKeys.contender.tr(), info: '${recordsData.contender}'),
                             const SizedBox(height: 10),
                             Container(
                               decoration: BoxDecoration(
@@ -106,7 +106,7 @@ class RecordInfoScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Note'.toUpperCase(),
+                                      LocaleKeys.note.tr().toUpperCase(),
                                       style: TextStyle(
                                         color: gold,
                                         fontSize: 16,

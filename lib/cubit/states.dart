@@ -2,7 +2,9 @@ import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/court_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
+import 'package:avocado/models/legislation_model.dart';
 import 'package:avocado/models/login_model.dart';
+import 'package:avocado/models/models_model.dart';
 import 'package:avocado/models/records_model.dart';
 import 'package:avocado/models/tasks_model.dart';
 
@@ -137,6 +139,30 @@ class GetCourtDataError extends AvocadoStates{
   final CourtModel model;
   GetCourtDataError(this.model);
 }
+
+class GetLegislationsLoading extends AvocadoStates{}
+class GetLegislationsSuccessful extends AvocadoStates{
+  final LegislationModel model;
+  GetLegislationsSuccessful(this.model);
+}
+class GetLegislationsError extends AvocadoStates{
+  final LegislationModel model;
+  GetLegislationsError(this.model);
+}
+
+class GetModelsLoading extends AvocadoStates{}
+class GetModelsSuccessful extends AvocadoStates{
+  final ModelsModel model;
+  GetModelsSuccessful(this.model);
+}
+class GetModelsError extends AvocadoStates{
+  final ModelsModel model;
+  GetModelsError(this.model);
+}
+
+class SearchCourtsLoading extends AvocadoStates{}
+class SearchCourtsSuccessful extends AvocadoStates{}
+class SearchCourtError extends AvocadoStates{}
 
 class GetExpensesDataLoading extends AvocadoStates{}
 class GetExpensesDataSuccessful extends AvocadoStates{}

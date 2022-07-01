@@ -40,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                     AvocadoCubit.get(context).init();
                     print('cached data >>>' '${CacheHelper.getData(key: 'id')}');
                     print(token);
-                    navigateAndKill(context, const AppLayout());
+                    navigateAndKill(context,  AppLayout(index: 0,));
                   })
 
                 }

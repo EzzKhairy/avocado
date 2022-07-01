@@ -1,10 +1,12 @@
-import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/court_model.dart';
-import 'package:avocado/modules/clientScreens/edit_client_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/shared/views/info_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../../translation/locale_keys.g.dart';
 
 class CourtInfoScreen extends StatelessWidget {
   CourtData courtData;
@@ -19,7 +21,7 @@ class CourtInfoScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Clients',
+          LocaleKeys.courts.tr(),
           style: TextStyle(
             fontFamily: 'Nedian',
             fontSize: 25.0,
@@ -30,25 +32,17 @@ class CourtInfoScreen extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: 250,
+            height: 150,
             child: Stack(
               alignment: AlignmentDirectional.bottomCenter,
               children: [
                 Align(
                   child: Container(
-                    height: 200,
+                    height: 100,
                     width: double.infinity,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [
-                              Colors.black.withOpacity(0.842),
-                              Colors.black.withOpacity(0.845),
-                              Colors.black.withOpacity(0.89),
-                            ],
-                            begin: AlignmentDirectional.topEnd,
-                            end: AlignmentDirectional.bottomStart,
-                            stops: const [0.20, 0.17, 0.40]),
-                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(60),bottomRight: Radius.circular(60))
+                    decoration: const BoxDecoration(
+                       color: Colors.black,
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60),bottomRight: Radius.circular(60))
                     ),
                   ),
                   alignment: AlignmentDirectional.topCenter,
@@ -101,10 +95,10 @@ class CourtInfoScreen extends StatelessWidget {
                     icon: Icon(Icons.location_on_rounded,color: gold,),
                     onPressed: (){
                       if(courtData.longitude != null && courtData.latitude != null) {
-                        viewLocation(courtData.longitude, courtData.latitude);
+                        openMap(longitude: courtData.longitude,latitude:  courtData.latitude);
                       }
                       else{
-                        showToast(context: context, msg: 'Coordinates are not available');
+                        showToast(context: context, msg: LocaleKeys.coordinatesNotAvailable.tr(),);
                       }
                     },
                   ),
@@ -112,82 +106,7 @@ class CourtInfoScreen extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              color: Colors.grey.shade200,
-              margin: const EdgeInsets.all(8.0),
-              elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
-                    Text('Email',style: TextStyle(color: Colors.grey.shade500)),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text('${courtData.address}',style: TextStyle(fontSize: 18))
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              color: Colors.grey.shade200,
-              margin: const EdgeInsets.all(8.0),
-              elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
-                    Text('Address',style: TextStyle(color: Colors.grey.shade500,
-                    )),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text('${courtData.address}',style: TextStyle(fontSize: 18))
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              color: Colors.grey.shade200,
-              margin: const EdgeInsets.all(8.0),
-              elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
-                    Text('National Number',style: TextStyle(color: Colors.grey.shade500,
-                    )),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text('${courtData.address}',style: TextStyle(fontSize: 18))
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-
+          InfoCard(title: LocaleKeys.address.tr(), body: courtData.address??LocaleKeys.notFound.tr()),
         ],
       ),
     );

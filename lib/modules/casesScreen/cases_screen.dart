@@ -43,17 +43,17 @@ class CasesScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    searchBar(
-                        controller: searchController,
-                        onChange: (value){
-                          if(value.isNotEmpty) {
-                            AvocadoCubit.get(context).searchCases(keyword: value);
+                      searchBar(
+                          controller: searchController,
+                          onChange: (value){
+                            if(value.isNotEmpty) {
+                              AvocadoCubit.get(context).searchCases(keyword: value);
+                            }
+                            else{
+                              AvocadoCubit.get(context).getCases();
+                            }
                           }
-                          else{
-                            AvocadoCubit.get(context).getCases();
-                          }
-                        }
-                    ),
+                      ),
                     const SizedBox(height: 20,),
                     searchcasesData.isEmpty ?
                     ListView.separated(

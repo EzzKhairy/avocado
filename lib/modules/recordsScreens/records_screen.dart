@@ -45,7 +45,7 @@ class RecordsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        searchBar(),
+                        searchBar(controller: null),
                         const SizedBox(height: 20,),
                         Conditional.single(
                           context: context,
@@ -57,9 +57,9 @@ class RecordsScreen extends StatelessWidget {
                             separatorBuilder: (context, index) => const SizedBox(height: 10,),
                             itemCount: recordsData!.length,
                           ),
-                          fallbackBuilder: (context) => const Center(child: Text(
-                            'No records included',
-                            style: TextStyle(
+                          fallbackBuilder: (context) =>  Center(child: Text(
+                            LocaleKeys.noRecordIncluding.tr(),
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),

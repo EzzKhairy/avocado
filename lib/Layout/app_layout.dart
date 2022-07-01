@@ -14,19 +14,21 @@ import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 
 class AppLayout extends StatefulWidget {
-  const AppLayout({Key? key}) : super(key: key);
+  int? index;
+  AppLayout({this.index,Key? key}) : super(key: key);
   @override
   State<AppLayout> createState() => _AppLayoutState();
 }
 
 
 class _AppLayoutState extends State<AppLayout> {
-
+  int? initialIndex;
   @override
   void initState() {
-
+    initialIndex = widget.index;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
@@ -36,7 +38,7 @@ class _AppLayoutState extends State<AppLayout> {
           return Conditional.single(
             context: context,
             conditionBuilder: (context)=>
-            (AvocadoCubit.get(context).caseModel != null) && AvocadoCubit.get(context).lawyerData != null
+            AvocadoCubit.get(context).caseModel != null && AvocadoCubit.get(context).lawyerData != null
                 && AvocadoCubit.get(context).clientsModel != null && AvocadoCubit.get(context).getCourtModel != null
             && AvocadoCubit.get(context).getTasksModel != null && AvocadoCubit.get(context).getLawyers != null,
             widgetBuilder:(context)=> ScaffoldGradientBackground(
@@ -68,7 +70,7 @@ class _AppLayoutState extends State<AppLayout> {
                     tabBackgroundColor: Colors.black,
                     color: HexColor('ADADAD'),
                     gap: 5,
-                    selectedIndex: AvocadoCubit.get(context).currentIndex,
+                    selectedIndex:AvocadoCubit.get(context).currentIndex,
                     onTabChange: (index){
                       AvocadoCubit.get(context).changeBottomNav(index);
                     },
@@ -89,7 +91,7 @@ class _AppLayoutState extends State<AppLayout> {
                         ),
                         GButton(
                           icon: Icons.menu,
-                          text: 'More',
+                          text: LocaleKeys.more.tr(),
                         )
                       ]
                   ),

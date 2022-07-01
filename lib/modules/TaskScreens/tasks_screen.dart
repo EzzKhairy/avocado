@@ -3,7 +3,9 @@ import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
 import 'package:calendar_agenda/calendar_agenda.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,7 +83,7 @@ class TasksScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.toc,size: 80,color: Colors.grey.shade400,textDirection: Directionality.of(context)),
-                            Text('No Tasks found \n for Today',style: TextStyle(color: Colors.grey.shade500),textAlign: TextAlign.center,)
+                            Text(LocaleKeys.noTasks.tr(),style: TextStyle(color: Colors.grey.shade500),textAlign: TextAlign.center,)
                           ],
                         ),
                       ))

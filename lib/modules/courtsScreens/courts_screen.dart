@@ -15,14 +15,15 @@ import '../../translation/locale_keys.g.dart';
 import 'court_info_screen.dart';
 
 class CourtsScreen extends StatelessWidget {
-  const CourtsScreen({Key? key}) : super(key: key);
-
+   CourtsScreen({Key? key}) : super(key: key);
+var searchController  = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
       listener: (context,state){},
       builder: (context,state) {
         List<CourtData>? courtData = AvocadoCubit.get(context).getCourtModel?.courtData;
+        List<CourtData>? searchedCourtData = AvocadoCubit.get(context).searchCourtModel?.courtData ?? [];
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -41,10 +42,35 @@ class CourtsScreen extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
-                  searchBar(context: context),
+                  searchBar(
+                      controller: searchController,
+                      onChange: (value){
+                        if(value.isNotEmpty) {
+                          AvocadoCubit.get(context).searchCourts(value);
+                        }
+                        else{
+                          AvocadoCubit.get(context).getCourts();
+                        }
+                      }
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
+                  searchedCourtData.isNotEmpty?
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context,index) {
+                      if(index % 2 == 0) {
+                        return clientBuilder(searchedCourtData[index],grey, Colors.black,context);
+                      } else {
+                        return clientBuilder(searchedCourtData[index],Colors.black, gold,context);
+                      }
+                    } ,
+                    separatorBuilder: (context,index) =>const SizedBox(height: 10,),
+                    itemCount: searchedCourtData.length,
+                  )
+                      :
                   ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -111,10 +137,10 @@ class CourtsScreen extends StatelessWidget {
               InkWell(
                 onTap: (){
                   if(courtData.longitude != null && courtData.latitude != null) {
-                    Location(courtData.longitude,courtData.latitude);
+                    openMap(longitude: courtData.longitude,latitude:  courtData.latitude);
                   }
                   else{
-                    showToast(context: context, msg: 'Coordinates are not available');
+                    showToast(context: context, msg: LocaleKeys.coordinatesNotAvailable.tr(),);
                   }
                 },
                 child: CircleAvatar(

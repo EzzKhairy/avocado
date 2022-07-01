@@ -9,11 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 
+import '../../shared/views/case_info_card.dart';
 import '../../translation/locale_keys.g.dart';
 
 class LawyerCasesScreen extends StatelessWidget {
   final int? lawyerId;
-  const LawyerCasesScreen(this.lawyerId,{Key? key}) : super(key: key);
+  LawyerCasesScreen(this.lawyerId,{Key? key}) : super(key: key);
+  var searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -23,6 +26,8 @@ class LawyerCasesScreen extends StatelessWidget {
           listener: (context, state) {},
           builder: (context, state) {
             List<CaseData>? casesData = AvocadoCubit.get(context).getLawyerCases?.casesData;
+            List<CaseData>? searchCasesData = AvocadoCubit.get(context).searchCaseModel?.casesData ?? [];
+
             return Conditional.single(
               context: context,
               conditionBuilder:(context) => state is GetCasesByLawyerIdDataSuccessful,
@@ -47,15 +52,34 @@ class LawyerCasesScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            searchBar(),
+                            searchBar(
+                                controller: searchController,
+                                onChange: (value){
+                                  if(value.isNotEmpty) {
+                                    AvocadoCubit.get(context).searchCases(keyword: value);
+                                  }
+                                  else{
+                                    AvocadoCubit.get(context).getCases();
+                                  }
+                                }
+                            ),
                             const SizedBox(height: 20,),
+                            searchCasesData.isEmpty ?
                             ListView.separated(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) => buildLawyerCasesItem(casesData![index],context),
+                              itemBuilder: (context, index) {
+                                return CaseInfoCard(casesData![index],width: double.infinity);},
                               separatorBuilder: (context, index) => const SizedBox(height: 10,),
                               itemCount: casesData!.length,
-                            ),
+                            ):
+                            ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return CaseInfoCard(searchCasesData[index],width: double.infinity);},
+                              separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                              itemCount: searchCasesData.length,)
                           ],
                         ),
                       ),
@@ -81,7 +105,6 @@ class LawyerCasesScreen extends StatelessWidget {
       margin: const EdgeInsetsDirectional.all(2.5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
-        height: 160,
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(12.0),

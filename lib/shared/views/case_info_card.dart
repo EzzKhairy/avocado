@@ -50,6 +50,7 @@ class CaseInfoCard extends StatelessWidget {
                 Text(
                   '${LocaleKeys.openedAt.tr()} ' ' ${caseData.createdAt}'.split('T').elementAt(0),
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
@@ -58,6 +59,8 @@ class CaseInfoCard extends StatelessWidget {
                 const SizedBox(height: 4.5,),
                 Text(
                   '${caseData.clientName}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
@@ -66,6 +69,8 @@ class CaseInfoCard extends StatelessWidget {
                 const SizedBox(height: 10,),
                 Text(
                   '${caseData.caseType}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 15,

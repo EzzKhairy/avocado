@@ -11,6 +11,8 @@ import 'package:avocado/models/expert_session_model.dart';
 import 'package:avocado/models/investegation_model.dart';
 import 'package:avocado/models/investigation_places_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
+import 'package:avocado/models/legislation_model.dart';
+import 'package:avocado/models/models_model.dart';
 import 'package:avocado/models/payments_model.dart';
 import 'package:avocado/models/records_model.dart';
 import 'package:avocado/models/session_model.dart';
@@ -27,6 +29,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -37,35 +40,6 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
 
   static AvocadoCubit get(context) => BlocProvider.of(context);
 
-  static var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  Future ScheduleNotification({
-    required DateTime taskDate,
-    required String body,
-    required String title
-  }) async {
-    AndroidNotificationDetails androidNotificationDetails =
-    AndroidNotificationDetails(
-      '${Random().nextInt(400)}',
-      'tasks',
-      playSound: true,
-      enableVibration: true,
-      priority: Priority.high,
-    );
-    var platformChannelSpecifies = NotificationDetails(
-        android: androidNotificationDetails
-    );
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        Random().nextInt(200),
-        title.toString(),
-        body,
-        tz.TZDateTime.from(taskDate, tz.local),
-        platformChannelSpecifies,
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation
-            .absoluteTime
-    );
-  }
 
 
   LawyersModel? getLawyerModel;
@@ -749,6 +723,76 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
     });
   }
 
+  LegislationModel? legislationModel;
+
+  void getLegislations() {
+    emit(GetLegislationsLoading());
+    DioHelper.getData(
+      url: 'legislations',
+    ).then((value) {
+      legislationModel = LegislationModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(legislationModel?.message);
+      }
+      emit(GetLegislationsSuccessful(legislationModel!));
+    }
+    ).catchError((onError) {
+      emit(GetLegislationsError(legislationModel!));
+      if (kDebugMode) {
+        print(legislationModel?.message);
+        print(onError);
+      }
+    });
+  }
+
+  ModelsModel? modelsModel;
+
+  void getModels() {
+    emit(GetModelsLoading());
+    DioHelper.getData(
+      url: 'models',
+    ).then((value) {
+      modelsModel = ModelsModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print(modelsModel?.message);
+      }
+      emit(GetModelsSuccessful(modelsModel!));
+    }
+    ).catchError((onError) {
+      emit(GetModelsError(modelsModel!));
+      if (kDebugMode) {
+        print(modelsModel?.message);
+        print(onError);
+      }
+    });
+  }
+
+  CourtModel? searchCourtModel;
+
+  void searchCourts(String keyWord) {
+    emit(SearchCourtsLoading());
+    DioHelper.getData(
+      url: 'courts_search/$keyWord',
+    ).then((value) {
+      searchCourtModel = CourtModel.fromJson(value.data);
+      //print(element);
+      if (kDebugMode) {
+        print('Searched >> ' '${searchCourtModel?.courtData![0].name}');
+      }
+      emit(SearchCourtsSuccessful());
+    }
+    ).catchError((onError) {
+      emit(SearchCourtError());
+      if (kDebugMode) {
+        print(lawyerData?.data![0].email);
+        print(onError);
+      }
+    });
+  }
+
+
   TasksModel? AddTasksModel;
 
   void addNewTask({
@@ -766,7 +810,8 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
           'Date': date,
           'StartTime': startTime,
           'EndTime': endTime,
-          'Description': description
+          'Description': description,
+          'Lawyer_id': lawyerId,
         }).then((value) {
       AddTasksModel = TasksModel.fromJson(value.data);
       print(AddTasksModel!.message);

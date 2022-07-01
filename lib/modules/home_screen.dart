@@ -1,3 +1,4 @@
+import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
@@ -62,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           buildHomeCard(
-                            function: (){navigateTo(context,const TasksScreen());},
+                            function: (){navigateTo(context,AppLayout(index: 1,));},
                             title: LocaleKeys.totalTasks.tr(),
                             icon: Icons.assignment_turned_in_rounded,
                             number: 15,
@@ -70,11 +71,11 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(width: 10,),
                           buildHomeCard(
                             function: (){
-                              if(AvocadoCubit.get(context).isAdmin) {
-                                navigateTo(context, const LawyersScreen());
+                              if(AvocadoCubit.get(context).isAdmin == false) {
+                                navigateTo(context, LawyersScreen());
                               }
                               else{
-                                showToast(context: context, msg: 'Not Authurized');
+                                showToast(context: context, msg: LocaleKeys.notAuthorized.tr());
                               }
                             },
                             title: LocaleKeys.totalLawyers.tr(),
@@ -87,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                       buildTaskHomeItem(context,AvocadoCubit.get(context).getTasksModel),
                       const SizedBox(height: 15,),
                       Container(
-                        height: 190,
+                        height: 200,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => CaseInfoCard(casesData[index],width: MediaQuery.of(context).size.width*.70),

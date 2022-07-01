@@ -121,5 +121,13 @@
   "noRecordIncluding": "No records included",
   "roleNumber": "Role Number",
   "requirements": "Requirements",
-  "more": "More"
+  "more": "More",
+  "coordinatesNotAvailable": "Coordinates are not available",
+  "noLegislations": "No Legislations included",
+  "noModels": "No Models included",
+  "noSessions": "No Sessions included",
+  "noExpenses": "No Expenses included",
+  "noPayments": "No Payments included",
+  "notAuthorized": "Not Authorized",
+  "created": "Created"
 }

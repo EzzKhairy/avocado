@@ -44,7 +44,7 @@ class ExpertSessionScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      searchBar(),
+                      searchBar(controller: null),
                       const SizedBox(height: 20,),
                       Conditional.single(
                         context: context,
@@ -56,9 +56,9 @@ class ExpertSessionScreen extends StatelessWidget {
                           separatorBuilder: (context, index) => const SizedBox(height: 10,),
                           itemCount: expertSessionData!.length,
                         ),
-                        fallbackBuilder: (context) => const Center(child: Text(
-                          'No Expert Sessions Included',
-                          style: TextStyle(
+                        fallbackBuilder: (context) => Center(child: Text(
+                          LocaleKeys.noE_Session.tr(),
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),

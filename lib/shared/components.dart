@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -177,12 +178,7 @@ throw 'Could not launch ${uri.toString()}';
 }
 
 Future<void> openMap({required double latitude, required double longitude}) async {
-  String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-  if (await canLaunchUrlString(googleUrl)) {
-    await launchUrlString(googleUrl);
-  } else {
-    throw 'Could not open the map.';
-  }
+  MapsLauncher.launchCoordinates(latitude, longitude);
 }
 
 Widget horizontalDivider({
@@ -262,7 +258,7 @@ Future launchUrl(url) async {
 
 Widget searchBar({
   context,
-  var controller,
+  required TextEditingController? controller,
   bool readOnly = false,
   double height = 40,
   double width = double.infinity,

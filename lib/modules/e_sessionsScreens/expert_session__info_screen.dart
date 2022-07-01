@@ -29,19 +29,19 @@ class ExpertSessionInfoScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child : Column(
           children : [
-            buildSessionInfoScreenItem(context: context, title: 'Expert Name', info: '${expertSessionData.expertName}'),
+            buildSessionInfoScreenItem(context: context, title: LocaleKeys.e_name.tr(), info: '${expertSessionData.expertName}'),
             const SizedBox(height: 10),
-            buildSessionInfoScreenItem(context: context, title: 'Expert Office Address', info: '${expertSessionData.officeAddress}'),
+            buildSessionInfoScreenItem(context: context, title:LocaleKeys.e_office_address.tr(), info: '${expertSessionData.officeAddress}'),
             const SizedBox(height: 10),
-            buildSessionInfoScreenItem(context: context, title: 'Session Date', info: '${expertSessionData.sessionDate}'),
+            buildSessionInfoScreenItem(context: context, title: LocaleKeys.sessionDate.tr(), info: '${expertSessionData.sessionDate}'),
             const SizedBox(height: 10),
-            buildSessionInfoScreenItem(context: context, title: 'Session Reason', info: '${expertSessionData.sessionReason}'),
+            buildSessionInfoScreenItem(context: context, title:LocaleKeys.sessionReason.tr(), info: '${expertSessionData.sessionReason}'),
             const SizedBox(height: 10),
-            buildSessionInfoScreenItem(context: context, title: 'Lawyer Name', info: '${expertSessionData.presentLawyerName}'),
+            buildSessionInfoScreenItem(context: context, title: LocaleKeys.lawyer.tr(), info: '${expertSessionData.presentLawyerName}'),
             const SizedBox(height: 10),
-            buildSessionInfoScreenItem(context: context, title: 'Decision', info: '${expertSessionData.decision}'),
+            buildSessionInfoScreenItem(context: context, title: LocaleKeys.decision.tr(), info: '${expertSessionData.decision}'),
             const SizedBox(height: 10),
-            buildSessionInfoScreenItem(context: context, title: 'Next Date', info: '${expertSessionData.nextDate}')
+            buildSessionInfoScreenItem(context: context, title: LocaleKeys.nextDate.tr(), info: '${expertSessionData.nextDate}')
           ],
         ),
       ),

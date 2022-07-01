@@ -122,7 +122,14 @@ abstract class  LocaleKeys {
   static const roleNumber = 'roleNumber';
   static const requirements = 'requirements';
   static const more = 'more';
+  static const coordinatesNotAvailable = 'coordinatesNotAvailable';
+  static const noLegislations = 'noLegislations';
+  static const noModels = 'noModels';
+  static const noSessions = 'noSessions';
+  static const noExpenses = 'noExpenses';
+  static const noPayments = 'noPayments';
+  static const notAuthorized = 'notAuthorized';
+  static const created = 'created';
   static const male = 'male';
   static const female = 'female';
-
 }

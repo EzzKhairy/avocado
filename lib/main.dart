@@ -78,7 +78,7 @@ void main()async
 
   if(token != null)
     {
-      widget = const AppLayout();
+      widget = AppLayout(index: 0,);
     }
   else
     {

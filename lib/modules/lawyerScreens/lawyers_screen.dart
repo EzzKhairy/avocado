@@ -13,13 +13,17 @@ import 'package:url_launcher/url_launcher_string.dart';
 import '../../translation/locale_keys.g.dart';
 
 class LawyersScreen extends StatelessWidget {
-  const LawyersScreen({Key? key}) : super(key: key);
+  LawyersScreen({Key? key}) : super(key: key);
+  var searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
       listener: (context,state){},
       builder: (context,state) {
               List<LawyerData>? lawyerData = AvocadoCubit.get(context).getLawyers!.data;
+              List<LawyerData>? searchLawyerData = AvocadoCubit.get(context).searchLawyersModel?.data ?? [];
+
               return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
@@ -27,7 +31,7 @@ class LawyersScreen extends StatelessWidget {
                   LocaleKeys.totalLawyers.tr(),
                   style: TextStyle(
                     fontFamily: 'Nedian',
-                    fontSize: 20.0,
+                    fontSize: 25.0,
                     color: gold,
                   ),
                 ),
@@ -39,12 +43,33 @@ class LawyersScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         searchBar(
+                          controller:searchController ,
                           onChange: (value){
+                            if(value.isNotEmpty) {
+                              AvocadoCubit.get(context).searchLawyers(keyword: value);
+                            }
+                            else{
+                              AvocadoCubit.get(context).getEveryLawyer();
+                            }
                           }
                         ),
                         const SizedBox(
                           height: 15,
                         ),
+                        searchLawyerData.isNotEmpty ?
+                        ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context,index) {
+                            if(index % 2 == 0) {
+                              return lawyerBuilder(searchLawyerData[index],grey, Colors.black,context);
+                            } else {
+                              return lawyerBuilder(searchLawyerData[index],Colors.black, gold,context);
+                            }
+                          },
+                          separatorBuilder: (context,index) =>const SizedBox(height: 10,),
+                          itemCount: lawyerData!.length,
+                        ):
                         ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,

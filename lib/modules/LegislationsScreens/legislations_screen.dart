@@ -1,6 +1,7 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/session_model.dart';
+import 'package:avocado/modules/LegislationsScreens/legislations_info_screen.dart';
 import 'package:avocado/modules/sesssionScreens/session_info_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
@@ -9,29 +10,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 
+import '../../models/legislation_model.dart';
 import '../../translation/locale_keys.g.dart';
 
-class SessionsScreen extends StatelessWidget {
-  final int? caseId;
-  const SessionsScreen(this.caseId,{Key? key}) : super(key: key);
+class LegislationsScreen extends StatelessWidget {
+  const LegislationsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        AvocadoCubit.get(context).getSessions(caseId: caseId);
+        AvocadoCubit.get(context).getLegislations();
         return BlocConsumer<AvocadoCubit,AvocadoStates>(
           listener: (context,state){},
           builder: (context,state) {
-            List<SessionData>? sessionData = AvocadoCubit.get(context).sessionModel?.sessionData;
+            List<LegislationsData>? legislationData = AvocadoCubit.get(context).legislationModel?.data;
             return Conditional.single(
               context: context,
-              conditionBuilder: (context) => state is GetSessionsDataSuccessful,
+              conditionBuilder: (context) => state is GetLegislationsSuccessful,
               widgetBuilder:(context) => Scaffold(
                 appBar:AppBar(
                   centerTitle: true,
                   title: Text(
-                    LocaleKeys.sessions.tr(),
+                    LocaleKeys.legistilation.tr(),
                     style: TextStyle(
                       fontFamily: 'Nedian',
                       fontSize: 23.0,
@@ -49,16 +50,16 @@ class SessionsScreen extends StatelessWidget {
                       const SizedBox(height: 15,),
                       Conditional.single(
                       context: context,
-                      conditionBuilder: (context)=> sessionData!.isNotEmpty,
+                      conditionBuilder: (context)=> legislationData!.isNotEmpty,
                       widgetBuilder:(context) => ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) => buildSessionItem(sessionData![index],context),
+                        itemBuilder: (context, index) => buildSessionItem(legislationData![index],context),
                         separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                        itemCount: sessionData!.length,
+                        itemCount: legislationData!.length,
                       ),
                       fallbackBuilder: (context) => Center(child: Text(
-                        LocaleKeys.noSessions.tr(),
+                        LocaleKeys.noLegislations.tr(),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -79,8 +80,8 @@ class SessionsScreen extends StatelessWidget {
   }
 
 
-  Widget buildSessionItem(SessionData? sessionData,context)=> GestureDetector(
-    onTap: (){navigateTo(context, SessionInfoScreen(sessionData));},
+  Widget buildSessionItem(LegislationsData? legislationsData,context)=> GestureDetector(
+    onTap: (){navigateTo(context, LegislationsInfoScreen(legislationsData?.attachment));},
     child: Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5,
@@ -94,7 +95,7 @@ class SessionsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${LocaleKeys.roleNumber.tr()} '' ${sessionData?.roleNumber}'.toUpperCase(),
+                '${legislationsData?.name}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -108,51 +109,12 @@ class SessionsScreen extends StatelessWidget {
                 child: horizontalDivider(height: 1.5,hColor: Colors.grey),
               ),
               Text(
-                '${LocaleKeys.openedAt.tr()}'' ${sessionData?.createdAt}'.split('T').elementAt(0),
+                '${LocaleKeys.created.tr()} ''${legislationsData?.createdAt}'.split('T').elementAt(0),
                 maxLines: 1,
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
                 ),
-              ),
-              const SizedBox(height: 10,),
-              Text(
-                '${sessionData?.presentLawyerName}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 10,),
-              Text(
-                '${sessionData?.sessionReason}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
-              const SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    '${sessionData?.sessionDate}',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '${sessionData?.nextDate}',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),

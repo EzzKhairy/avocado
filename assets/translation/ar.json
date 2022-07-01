@@ -121,5 +121,13 @@
   "noRecordIncluding": "لا يوجد محاضر",
   "roleNumber": "ترتيب الجلسه",
   "requirements": "متطلبات الجلسه",
-  "more": "المزيد"
+  "more": "المزيد",
+  "coordinatesNotAvailable": "الإحداثيات غير متوفره",
+  "noLegislations": "لا يوجد تشريعات",
+  "noModels": "لا يوجد نماذج",
+  "noSessions": "لا يوجد جلسات",
+  "noExpenses": "لا يوجد مصاريف",
+  "noPayments": "لا يوجد مدفوعات",
+  "notAuthorized": "غير مصرح  لك",
+  "created": "تم إنشاؤه"
 }

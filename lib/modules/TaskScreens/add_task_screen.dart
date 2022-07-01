@@ -7,6 +7,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../localNotificationManager.dart';
+
 class AddTaskScreen extends StatelessWidget {
   AddTaskScreen({Key? key}) : super(key: key);
 
@@ -23,18 +25,18 @@ class AddTaskScreen extends StatelessWidget {
   var tasksFormKey  = GlobalKey<FormState>();
 
   final dateFormat = DateFormat('yyyy-MM-dd');
-  final timeFormat = DateFormat('hh:mm');
-  final dateTimeFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
+  final timeFormat = TimeOfDayFormat.H_colon_mm;
 
   DateTime taskDate = DateTime.now();
   DateTime taskTime =  DateTime.now();
+  var myTime =  '';
 
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        dateController.text = DateFormat.yMMMMd().format(DateTime.now().add(const Duration(days: 1)));
+        dateController.text = DateTime.now().add(const Duration(days: 1)).toString().split(' ').elementAt(0);
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -77,9 +79,9 @@ class AddTaskScreen extends StatelessWidget {
                           lastDate: DateTime.now().add(const Duration(days: 90)),
                       ).then((value) {
                           print(value.toString());
-                          taskDate = DateTime.parse(dateFormat.format(value!));
+                          taskDate = DateTime.parse(dateFormat.format(value!).split(' ').elementAt(0));
                           print(taskDate.toString());
-                          return dateController.text = DateFormat.yMMMMd().format(value);
+                          return dateController.text = taskDate.toString().split(' ').elementAt(0);
                       });
                         },
                       suffix: Icons.calendar_today_outlined,
@@ -90,9 +92,9 @@ class AddTaskScreen extends StatelessWidget {
                           firstDate: DateTime.now(),
                           lastDate: DateTime.now().add(const Duration(days: 90)),
                         ).then((value) {
-                          taskDate = DateTime.parse(dateFormat.format(value!));
+                          taskDate = DateTime.parse(dateFormat.format(value!).split(' ').elementAt(0));
                           print(taskDate.toString());
-                          return dateController.text = DateFormat.yMMMMd().format(value);
+                          return dateController.text = taskDate.toString().split(' ').elementAt(0);
                         }
                         );
                       }
@@ -112,7 +114,14 @@ class AddTaskScreen extends StatelessWidget {
                                 context: context,
                                 initialTime: TimeOfDay.now(),
                               ).then((value) {
-                                return startTimeController.text = value!.format(context).toString();
+                                DateTime date = DateFormat.jm().parse(value!.format(context).toString());
+                                print( ' Formated ' +  date.toString());
+                                myTime = DateFormat("HH:mm").format(date);
+                                taskDate = DateTime.parse(taskDate.toString().split(' ').elementAt(0)+ ' ' + myTime);
+                                startTimeController.text = value.format(context).toString();
+                                startTimeController.text.contains('PM') ? taskDate.hour + 12 : debugPrint('AM');
+                                print(myTime);
+                                print(taskDate);
                               });
                             },
                             suffixPressed: (){
@@ -120,8 +129,14 @@ class AddTaskScreen extends StatelessWidget {
                                 context: context,
                                 initialTime: TimeOfDay.now(),
                               ).then((value) {
-                                print(value!.format(context).toString());
-                                return startTimeController.text = (value.format(context).toString());
+                                DateTime date = DateFormat.jm().parse(value!.format(context).toString());
+                                print(date.toString());
+                               // date.toString().contains('PM') ? date.add(Duration(hours: 12)) : date.
+                                myTime = DateFormat("HH:mm").format(date);
+                                taskDate = DateTime.parse(taskDate.toString().split(' ').elementAt(0)+ ' ' + myTime);
+                                startTimeController.text = (value.format(context).toString());
+                                print(myTime);
+                                print(taskDate);
                               });
                             }
                         ),
@@ -146,6 +161,7 @@ class AddTaskScreen extends StatelessWidget {
                             hintText: LocaleKeys.endTime.tr(),
                             type: TextInputType.text,
                             readonly: true,
+                            validate: null,
                             onTap: (){
                               showTimePicker(
                                 context: context,
@@ -228,20 +244,25 @@ class AddTaskScreen extends StatelessWidget {
                 Expanded(
                   child: TextButton(
                       onPressed: (){
-                        if(tasksFormKey.currentState!.validate()) {
-                          AvocadoCubit.get(context).addNewTask(
-                              title: taskNameController.text,
-                            date: dateController.text,
-                            startTime: startTimeController.text.split(' ').elementAt(0),
-                            endTime: endTimeController.text.split(' ').elementAt(0),
-                            description: descriptionController.text
-                          );
-                          AvocadoCubit.get(context).ScheduleNotification(
-                              taskDate: taskDate,
-                              body: descriptionController.text,
-                              title: taskNameController.text
-                          );
-                        }
+                        // if(tasksFormKey.currentState!.validate()) {
+                        //   AvocadoCubit.get(context).addNewTask(
+                        //       title: taskNameController.text,
+                        //     date: dateController.text,
+                        //     startTime: startTimeController.text,
+                        //     endTime: endTimeController.text,
+                        //     description: descriptionController.text
+                        //   );
+                        //
+                        // }
+                        print(DateTime.now().timeZoneName);
+                        ScheduleNotification(
+                            taskDate: taskDate,
+                            hour:  int.parse(myTime.split(':').elementAt(0)),
+                            minutes: int.parse(myTime.split(':').elementAt(1)),
+                            isPm: startTimeController.text.contains('PM') ? true : false,
+                            body: descriptionController.text,
+                            title: taskNameController.text,
+                        );
                       },
                       child: Text(LocaleKeys.save.tr(),style: const TextStyle(fontSize: 18),)
                   ),

@@ -1,8 +1,9 @@
+import 'package:avocado/Layout/app_layout.dart';
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/modules/casesScreen/cases_screen.dart';
 import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/modules/courtsScreens/courts_screen.dart';
-import 'package:avocado/modules/profile_screen.dart';
+import 'package:avocado/modules/modelsScreens/models_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
 import 'package:avocado/shared/views/settings_card.dart';
@@ -10,7 +11,7 @@ import 'package:avocado/translation/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import 'lawyerScreens/lawyer_cases_screen.dart';
+import 'LegislationsScreens/legislations_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -49,15 +50,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 horizontalDivider(),
                 SettingsCard(goTo: ClientsScreen(), cardName: LocaleKeys.clients.tr(),cardIcon: Icons.group,),
                 horizontalDivider(),
-                SettingsCard(goTo: ProfileScreen(), cardName: LocaleKeys.profile.tr(),cardIcon: Icons.person),
+                SettingsCard(goTo: AppLayout(index: 2 ,), cardName: LocaleKeys.profile.tr(),cardIcon: Icons.person),
                 horizontalDivider(),
                 SettingsCard(goTo: CasesScreen(), cardName: LocaleKeys.totalCases.tr(),cardIcon: Icons.cases_sharp),
                 horizontalDivider(),
-                SettingsCard(goTo: const CourtsScreen(), cardName: LocaleKeys.courts.tr(),cardIcon: Icons.villa),
+                SettingsCard(goTo:  CourtsScreen(), cardName: LocaleKeys.courts.tr(),cardIcon: Icons.villa),
                 horizontalDivider(),
-                SettingsCard(goTo: const CourtsScreen(), cardName: LocaleKeys.legistilation.tr(),cardIcon: Icons.picture_as_pdf),
+                SettingsCard(goTo:  const LegislationsScreen(), cardName: LocaleKeys.legistilation.tr(),cardIcon: Icons.picture_as_pdf),
                 horizontalDivider(),
-                SettingsCard(goTo: const CourtsScreen(), cardName: LocaleKeys.models.tr(),cardIcon: Icons.topic_outlined),
+                SettingsCard(goTo:  const ModelsScreen(), cardName: LocaleKeys.models.tr(),cardIcon: Icons.topic_outlined),
                 Container(
                     padding:const EdgeInsets.all(15),
                     child:  Text(LocaleKeys.Settings.tr(),style: const TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),)),

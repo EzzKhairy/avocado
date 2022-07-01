@@ -43,7 +43,7 @@ class PaymentsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      searchBar(),
+                      searchBar(controller: null),
                       const SizedBox(height: 15,),
                       Conditional.single(
                       context: context,
@@ -55,9 +55,9 @@ class PaymentsScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(height: 10,),
                         itemCount: paymentsData!.length,
                       ),
-                      fallbackBuilder: (context) => const Center(child: Text(
-                        'No Payments Included',
-                        style: TextStyle(
+                      fallbackBuilder: (context) =>  Center(child: Text(
+                        LocaleKeys.noPayments.tr(),
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),

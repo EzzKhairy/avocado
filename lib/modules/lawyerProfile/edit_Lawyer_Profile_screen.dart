@@ -28,11 +28,11 @@ class EditLawyerProfileScreen extends StatelessWidget {
 
    @override
   Widget build(BuildContext context) {
-    nameController.text = lawyersModel.name?? 'Not Found';
-    emailController.text = lawyersModel.email?? 'Not Found';
-    addressController.text = lawyersModel.address ?? 'Not Found';
-    phoneController.text = lawyersModel.phone?? 'Not Found';
-    dateController.text = lawyersModel.dateOfBirth?? 'Not Found';
+    nameController.text = lawyersModel.name?? LocaleKeys.notFound.tr();
+    emailController.text = lawyersModel.email?? LocaleKeys.notFound.tr();
+    addressController.text = lawyersModel.address ?? LocaleKeys.notFound.tr();
+    phoneController.text = lawyersModel.phone?? LocaleKeys.notFound.tr();
+    dateController.text = lawyersModel.dateOfBirth?? LocaleKeys.notFound.tr();
     return BlocConsumer<AvocadoCubit,AvocadoStates>(
         listener: (context,state){
           if(state is UpdateLawyerProfileSuccessful)
@@ -190,7 +190,7 @@ class EditLawyerProfileScreen extends StatelessWidget {
                             height: 2,
                             color: gold,
                           ),
-                          onChanged: lawyersModel.role == 'Admin' || lawyersModel.role == 'admin' ? (String? newValue) {
+                          onChanged: AvocadoCubit.get(context).isAdmin ? (String? newValue) {
                             AvocadoCubit.get(context)
                                 .changeRoleValue(newValue);
                           } : null,
@@ -243,8 +243,8 @@ class EditLawyerProfileScreen extends StatelessWidget {
                               context: context,
                               title: LocaleKeys.discardChanges.tr(),
                               content: LocaleKeys.sureDiscardChanges.tr(),
-                              outlinedButtonText: 'No',
-                              elevatedButtonText: 'Yes',
+                              outlinedButtonText: LocaleKeys.no.tr(),
+                              elevatedButtonText: LocaleKeys.yes.tr(),
                             )
                         );
                         if (shouldPop == true)

@@ -42,7 +42,7 @@ class LawyerProfileScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 60,
                     backgroundColor: grey,
-                    backgroundImage: NetworkImage('${lawyersModel.profilePhotoPath}'),
+                    backgroundImage: NetworkImage(lawyersModel.profilePhotoPath ?? 'https://w7.pngwing.com/pngs/49/613/png-transparent-computer-icons-avatar-user-profile-avatar-heroes-dark-black.png'),
                   ),],
               ),
             ),

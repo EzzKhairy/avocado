@@ -44,7 +44,7 @@ class ExpensesScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      searchBar(),
+                      searchBar(controller: null),
                       const SizedBox(height: 15,),
                       Conditional.single(
                       context: context,
@@ -56,9 +56,9 @@ class ExpensesScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(height: 10,),
                         itemCount: expensesData!.length,
                       ),
-                      fallbackBuilder: (context) => const Center(child: Text(
-                        'No Expenses Included',
-                        style: TextStyle(
+                      fallbackBuilder: (context) => Center(child: Text(
+                        LocaleKeys.expenses.tr(),
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),

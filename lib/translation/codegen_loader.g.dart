@@ -137,7 +137,15 @@ class CodegenLoader extends AssetLoader{
   "noRecordIncluding": "لا يوجد محاضر",
   "roleNumber": "ترتيب الجلسه",
   "requirements": "متطلبات الجلسه",
-  "more": "المزيد"
+  "more": "المزيد",
+  "coordinatesNotAvailable": "الإحداثيات غير متوفره",
+  "noLegislations": "لا يوجد تشريعات",
+  "noModels": "لا يوجد نماذج",
+  "noSessions": "لا يوجد جلسات",
+  "noExpenses": "لا يوجد مصاريف",
+  "noPayments": "لا يوجد مدفوعات",
+  "notAuthorized": "غير مصرح  لك",
+  "created": "تم إنشاؤه"
 };
 static const Map<String,dynamic> en = {
   "save": "Save",
@@ -262,7 +270,15 @@ static const Map<String,dynamic> en = {
   "noRecordIncluding": "No records included",
   "roleNumber": "Role Number",
   "requirements": "Requirements",
-  "more": "More"
+  "more": "More",
+  "coordinatesNotAvailable": "Coordinates are not available",
+  "noLegislations": "No Legislations included",
+  "noModels": "No Models included",
+  "noSessions": "No Sessions included",
+  "noExpenses": "No Expenses included",
+  "noPayments": "No Payments included",
+  "notAuthorized": "Not Authorized",
+  "created": "Created"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

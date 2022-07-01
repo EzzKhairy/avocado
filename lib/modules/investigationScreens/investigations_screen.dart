@@ -45,7 +45,7 @@ class InvestigationsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        searchBar(),
+                        searchBar(controller: null),
                         const SizedBox(height: 20,),
                         Conditional.single(
                           context: context,
@@ -57,7 +57,7 @@ class InvestigationsScreen extends StatelessWidget {
                             separatorBuilder: (context, index) => const SizedBox(height: 10,),
                             itemCount: investigationData!.length,
                           ),
-                          fallbackBuilder: (context) => const Center(child: Text('No investigations included'),),
+                          fallbackBuilder: (context) => Center(child: Text(LocaleKeys.noInvestigations.tr()),),
                         ),
                       ],
                     ),

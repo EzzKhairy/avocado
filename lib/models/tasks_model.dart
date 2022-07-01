@@ -27,6 +27,7 @@ class TasksData {
   String? startTime;
   String? endTime;
   String? description;
+  int? lawyerId;
   String? createdAt;
   String? updatedAt;
 
@@ -38,6 +39,7 @@ class TasksData {
     startTime = json['StartTime'];
     endTime = json['EndTime'];
     description = json['Description'];
+    lawyerId = json['Lawyer_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

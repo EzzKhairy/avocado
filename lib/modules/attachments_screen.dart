@@ -1,6 +1,8 @@
 
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
+import 'package:avocado/translation/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
@@ -24,7 +26,7 @@ class PDFViewerScreen extends StatelessWidget {
                 elevation: 0,
                 centerTitle: true,
                 title: Text(
-                  'Attachments',
+                  LocaleKeys.attachments.tr(),
                   style: TextStyle(
                     fontFamily: 'Nedian',
                     fontSize: 25.0,
