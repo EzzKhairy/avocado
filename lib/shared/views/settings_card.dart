@@ -10,11 +10,13 @@ class SettingsCard extends StatelessWidget {
   String cardName;
   bool isLanguage;
   IconData cardIcon;
+  bool isProfile;
 
   SettingsCard({
     this.goTo,
     required this.cardName,
     required this.cardIcon,
+    this.isProfile = false,
     this.isLanguage = false,
     Key? key}) : super(key: key);
 
@@ -22,9 +24,14 @@ class SettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return  InkWell(
       onTap: (){
-        if(isLanguage == false) {
-          navigateTo(context, goTo);
-        }},
+       if(isProfile)
+          {
+            AvocadoCubit.get(context).changeBottomNav(2);
+          }
+       else if(goTo != null || isLanguage == false){
+         navigateTo(context, goTo);
+       }
+        },
       child: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(15),

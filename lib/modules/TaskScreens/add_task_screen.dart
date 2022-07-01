@@ -36,7 +36,7 @@ class AddTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        dateController.text = DateTime.now().add(const Duration(days: 1)).toString().split(' ').elementAt(0);
+        dateController.text =DateFormat.yMMMMd().format(DateTime.now().add(const Duration(days: 1))) ;
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -81,7 +81,7 @@ class AddTaskScreen extends StatelessWidget {
                           print(value.toString());
                           taskDate = DateTime.parse(dateFormat.format(value!).split(' ').elementAt(0));
                           print(taskDate.toString());
-                          return dateController.text = taskDate.toString().split(' ').elementAt(0);
+                          return dateController.text = DateFormat.yMMMMd().format(value);
                       });
                         },
                       suffix: Icons.calendar_today_outlined,
@@ -94,7 +94,7 @@ class AddTaskScreen extends StatelessWidget {
                         ).then((value) {
                           taskDate = DateTime.parse(dateFormat.format(value!).split(' ').elementAt(0));
                           print(taskDate.toString());
-                          return dateController.text = taskDate.toString().split(' ').elementAt(0);
+                          return dateController.text = DateFormat.yMMMMd().format(value);
                         }
                         );
                       }
@@ -161,7 +161,7 @@ class AddTaskScreen extends StatelessWidget {
                             hintText: LocaleKeys.endTime.tr(),
                             type: TextInputType.text,
                             readonly: true,
-                            validate: null,
+                            validate: (value){return null;},
                             onTap: (){
                               showTimePicker(
                                 context: context,
@@ -185,6 +185,7 @@ class AddTaskScreen extends StatelessWidget {
                     const SizedBox(height: 20,),
                      Text(LocaleKeys.description.tr().toUpperCase(),style: const TextStyle( fontSize: 15,color: Colors.grey) ,),
                     profileFormField(
+                      validate: (value){return null;},
                       controller: descriptionController,
                       type: TextInputType.text,
                       maxLines: 4,
@@ -244,25 +245,24 @@ class AddTaskScreen extends StatelessWidget {
                 Expanded(
                   child: TextButton(
                       onPressed: (){
-                        // if(tasksFormKey.currentState!.validate()) {
-                        //   AvocadoCubit.get(context).addNewTask(
-                        //       title: taskNameController.text,
-                        //     date: dateController.text,
-                        //     startTime: startTimeController.text,
-                        //     endTime: endTimeController.text,
-                        //     description: descriptionController.text
-                        //   );
-                        //
-                        // }
-                        print(DateTime.now().timeZoneName);
-                        ScheduleNotification(
+                        if(tasksFormKey.currentState!.validate()) {
+                          AvocadoCubit.get(context).addNewTask(
+                              title: taskNameController.text,
+                            date: dateController.text,
+                            startTime: startTimeController.text,
+                            endTime: endTimeController.text,
+                            description: descriptionController.text
+                          );
+                          print(DateTime.now().timeZoneName);
+                          ScheduleNotification(
                             taskDate: taskDate,
                             hour:  int.parse(myTime.split(':').elementAt(0)),
                             minutes: int.parse(myTime.split(':').elementAt(1)),
                             isPm: startTimeController.text.contains('PM') ? true : false,
                             body: descriptionController.text,
                             title: taskNameController.text,
-                        );
+                          );
+                        }
                       },
                       child: Text(LocaleKeys.save.tr(),style: const TextStyle(fontSize: 18),)
                   ),

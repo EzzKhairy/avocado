@@ -50,10 +50,7 @@ class EditInfoCard extends StatelessWidget {
                     if(value!.isEmpty) {
                       return 'This field must not be Empty';
                     }
-                    else if (value.contains('@') == false) {
-                      return 'Email Formula is incorrect';
-                    }
-                    else if(value.compareTo(controller.text)!=0){
+                    else if(value.compareTo(controller.text) != 0){
                       AvocadoCubit.get(context).toggleIsChanged();
                     }
                   },

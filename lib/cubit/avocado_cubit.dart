@@ -111,9 +111,10 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
     required String? address,
     required String? role,
     required String? lawyerNationalNumber,
-    String? phoneNumber,
-    String? dateOfBirth,
-    String ? gender,
+    required String? photoPath,
+    required String? phoneNumber,
+    required String? dateOfBirth,
+    required String ? gender,
   }) {
     emit(UpdateLawyerProfileLoading());
     DioHelper.putData(
@@ -127,6 +128,7 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
         'phone': phoneNumber,
         'DOB': dateOfBirth,
         'Gender': gender,
+        'profile_photo_path': photoPath,
       },
 
     ).then((value) {
@@ -320,33 +322,6 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
     });
   }
 
-  bool isEdit = false;
-  String editText = 'EDIT';
-
-  void editPressed({
-    required int? lawyerID,
-    required String? email,
-    required String? lawyerNationalNumber,
-    required String? address,
-    required String? name,
-    role,
-  }) {
-    isEdit = !isEdit;
-    if (isEdit) {
-      editText = 'SAVE';
-      emit(EditPressedState());
-    } else {
-      editText = 'EDIT';
-      updateLawyerProfile(
-          lawyerID: lawyerID,
-          email: email,
-          lawyerNationalNumber: lawyerNationalNumber,
-          name: name,
-          address: address,
-          role: role
-      );
-    }
-  }
 
   CaseModel? caseModel;
 
@@ -872,17 +847,7 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
   File? pickedImage;
   String? base64;
 
-  void pickImage({
-    required int? lawyerID,
-    required String? name,
-    required String? email,
-    required String? address,
-    required String? role,
-    required String? lawyerNationalNumber,
-    String? phoneNumber,
-    String? dateOfBirth,
-    String ? gender,
-  }) async {
+  void pickImage() async {
     final XFile? pickedImageXFile = await _picker.pickImage(
         source: ImageSource.gallery);
     if (pickedImageXFile != null) {
@@ -894,18 +859,6 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
     }
     var imageBytes = await pickedImage?.readAsBytes();
     base64 = const Base64Codec().encode(imageBytes!);
-    updateLawyerProfilePhoto(
-      lawyerID: lawyerID,
-      name: name,
-      email: email,
-      address: address,
-      role: role,
-      lawyerNationalNumber: lawyerNationalNumber,
-      profilePhoto: '$base64',
-      phoneNumber: phoneNumber,
-      dateOfBirth: dateOfBirth,
-      gender: gender,
-    );
     debugPrint(base64);
   }
 

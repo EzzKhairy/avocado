@@ -50,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 horizontalDivider(),
                 SettingsCard(goTo: ClientsScreen(), cardName: LocaleKeys.clients.tr(),cardIcon: Icons.group,),
                 horizontalDivider(),
-                SettingsCard(goTo: AppLayout(index: 2 ,), cardName: LocaleKeys.profile.tr(),cardIcon: Icons.person),
+                SettingsCard(cardName: LocaleKeys.profile.tr(),cardIcon: Icons.person , isProfile: true,),
                 horizontalDivider(),
                 SettingsCard(goTo: CasesScreen(), cardName: LocaleKeys.totalCases.tr(),cardIcon: Icons.cases_sharp),
                 horizontalDivider(),

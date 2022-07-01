@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           buildHomeCard(
-                            function: (){navigateTo(context,AppLayout(index: 1,));},
+                            function: (){AvocadoCubit.get(context).changeBottomNav(1);},
                             title: LocaleKeys.totalTasks.tr(),
                             icon: Icons.assignment_turned_in_rounded,
                             number: 15,
@@ -187,7 +187,7 @@ class HomeScreen extends StatelessWidget {
                     child: Text(
                       LocaleKeys.viewAll.tr(),
                       style: TextStyle(color: gold),),
-                    onTap: (){navigateTo(context, const TasksScreen());},
+                    onTap: (){AvocadoCubit.get(context).changeBottomNav(1);},
                   ),
                 ],
               ),

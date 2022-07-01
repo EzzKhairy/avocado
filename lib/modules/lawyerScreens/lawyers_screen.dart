@@ -102,7 +102,6 @@ class LawyersScreen extends StatelessWidget {
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          height: 70,
           width: double.infinity,
           padding: const EdgeInsets.all(10),
           child: Row(

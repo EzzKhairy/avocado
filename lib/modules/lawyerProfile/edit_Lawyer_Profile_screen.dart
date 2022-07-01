@@ -1,12 +1,9 @@
 import 'package:avocado/cubit/avocado_cubit.dart';
 import 'package:avocado/cubit/states.dart';
-import 'package:avocado/models/clients_model.dart';
 import 'package:avocado/models/lawyers_model.dart';
-import 'package:avocado/modules/clientScreens/clients_screen.dart';
 import 'package:avocado/modules/lawyerProfile/Lawyer_profile_new.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
-import 'package:avocado/shared/profile_components.dart';
 import 'package:avocado/shared/views/edit_Dropdown_card.dart';
 import 'package:avocado/shared/views/edit_Info_card.dart';
 import 'package:avocado/translation/locale_keys.g.dart';
@@ -40,7 +37,7 @@ class EditLawyerProfileScreen extends StatelessWidget {
               if(state.model.status == 'true')
                 {
                   print('asasasasa' '${state.model.message}');
-                  AvocadoCubit.get(context).getClients();
+                  AvocadoCubit.get(context).getLawyerProfile(lawyerId);
                   showToast(context: context, msg: state.model.message);
                   navigateAndKill(context,  LawyerProfileScreen());
                 }
@@ -80,18 +77,7 @@ class EditLawyerProfileScreen extends StatelessWidget {
                 SizedBox(height: 10,),
                 InkWell(
                   onTap: () async {
-                    AvocadoCubit.get(context).pickImage(
-                      lawyerID: lawyerId,
-                      name: lawyersModel.name,
-                      email: lawyersModel.email,
-                      address: lawyersModel.address,
-                      role: lawyersModel.role,
-                      lawyerNationalNumber:
-                      lawyersModel.lawyerNationalNumber,
-                      phoneNumber: lawyersModel.phone,
-                      dateOfBirth: lawyersModel.dateOfBirth,
-                      gender: lawyersModel.gender
-                    );
+                    AvocadoCubit.get(context).pickImage();
                   },
                   child: CircleAvatar(
                     radius: 75,
@@ -142,7 +128,7 @@ class EditLawyerProfileScreen extends StatelessWidget {
                           prefix: Icons.transgender,
                           title: LocaleKeys.gender.tr(),
                         dropdownButton:DropdownButton<String>(
-                          value: lawyersModel.gender,
+                          value: AvocadoCubit.get(context).gender,
                           icon: Expanded(
                             child: Row(
                               children: const [
@@ -176,7 +162,7 @@ class EditLawyerProfileScreen extends StatelessWidget {
                           prefix: Icons.transgender,
                           title: LocaleKeys.role.tr(),
                         dropdownButton: DropdownButton<String>(
-                          value: lawyersModel.role,
+                          value: AvocadoCubit.get(context).role,
                           icon: Expanded(
                             child: Row(
                               children: const [
@@ -232,8 +218,6 @@ class EditLawyerProfileScreen extends StatelessWidget {
             children: [
               TextButton(
                   onPressed: () async {
-                    if(clientFormKey.currentState!.validate())
-                    {
                       if(AvocadoCubit.get(context).isChanged)
                       {
                         final shouldPop = await showDialog(
@@ -254,7 +238,6 @@ class EditLawyerProfileScreen extends StatelessWidget {
                         {
                           pop(context);
                         }
-                    }
                   },
                   child: Text(LocaleKeys.cancel.tr(),style: TextStyle(fontSize: 18),)
               ),
@@ -268,10 +251,11 @@ class EditLawyerProfileScreen extends StatelessWidget {
                           name: nameController.text,
                           email: emailController.text,
                           address: addressController.text,
-                          role: roleController.text,
+                          role: AvocadoCubit.get(context).role,
                           phoneNumber: phoneController.text,
                           dateOfBirth: dateController.text,
-                        gender: genderController.text,
+                          gender: AvocadoCubit.get(context).gender,
+                          photoPath: AvocadoCubit.get(context).base64 ?? lawyersModel.profilePhotoPath,
                       );
                     }
                   },

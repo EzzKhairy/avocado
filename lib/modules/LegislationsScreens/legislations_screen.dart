@@ -41,33 +41,35 @@ class LegislationsScreen extends StatelessWidget {
                   ),
                   backgroundColor: Colors.black,
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      searchBar(controller: null),
-                      const SizedBox(height: 15,),
-                      Conditional.single(
-                      context: context,
-                      conditionBuilder: (context)=> legislationData!.isNotEmpty,
-                      widgetBuilder:(context) => ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) => buildSessionItem(legislationData![index],context),
-                        separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                        itemCount: legislationData!.length,
-                      ),
-                      fallbackBuilder: (context) => Center(child: Text(
-                        LocaleKeys.noLegislations.tr(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        searchBar(controller: null),
+                        const SizedBox(height: 15,),
+                        Conditional.single(
+                        context: context,
+                        conditionBuilder: (context)=> legislationData!.isNotEmpty,
+                        widgetBuilder:(context) => ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => buildSessionItem(legislationData![index],context),
+                          separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                          itemCount: legislationData!.length,
                         ),
-                      ),
-                      ),
-                      ),
-                    ],
+                        fallbackBuilder: (context) => Center(child: Text(
+                          LocaleKeys.noLegislations.tr(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

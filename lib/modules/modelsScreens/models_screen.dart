@@ -43,33 +43,35 @@ class ModelsScreen extends StatelessWidget {
                   ),
                   backgroundColor: Colors.black,
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      searchBar(controller: null),
-                      const SizedBox(height: 15,),
-                      Conditional.single(
-                      context: context,
-                      conditionBuilder: (context)=> modelsData!.isNotEmpty,
-                      widgetBuilder:(context) => ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) => buildSessionItem(modelsData![index],context),
-                        separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                        itemCount: modelsData!.length,
-                      ),
-                      fallbackBuilder: (context) =>  Center(child: Text(
-                        LocaleKeys.noModels.tr(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        searchBar(controller: null),
+                        const SizedBox(height: 15,),
+                        Conditional.single(
+                        context: context,
+                        conditionBuilder: (context)=> modelsData!.isNotEmpty,
+                        widgetBuilder:(context) => ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => buildSessionItem(modelsData![index],context),
+                          separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                          itemCount: modelsData!.length,
                         ),
-                      ),
-                      ),
-                      ),
-                    ],
+                        fallbackBuilder: (context) =>  Center(child: Text(
+                          LocaleKeys.noModels.tr(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
