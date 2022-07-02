@@ -45,6 +45,7 @@ class CasesScreen extends StatelessWidget {
                   children: [
                       searchBar(
                           controller: searchController,
+                          hint: LocaleKeys.searchCases.tr(),
                           onChange: (value){
                             if(value.isNotEmpty) {
                               AvocadoCubit.get(context).searchCases(keyword: value);

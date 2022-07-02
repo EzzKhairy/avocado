@@ -3,6 +3,7 @@ import 'package:avocado/modules/lawyerProfile/edit_Lawyer_Profile_screen.dart';
 import 'package:avocado/modules/lawyerScreens/lawyer_cases_screen.dart';
 import 'package:avocado/shared/components.dart';
 import 'package:avocado/shared/constants.dart';
+import 'package:avocado/shared/views/info_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -101,97 +102,9 @@ class LawyerInfoScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Card(
-                color: Colors.grey.shade200,
-                margin: const EdgeInsets.all(8.0),
-                elevation: 5,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                child: Container(
-                  height: 70,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children:[
-                      Text(LocaleKeys.EmailAddress.tr(),style: TextStyle(color: Colors.grey.shade500)),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text('${lawyerData.email}',style: TextStyle(fontSize: 18))
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Card(
-                color: Colors.grey.shade200,
-                margin: const EdgeInsets.all(8.0),
-                elevation: 5,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                child: Container(
-                  height: 70,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children:[
-                      Text(LocaleKeys.address.tr(),style: TextStyle(color: Colors.grey.shade500,
-                      )),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text('${lawyerData.address}',style: TextStyle(fontSize: 18))
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Card(
-                color: Colors.grey.shade200,
-                margin: const EdgeInsets.all(8.0),
-                elevation: 5,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                child: Container(
-                  height: 70,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children:[
-                      Text(LocaleKeys.nationalNumber.tr(),style: TextStyle(color: Colors.grey.shade500,
-                      )),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(lawyerData.lawyerNationalNumber ?? LocaleKeys.notFound.tr(),style: const TextStyle(fontSize: 18))
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: SizedBox(
-                height: 60,
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: ()
-                  {
-                    navigateTo(context, LawyerCasesScreen(lawyerData.id));
-                  },
-                  child: Text('Cases of ${lawyerData.name?.split(' ').elementAt(0)}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,letterSpacing: 2)),
-                ),
-              ),
-            ),
+            InfoCard(title: LocaleKeys.EmailAddress.tr(), body: '${lawyerData.email}'),
+            InfoCard(title: LocaleKeys.address.tr(), body: '${lawyerData.address}'),
+            InfoCard(title: LocaleKeys.nationalNumber.tr(), body: '${lawyerData.lawyerNationalNumber}'),
           ],
         ),
       ),

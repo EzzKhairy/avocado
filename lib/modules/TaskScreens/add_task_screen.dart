@@ -30,6 +30,7 @@ class AddTaskScreen extends StatelessWidget {
   final dateFormat = DateFormat('yyyy-MM-dd');
   final timeFormat = TimeOfDayFormat.H_colon_mm;
 
+  String? stringDate;
   DateTime taskDate = DateTime.now();
   DateTime taskTime =  DateTime.now();
   var myTime =  '';
@@ -100,7 +101,9 @@ class AddTaskScreen extends StatelessWidget {
                                 lastDate: DateTime.now().add(const Duration(days: 90)),
                               ).then((value) {
                                 print(value.toString());
-                                taskDate = DateTime.parse(dateFormat.format(value!).split(' ').elementAt(0));
+                                stringDate = dateFormat.format(value!).split(' ').elementAt(0);
+                                print ('string date >>> ${stringDate}');
+                                taskDate = DateTime.parse(dateFormat.format(value).split(' ').elementAt(0));
                                 print(taskDate.toString());
                                 return dateController.text = DateFormat.yMMMMd().format(value);
                               });
@@ -113,7 +116,9 @@ class AddTaskScreen extends StatelessWidget {
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime.now().add(const Duration(days: 90)),
                               ).then((value) {
-                                taskDate = DateTime.parse(dateFormat.format(value!).split(' ').elementAt(0));
+                                stringDate = dateFormat.format(value!).split(' ').elementAt(0);
+                                print ('string date >>> ${stringDate}');
+                                taskDate = DateTime.parse(dateFormat.format(value).split(' ').elementAt(0));
                                 print(taskDate.toString());
                                 return dateController.text = DateFormat.yMMMMd().format(value);
                               }
@@ -269,7 +274,7 @@ class AddTaskScreen extends StatelessWidget {
                             if(tasksFormKey.currentState!.validate()) {
                               AvocadoCubit.get(context).addNewTask(
                                   title: taskNameController.text,
-                                  date: dateController.text,
+                                  date: stringDate.toString(),
                                   startTime: startTimeController.text,
                                   endTime: endTimeController.text,
                                   description: descriptionController.text

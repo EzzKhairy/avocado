@@ -44,6 +44,7 @@ class ClientsScreen extends StatelessWidget {
                 children: [
                   searchBar(
                     controller: searchController,
+                    hint: LocaleKeys.searchClients.tr(),
                     onChange: (value){
                       if(value.isNotEmpty) {
                       AvocadoCubit.get(context).searchClients(value);

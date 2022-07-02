@@ -39,7 +39,7 @@ void main()async
   token = CacheHelper.getData(key : 'token');
   lawyerId = CacheHelper.getData(key : 'id');
   print(token);
-  print(lawyerId);
+  print('constant Id: ' + lawyerId.toString());
 
 
   if(token != null)

@@ -262,7 +262,8 @@ Widget searchBar({
   bool readOnly = false,
   double height = 40,
   double width = double.infinity,
-  void Function(String)? onChange
+  void Function(String)? onChange,
+  String? hint
 }){
   return Container(
     height: height,
@@ -270,14 +271,14 @@ Widget searchBar({
     child: TextFormField(
       autofocus: false,
       readOnly: readOnly,
-      style: const TextStyle(color: Colors.grey),
+      style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
         border: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
         filled: true,
         fillColor: HexColor("C4C4C4"),
         disabledBorder: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
         focusedBorder: OutlineInputBorder( borderRadius: BorderRadius.circular(50),borderSide: const BorderSide(style: BorderStyle.none,width: 0)),
-        hintText:LocaleKeys.search.tr(),
+        hintText:hint ?? LocaleKeys.search.tr(),
         hintStyle: const TextStyle(fontSize: 15,color: Colors.black),
         prefixIcon: const Icon(Icons.search,color: Colors.black,),
         contentPadding: EdgeInsets.zero

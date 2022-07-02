@@ -44,6 +44,7 @@ class LawyersScreen extends StatelessWidget {
                       children: [
                         searchBar(
                           controller:searchController ,
+                            hint: LocaleKeys.searchLawyers.tr(),
                           onChange: (value){
                             if(value.isNotEmpty) {
                               AvocadoCubit.get(context).searchLawyers(keyword: value);
@@ -68,7 +69,7 @@ class LawyersScreen extends StatelessWidget {
                             }
                           },
                           separatorBuilder: (context,index) =>const SizedBox(height: 10,),
-                          itemCount: lawyerData!.length,
+                          itemCount: searchLawyerData.length,
                         ):
                         ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),

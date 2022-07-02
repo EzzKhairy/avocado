@@ -35,7 +35,8 @@ class EditClientInfoScreen extends StatelessWidget {
                   print('asasasasa' '${state.model.message}');
                   AvocadoCubit.get(context).getClients();
                   showToast(context: context, msg: state.model.message);
-                  navigateAndKill(context,  ClientsScreen());
+                  pop(context);
+                  pop(context);
                 }
             }
           if(state is UpdateClientProfileError)

@@ -63,7 +63,8 @@ Future<void> _configureLocalTimezone() async {
 
 tz.TZDateTime _convertTime(DateTime date , int hour,int minutes , bool isPm) {
   final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-  isPm ? hour += 12 : debugPrint('AM');
+  isPm ? hour += 12 :
+  hour == 12 ? hour = 00: hour = hour;
   tz.TZDateTime scheduleDate =
   tz.TZDateTime(tz.local,date.year,date.month,date.day,hour,minutes);
   print('scheduleDate ' + scheduleDate.toString());

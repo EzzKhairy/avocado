@@ -39,7 +39,7 @@ class EditLawyerProfileScreen extends StatelessWidget {
                   print('asasasasa' '${state.model.message}');
                   AvocadoCubit.get(context).getLawyerProfile(lawyerId);
                   showToast(context: context, msg: state.model.message);
-                  navigateAndKill(context,  LawyerProfileScreen());
+                  pop(context);
                 }
             }
           if(state is UpdateLawyerProfileError)

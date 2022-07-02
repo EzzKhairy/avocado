@@ -68,7 +68,7 @@ class CaseInfoCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 10,),
                 Text(
-                  '${caseData.caseType}',
+                  '${caseData.title}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(

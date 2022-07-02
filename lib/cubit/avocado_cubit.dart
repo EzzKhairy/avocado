@@ -66,6 +66,8 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
       url: 'lawyers/$lawyerID',
     ).then((value) {
       lawyerData = LawyersModel.fromJson(value.data);
+      checkAuthorization();
+      getCases();
       //print(element);
       if (kDebugMode) {
         print(lawyerData?.data![0].email);
@@ -82,14 +84,19 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
   }
 
   bool isAdmin = false;
-  void checkAuthorization(lawyerId) {
-    if (lawyerData?.data![0].role?.toUpperCase() == 'ADMIN') {
+  void checkAuthorization() {
+    print('Authorization' ' ${lawyerData?.data![0].role}');
+    if (lawyerData?.data![0].role == 'Admin') {
       isAdmin = true;
-      emit(CheckAuthorizationState());
+      role = lawyerData?.data![0].role;
+      gender = lawyerData?.data![0].gender;
+      emit(CheckedAuthorizationAdmin());
     }
     else {
       isAdmin = false;
-      emit(CheckAuthorizationState());
+      role = lawyerData?.data![0].role;
+      gender = lawyerData?.data![0].gender;
+      emit(CheckedAuthorizationLawyer());
     }
   }
 
@@ -287,7 +294,7 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
       url: 'clients',
       data: {
         'email': email,
-        'Lawyer_id': lawyerID,
+        'Lawyer_id': lawyerId,
         'name': name,
         'Client_National_Number': clientNationalNumber,
         'address': address,
@@ -823,12 +830,14 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
 
 
   void changeLocalToAr(BuildContext context) async {
-    await context.setLocale(Locale('ar'));
+    await context.setLocale(const Locale('ar'));
+    AvocadoCubit.get(context).changeBottomNav(0);
     emit(ChangeLocalToArState());
   }
 
   void changeLocalToEn(BuildContext context) async {
-    await context.setLocale(Locale('en'));
+    await context.setLocale(const Locale('en'));
+    AvocadoCubit.get(context).changeBottomNav(0);
     emit(ChangeLocalToEnState());
   }
 
@@ -911,8 +920,6 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
   void init(){
     getLawyerProfile(lawyerId);
     getClients();
-    checkAuthorization(lawyerId);
-    getCases();
     getCourts();
     getTodayTasks(dateFormat.format(DateTime.now()));
     getEveryLawyer();

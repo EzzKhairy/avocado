@@ -31,7 +31,7 @@ class AddClientScreen extends StatelessWidget {
             print('asasasasa' '${state.model.message}');
             AvocadoCubit.get(context).getClients();
             showToast(context: context, msg: state.model.message);
-            navigateAndKill(context,  ClientsScreen());
+            pop(context);
           }
         }
         if(state is AddNewClientError)
