@@ -24,25 +24,32 @@ class SessionInfoScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-            child : Column(
-              children : [
-                buildSessionInfoScreenItem(context: context, title: LocaleKeys.roleNumber.tr(), info: '${sessionData?.roleNumber}'),
-                const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: LocaleKeys.sessionDate.tr(), info: '${sessionData?.sessionDate}'),
-                const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: LocaleKeys.lawyer.tr(), info: '${sessionData?.presentLawyerName}'),
-                const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: LocaleKeys.sessionReason.tr(), info: '${sessionData?.sessionReason}'),
-                const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: LocaleKeys.requirements.tr(), info: '${sessionData?.sessionRequirements}'),
-                const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: LocaleKeys.decision.tr(), info: '${sessionData?.decision}'),
-                const SizedBox(height: 10),
-                buildSessionInfoScreenItem(context: context, title: LocaleKeys.nextDate.tr(), info: '${sessionData?.nextDate}'),
-              ],
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+              child : Column(
+                children : [
+                  Text(
+                    LocaleKeys.roleNumber.tr()+ ': ' + '${sessionData?.roleNumber?.toUpperCase()}',
+                    style: const TextStyle(
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  buildSessionInfoScreenItem(context: context, title: LocaleKeys.sessionDate.tr(), info: '${sessionData?.sessionDate}'),
+                  const SizedBox(height: 10),
+                  buildSessionInfoScreenItem(context: context, title: LocaleKeys.lawyer.tr(), info: '${sessionData?.presentLawyerName}'),
+                  const SizedBox(height: 10),
+                  buildSessionInfoScreenItem(context: context, title: LocaleKeys.sessionReason.tr(), info: '${sessionData?.sessionReason}'),
+                  const SizedBox(height: 10),
+                  buildSessionInfoScreenItem(context: context, title: LocaleKeys.requirements.tr(), info: '${sessionData?.sessionRequirements}'),
+                  const SizedBox(height: 10),
+                  buildSessionInfoScreenItem(context: context, title: LocaleKeys.decision.tr(), info: '${sessionData?.decision}'),
+                  const SizedBox(height: 10),
+                  buildSessionInfoScreenItem(context: context, title: LocaleKeys.nextDate.tr(), info: '${sessionData?.nextDate}'),
+                ],
+              ),
+        ),
       ),
     );
   }
@@ -62,34 +69,23 @@ class SessionInfoScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '$title',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        '$info',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:[
+                Text(title!,style: TextStyle(color: Colors.grey.shade600
+                ),textAlign: TextAlign.left,),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(width: 15,),
+                    Expanded(child: Text(info!,style: const TextStyle(fontSize: 18),maxLines: 3,)),
+                  ],
+                )
+              ],
+              )
+          )
           ));
 }

@@ -210,7 +210,7 @@ class CaseInfoScreen extends StatelessWidget {
                                       onPressed: (){
                                         navigateTo(context, PaymentsScreen(caseData.id));
                                       },
-                                      child: Text(LocaleKeys.expenses.tr())
+                                      child: Text(LocaleKeys.payments.tr())
                                   ),
                                 ),
                               ],

@@ -32,13 +32,13 @@ class CourtInfoScreen extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: 150,
+            height: 250,
             child: Stack(
               alignment: AlignmentDirectional.bottomCenter,
               children: [
                 Align(
                   child: Container(
-                    height: 100,
+                    height: 200,
                     width: double.infinity,
                     decoration: const BoxDecoration(
                        color: Colors.black,

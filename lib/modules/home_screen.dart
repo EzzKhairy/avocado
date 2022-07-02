@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(width: 10,),
                           buildHomeCard(
                             function: (){
-                              if(AvocadoCubit.get(context).isAdmin == false) {
+                              if(AvocadoCubit.get(context).isAdmin == true) {
                                 navigateTo(context, LawyersScreen());
                               }
                               else{

@@ -82,7 +82,6 @@ class InvestigationsScreen extends StatelessWidget {
       margin: const EdgeInsetsDirectional.all(2.5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
-        height: 160,
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(12.0),

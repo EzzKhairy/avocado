@@ -77,7 +77,17 @@ class EditLawyerProfileScreen extends StatelessWidget {
                 SizedBox(height: 10,),
                 InkWell(
                   onTap: () async {
-                    AvocadoCubit.get(context).pickImage();
+                    AvocadoCubit.get(context).pickImage(
+                      lawyerID: lawyersModel.id,
+                      lawyerNationalNumber: lawyersModel.lawyerNationalNumber,
+                      name: nameController.text,
+                      email: emailController.text,
+                      address: addressController.text,
+                      role: AvocadoCubit.get(context).role,
+                      phoneNumber: phoneController.text,
+                      dateOfBirth: dateController.text,
+                      gender: AvocadoCubit.get(context).gender,
+                    );
                   },
                   child: CircleAvatar(
                     radius: 75,
@@ -255,7 +265,7 @@ class EditLawyerProfileScreen extends StatelessWidget {
                           phoneNumber: phoneController.text,
                           dateOfBirth: dateController.text,
                           gender: AvocadoCubit.get(context).gender,
-                          photoPath: AvocadoCubit.get(context).base64 ?? lawyersModel.profilePhotoPath,
+
                       );
                     }
                   },

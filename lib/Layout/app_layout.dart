@@ -26,6 +26,7 @@ class _AppLayoutState extends State<AppLayout> {
   @override
   void initState() {
     initialIndex = widget.index;
+    initialIndex ?? AvocadoCubit.get(context).changeBottomNav(initialIndex!);
     super.initState();
   }
 

@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
-
 import 'package:avocado/cubit/states.dart';
 import 'package:avocado/models/case_model.dart';
 import 'package:avocado/models/clients_model.dart';
@@ -19,7 +17,6 @@ import 'package:avocado/models/session_model.dart';
 import 'package:avocado/models/tasks_model.dart';
 import 'package:avocado/modules/lawyerProfile/Lawyer_profile_new.dart';
 import 'package:avocado/modules/home_screen.dart';
-import 'package:avocado/modules/profile_screen.dart';
 import 'package:avocado/modules/settings_screen.dart';
 import 'package:avocado/modules/TaskScreens/tasks_screen.dart';
 import 'package:avocado/remoteNetwork/dio_helper.dart';
@@ -28,12 +25,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
-
 
 class AvocadoCubit extends Cubit <AvocadoStates> {
   AvocadoCubit() : super(InitialState());
@@ -90,7 +82,6 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
   }
 
   bool isAdmin = false;
-
   void checkAuthorization(lawyerId) {
     if (lawyerData?.data![0].role?.toUpperCase() == 'ADMIN') {
       isAdmin = true;
@@ -111,10 +102,9 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
     required String? address,
     required String? role,
     required String? lawyerNationalNumber,
-    required String? photoPath,
     required String? phoneNumber,
     required String? dateOfBirth,
-    required String ? gender,
+    required String? gender,
   }) {
     emit(UpdateLawyerProfileLoading());
     DioHelper.putData(
@@ -128,7 +118,6 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
         'phone': phoneNumber,
         'DOB': dateOfBirth,
         'Gender': gender,
-        'profile_photo_path': photoPath,
       },
 
     ).then((value) {
@@ -847,9 +836,18 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
   File? pickedImage;
   String? base64;
 
-  void pickImage() async {
-    final XFile? pickedImageXFile = await _picker.pickImage(
-        source: ImageSource.gallery);
+  void pickImage({
+    required int? lawyerID,
+    required String? name,
+    required String? email,
+    required String? address,
+    required String? role,
+    required String? lawyerNationalNumber,
+    required String? phoneNumber,
+    required String? dateOfBirth,
+    required String? gender,
+}) async {
+    final XFile? pickedImageXFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImageXFile != null) {
       pickedImage = File(pickedImageXFile.path);
       emit(ProfileImagePickedSuccessful());
@@ -859,6 +857,18 @@ class AvocadoCubit extends Cubit <AvocadoStates> {
     }
     var imageBytes = await pickedImage?.readAsBytes();
     base64 = const Base64Codec().encode(imageBytes!);
+    updateLawyerProfilePhoto(
+        lawyerID: lawyerID,
+        name: name,
+        email: email,
+        address: address,
+        role: role,
+        lawyerNationalNumber: lawyerNationalNumber,
+        phoneNumber: phoneNumber,
+        gender: gender,
+        profilePhoto: base64
+    );
+
     debugPrint(base64);
   }
 
