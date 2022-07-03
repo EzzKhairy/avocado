@@ -109,6 +109,11 @@ class CaseInfoScreen extends StatelessWidget {
                               height: 10,
                             ),
                             buildCaseInfoScreenItem(
+                                context: context, title: LocaleKeys.client.tr(), info: '${caseData.clientName}'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            buildCaseInfoScreenItem(
                                 context: context, title: LocaleKeys.caseType.tr(), info: '${caseData.caseType}'),
                             const SizedBox(
                               height: 10,
@@ -120,6 +125,11 @@ class CaseInfoScreen extends StatelessWidget {
                             ),
                             buildCaseInfoScreenItem(
                                 context: context, title: LocaleKeys.lawyer.tr(), info: '${lawyerName}'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            buildCaseInfoScreenItem(
+                                context: context, title: LocaleKeys.contender.tr(), info: '${caseData.contender}'),
                             const SizedBox(
                               height: 10,
                             ),
